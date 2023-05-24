@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "GameEngine.h"
 #include "WindowsPlayer.h"
 #include "WindowsUtil.h"
 
@@ -6,7 +7,11 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 {
 	if (!wndplayer::InitWindowsApp(hInstance, wndplayer::gWidth, wndplayer::gHeight))
 	{
-		::MessageBox(nullptr, _T("WinMain/InitWindowsApp : FAILED"), _T("Error"), MB_ICONEXCLAMATION | MB_OK);
+		return 0;
+	}
+
+	if (!GameEngine::Init(hInstance, wndplayer::gWndHandler, wndplayer::gWidth, wndplayer::gHeight, true))
+	{
 		return 0;
 	}
 
@@ -15,9 +20,10 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 
 	while (wndplayer::Tick())
 	{
-
+		GameEngine::Tick();
 	}
 
+	GameEngine::Release();
 	wndplayer::Destroy();
 
 	return 0;
