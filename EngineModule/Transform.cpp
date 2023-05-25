@@ -38,21 +38,21 @@ Vector Transform::GetScale() const
 	return mScale;
 }
 
-Vector Transform::GetXAxis() const
+Vector Transform::GetAxisX() const
 {
 	Quaternion rotation = mEulerAngles.ToQuaternion();
 	rotation.Normalize();
 	return rotation.GetAxisX();
 }
 
-Vector Transform::GetYAxis() const
+Vector Transform::GetAxisY() const
 {
 	Quaternion rotation = mEulerAngles.ToQuaternion();
 	rotation.Normalize();
 	return rotation.GetAxisY();
 }
 
-Vector Transform::GetZAxis() const
+Vector Transform::GetAxisZ() const
 {
 	Quaternion rotation = mEulerAngles.ToQuaternion();
 	rotation.Normalize();
@@ -60,6 +60,14 @@ Vector Transform::GetZAxis() const
 }
 
 Matrix Transform::GetMatrix() const
+{
+	D3DXMATRIX dr = GetD3DXMatrix();
+	Matrix result;
+	memcpy(&result.M, &dr.m, sizeof(Matrix));
+	return result;
+}
+
+D3DXMATRIX Transform::GetD3DXMatrix() const
 {
 	D3DXMATRIX matPos;
 	D3DXMatrixTranslation(&matPos, mPosition.X, mPosition.Y, mPosition.Z);
@@ -73,10 +81,7 @@ Matrix Transform::GetMatrix() const
 	D3DXMATRIX matScale;
 	D3DXMatrixScaling(&matScale, mScale.X, mScale.Y, mScale.Z);
 
-	D3DXMATRIX dr = matScale * matRot * matPos;
-	Matrix result;
-	std::copy(&dr.m[0][0], &dr.m[0][0] + 4 * 4, &result.M[0][0]);
-	return result;
+	return matScale * matRot * matPos;
 }
 
 void Transform::SetPosition(const Vector& position)
@@ -137,9 +142,9 @@ void Transform::AddRotationZ(const float degree)
 
 void Transform::Translate(const Vector& translation)
 {
-	Vector right = GetXAxis();
-	Vector up = GetYAxis();
-	Vector look = GetZAxis();
+	Vector right = GetAxisX();
+	Vector up = GetAxisY();
+	Vector look = GetAxisZ();
 
 	Vector posX = Vector(right.X, right.Y, right.Z) * translation.X;
 	Vector posY = Vector(up.X, up.Y, up.Z) * translation.Y;

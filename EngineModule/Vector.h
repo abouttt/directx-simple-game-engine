@@ -5,8 +5,9 @@ struct Quaternion;
 struct Vector
 {
 	// 생성자
-	Vector() = default;
+	Vector();
 	Vector(float x, float y, float z);
+	Vector(const Vector& v);
 
 	// 정적멤버함수
 	static float Angle(const Vector& v1, const Vector& v2);
@@ -17,7 +18,6 @@ struct Vector
 
 	// 멤버함수
 	bool IsZero() const;
-	float Equals(const Vector& v1, const Vector& v2);
 	Vector GetAbs() const;
 	float GetSize() const;
 	float GetSizeSq() const;
@@ -29,8 +29,6 @@ struct Vector
 	tstring ToString();
 
 	// 연산자
-	float operator[](BYTE index) const;
-	float& operator[](BYTE index);
 	Vector operator+(const Vector& v) const;
 	Vector operator+(const float bias) const;
 	Vector operator-() const;
@@ -57,17 +55,10 @@ struct Vector
 	static const Vector Right;
 	static const Vector Up;
 	static const Vector Zero;
-	static constexpr BYTE Dimension = 3;
 
 	// 멤버변수
-	union
-	{
-		struct
-		{
-			float X, Y, Z;
-		};
-
-		std::array<float, Dimension> Scalars = { 0.f, 0.f, 0.f };
-	};
+	float X;
+	float Y;
+	float Z;
 };
 

@@ -5,11 +5,27 @@
 
 const Quaternion Quaternion::Identity = Quaternion(0.f, 0.f, 0.f, 1.f);
 
+Quaternion::Quaternion()
+	: X(0.f)
+	, Y(0.f)
+	, Z(0.f)
+	, W(1.f)
+{
+}
+
 Quaternion::Quaternion(float x, float y, float z, float w)
 	: X(x)
 	, Y(y)
 	, Z(z)
 	, W(w)
+{
+}
+
+Quaternion::Quaternion(const Quaternion& q)
+	: X(q.X)
+	, Y(q.Y)
+	, Z(q.Z)
+	, W(q.X)
 {
 }
 
@@ -24,60 +40,48 @@ Quaternion Quaternion::Slerp(const Quaternion& q1, const Quaternion& q2, float s
 
 Vector Quaternion::ToEuler() const
 {
-	Vector result;
-
-	float sinrCosp = 2 * (W * Z + X * Y);
-	float cosrCosp = 1 - 2 * (Z * Z + X * X);
-	result.Z = Math::Rad2Deg(atan2f(sinrCosp, cosrCosp));
-
-	float pitchTest = W * X - Y * Z;
-	float asinThreshold = 0.4999995f;
-	if (pitchTest < -asinThreshold)
-	{
-		result.X = -90;
-	}
-	else if (pitchTest > asinThreshold)
-	{
-		result.X = 90;
-	}
-	else
-	{
-		float sinp = 2 * pitchTest;
-		result.X = Math::Rad2Deg(asinf(sinp));
-	}
-
-	float sinyCosp = 2 * (W * Y + X * Z);
-	float cosyCosp = 1.f - 2 * (X * X + Y * Y);
-	result.Y = Math::Rad2Deg(atan2f(sinyCosp, cosyCosp));
-
-	return result;
+	D3DXVECTOR3 result;
+	D3DXMATRIX mat;
+	D3DXQUATERNION quat(X, Y, Z, W);
+	D3DXMatrixRotationQuaternion(&mat, &quat);
+	D3DXMatrixDecompose(&result, nullptr, nullptr, &mat);
+	return Vector(result.x, result.y, result.z);
 }
 
 Vector Quaternion::GetAxisX() const
 {
-	float cy = 0.f, sy = 0.f, cp = 0.f, sp = 0.f, cr = 0.f, sr = 0.f;
-	Math::GetSinCos(&sy, &cy, Y);
-	Math::GetSinCos(&sp, &cp, X);
-	Math::GetSinCos(&sr, &cr, Z);
-	return Vector(cy * cr + sy * sp * sr, cp * sr, -sy * cr + cy * sp * sr);
+	D3DXVECTOR3 axisX;
+	D3DXMATRIX mat;
+	D3DXQUATERNION quat(X, Y, Z, W);
+	D3DXMatrixRotationQuaternion(&mat, &quat);
+	axisX.x = mat._11;
+	axisX.y = mat._21;
+	axisX.z = mat._31;
+	return Vector(axisX.x, axisX.y, axisX.z);
 }
 
 Vector Quaternion::GetAxisY() const
 {
-	float cy = 0.f, sy = 0.f, cp = 0.f, sp = 0.f, cr = 0.f, sr = 0.f;
-	Math::GetSinCos(&sy, &cy, Y);
-	Math::GetSinCos(&sp, &cp, X);
-	Math::GetSinCos(&sr, &cr, Z);
-	return Vector(-cy * sr + sy * sp * cr, cp * cr, sy * sr + cy * sp * cr);
+	D3DXVECTOR3 axisY;
+	D3DXMATRIX mat;
+	D3DXQUATERNION quat(X, Y, Z, W);
+	D3DXMatrixRotationQuaternion(&mat, &quat);
+	axisY.x = mat._12;
+	axisY.y = mat._22;
+	axisY.z = mat._32;
+	return Vector(axisY.x, axisY.y, axisY.z);
 }
 
 Vector Quaternion::GetAxisZ() const
 {
-	float cy = 0.f, sy = 0.f, cp = 0.f, sp = 0.f, cr = 0.f, sr = 0.f;
-	Math::GetSinCos(&sy, &cy, Y);
-	Math::GetSinCos(&sp, &cp, X);
-	Math::GetSinCos(&sr, &cr, Z);
-	return Vector(sy * cp, -sp, cy * cp);
+	D3DXVECTOR3 axisZ;
+	D3DXMATRIX mat;
+	D3DXQUATERNION quat(X, Y, Z, W);
+	D3DXMatrixRotationQuaternion(&mat, &quat);
+	axisZ.x = mat._13;
+	axisZ.y = mat._23;
+	axisZ.z = mat._33;
+	return Vector(axisZ.x, axisZ.y, axisZ.z);
 }
 
 void Quaternion::Normalize()
@@ -87,23 +91,10 @@ void Quaternion::Normalize()
 
 Quaternion Quaternion::GetNormalize() const
 {
-	Quaternion result;
-	const float squareSum = X * X + Y * Y + Z * Z + W * W;
-	if (squareSum >= Math::SMALL_NUMBER)
-	{
-		const float scale = 1.f / sqrtf(squareSum);
-
-		result.X *= scale;
-		result.Y *= scale;
-		result.Z *= scale;
-		result.W *= scale;
-	}
-	else
-	{
-		result = Quaternion::Identity;
-	}
-
-	return result;
+	D3DXQUATERNION result;
+	D3DXQUATERNION dq(X, Y, Z, W);
+	D3DXQuaternionNormalize(&result, &dq);
+	return Quaternion(result.x, result.y, result.z, result.w);
 }
 
 Quaternion Quaternion::Inverse()
@@ -133,7 +124,7 @@ tstring Quaternion::ToString() const
 
 Quaternion Quaternion::operator+(const Quaternion& q) const
 {
-	return Quaternion(X + q.X, Y + q.Y, Z + q.Z, W + q.W);
+	return Quaternion(*this) += q;
 }
 
 Quaternion Quaternion::operator-() const
@@ -143,37 +134,28 @@ Quaternion Quaternion::operator-() const
 
 Quaternion Quaternion::operator-(const Quaternion& q) const
 {
-	return Quaternion(X - q.X, Y - q.Y, Z - q.Z, W - q.W);
+	return Quaternion(*this) -= q;
 }
 
 Quaternion Quaternion::operator*(const Quaternion& q) const
 {
-	Quaternion result;
-	Vector v1(X, Y, Z);
-	Vector v2(q.X, q.Y, q.Z);
-	result.W = W * q.W - Vector::Dot(v1, v2);
-	Vector v = v2 * W + v1 * q.W + Vector::Cross(v1, v2);
-	result.X = v.X;
-	result.Y = v.Y;
-	result.Z = v.Z;
-
-	return result;
+	return Quaternion(*this) *= q;
 }
 
 Vector Quaternion::operator*(const Vector& v) const
 {
-	Quaternion q(X, Y, Z, W);
-	Quaternion q1, q2;
-	q1 = q.Inverse();
-	q2 = q1 * Quaternion(v.X, v.Y, v.Z, 1.0f) * q;
-	return Vector(q2.X, q2.Y, q2.Z);
+	D3DXVECTOR3 result;
+	D3DXMATRIX mat;
+	D3DXQUATERNION dq(X, Y, Z, W);
+	D3DXVECTOR3 dv(v.X, v.Y, v.Z);
+	D3DXMatrixRotationQuaternion(&mat, &dq);
+	D3DXVec3TransformCoord(&result, &dv, &mat);
+	return Vector(result.x, result.y, result.z);
 }
 
-Quaternion Quaternion::operator/(const float scale) const
+Quaternion Quaternion::operator/(const float scalar) const
 {
-	D3DXQUATERNION result(X, Y, Z, W);
-	result /= scale;
-	return Quaternion(result.x, result.y, result.z, result.w);
+	return Quaternion(*this) /= scalar;
 }
 
 Quaternion Quaternion::operator+=(const Quaternion& q)
@@ -196,19 +178,21 @@ Quaternion Quaternion::operator-=(const Quaternion& q)
 
 Quaternion Quaternion::operator*=(const Quaternion& q)
 {
-	Vector v1(X, Y, Z), v2(q.X, q.Y, q.Z);
-	W = W * q.W - Vector::Dot(v1, v2);
-	Vector v = v2 * W + v1 * q.W + Vector::Cross(v1, v2);
-	X = v.X;
-	Y = v.Y;
-	Z = v.Z;
+	D3DXQUATERNION result;
+	D3DXQUATERNION q1(X, Y, Z, W);
+	D3DXQUATERNION q2(q.X, q.Y, q.Z, q.W);
+	D3DXQuaternionMultiply(&result, &q1, &q2);
+	X = result.x;
+	Y = result.y;
+	Z = result.z;
+	W = result.w;
 	return *this;
 }
 
-Quaternion Quaternion::operator/=(const float scale)
+Quaternion Quaternion::operator/=(const float scalar)
 {
 	D3DXQUATERNION result(X, Y, Z, W);
-	result /= scale;
+	result /= scalar;
 	X = result.x;
 	Y = result.y;
 	Z = result.z;

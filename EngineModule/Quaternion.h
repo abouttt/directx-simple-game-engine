@@ -4,8 +4,9 @@ struct Vector;
 
 struct Quaternion
 {
-	Quaternion() = default;
+	Quaternion();
 	Quaternion(float x, float y, float z, float w);
+	Quaternion(const Quaternion& q);
 
 	// Á¤Àû¸â¹öÇÔ¼ö
 	static Quaternion Slerp(const Quaternion& q1, const Quaternion& q2, float slerp);
@@ -28,12 +29,12 @@ struct Quaternion
 	Quaternion operator-(const Quaternion& q) const;
 	Quaternion operator*(const Quaternion& q) const;
 	Vector operator*(const Vector& v) const;
-	Quaternion operator/(const float scale) const;
+	Quaternion operator/(const float scalar) const;
 
 	Quaternion operator+=(const Quaternion& q);
 	Quaternion operator-=(const Quaternion& q);
 	Quaternion operator*=(const Quaternion& q);
-	Quaternion operator/=(const float scale);
+	Quaternion operator/=(const float scalar);
 
 	bool operator==(const Quaternion& q);
 	bool operator!=(const Quaternion& q);
@@ -42,9 +43,9 @@ struct Quaternion
 	static const Quaternion Identity;
 
 	// ¸â¹öº¯¼ö
-	float X = 0.f;
-	float Y = 0.f;
-	float Z = 0.f;
-	float W = 1.f;
+	float X;
+	float Y;
+	float Z;
+	float W;
 };
 

@@ -12,8 +12,24 @@ const Vector Vector::Right = Vector(1.f, 0.f, 0.f);
 const Vector Vector::Up = Vector(0.f, 1.f, 0.f);
 const Vector Vector::Zero = Vector(0.f, 0.f, 0.f);
 
+Vector::Vector()
+	: X(0.f)
+	, Y(0.f)
+	, Z(0.f)
+{
+}
+
 Vector::Vector(float x, float y, float z)
-	: Scalars({ x,y,z })
+	: X(x)
+	, Y(y)
+	, Z(z)
+{
+}
+
+Vector::Vector(const Vector& v)
+	: X(v.X)
+	, Y(v.Y)
+	, Z(v.Z)
 {
 }
 
@@ -41,10 +57,10 @@ float Vector::Distance(const Vector& v1, const Vector& v2)
 
 float Vector::DistanceSq(const Vector& v1, const Vector& v2)
 {
-	float xLength = v2.X - v1.X;
-	float yLength = v2.Y - v1.Y;
-	float zLength = v2.Z - v1.Z;
-	return (xLength * xLength) + (yLength * yLength) + (zLength * zLength);
+	float xDist = v2.X - v1.X;
+	float yDist = v2.Y - v1.Y;
+	float zDist = v2.Z - v1.Z;
+	return (xDist * xDist) + (yDist * yDist) + (zDist * zDist);
 }
 
 float Vector::Dot(const Vector& v1, const Vector& v2)
@@ -55,11 +71,6 @@ float Vector::Dot(const Vector& v1, const Vector& v2)
 bool Vector::IsZero() const
 {
 	return *this == Zero;
-}
-
-float Vector::Equals(const Vector& v1, const Vector& v2)
-{
-	return v1 == v2;
 }
 
 Vector Vector::GetAbs() const
@@ -132,18 +143,6 @@ tstring Vector::ToString()
 	TCHAR result[64]{};
 	_sntprintf(result, sizeof(result), _T("(%.3f, %.3f, %.3f)"), X, Y, Z);
 	return result;
-}
-
-float Vector::operator[](BYTE index) const
-{
-	assert(index < Dimension);
-	return Scalars[index];
-}
-
-float& Vector::operator[](BYTE index)
-{
-	assert(index < Dimension);
-	return Scalars[index];
 }
 
 Vector Vector::operator+(const Vector& v) const

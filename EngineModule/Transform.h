@@ -16,10 +16,11 @@ public:
 	Quaternion GetRotation() const;
 	Vector GetEulerAngles() const;
 	Vector GetScale() const;
-	Vector GetXAxis() const;
-	Vector GetYAxis() const;
-	Vector GetZAxis() const;
+	Vector GetAxisX() const;
+	Vector GetAxisY() const;
+	Vector GetAxisZ() const;
 	Matrix GetMatrix() const;
+	D3DXMATRIX GetD3DXMatrix() const;
 
 	void SetPosition(const Vector& position);
 	void SetRotation(const Quaternion& rotation);
