@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "DXContext.h"
 #include "GameEngine.h"
+#include "InputManager.h"
 #include "TimeManager.h"
 
 bool GameEngine::mbInit = false;
@@ -12,7 +13,8 @@ bool GameEngine::Init(const HINSTANCE hInstance, const HWND hWnd, const int widt
 		return false;
 	}
 
-	if (!DXContext::init(hWnd, width, height, bWindowed))
+	if (!DXContext::init(hWnd, width, height, bWindowed) ||
+		!InputManager::init(hInstance, hWnd))
 	{
 		return false;
 	}
@@ -31,13 +33,19 @@ void GameEngine::Release()
 	}
 
 	DXContext::release();
+	InputManager::release();
 
 	mbInit = false;
 }
 
-void GameEngine::Tick()
+void GameEngine::OnTick()
 {
+	// 성능 측정 시작.
 	TimeManager::beginTick();
 
+	// Input Event.
+	InputManager::update();
+
+	// 성능 측정 종료.
 	TimeManager::endTick();
 }

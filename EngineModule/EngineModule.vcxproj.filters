@@ -48,6 +48,9 @@
     <ClInclude Include="TimeManager.h">
       <Filter>Core\Public</Filter>
     </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Core\Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -60,6 +63,9 @@
       <Filter>Core\Private</Filter>
     </ClCompile>
     <ClCompile Include="TimeManager.cpp">
+      <Filter>Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
       <Filter>Core\Private</Filter>
     </ClCompile>
   </ItemGroup>

@@ -151,12 +151,14 @@
   <ItemGroup>
     <ClInclude Include="DXContext.h" />
     <ClInclude Include="GameEngine.h" />
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="TimeManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXContext.cpp" />
     <ClCompile Include="GameEngine.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

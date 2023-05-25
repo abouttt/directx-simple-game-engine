@@ -2,6 +2,7 @@
 #include "GameEngine.h"
 #include "WindowsPlayer.h"
 #include "WindowsUtil.h"
+#include "TimeManager.h"
 
 int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ PSTR lpCmdLine, _In_ int nCmdShow)
 {
@@ -18,9 +19,19 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 	wndutil::Show(wndplayer::gWndHandler);
 	wndutil::SetCenterWindow(wndplayer::gWndHandler);
 
+	static float previousTimer = 0.f;
+	static float updatePeriod = 500.f;
 	while (wndplayer::Tick())
 	{
-		GameEngine::Tick();
+		GameEngine::OnTick();
+		
+		float currentTime = TimeManager::GetElapsedTime();
+		if (currentTime - previousTimer > updatePeriod)
+		{
+			float fps = TimeManager::GetFPS();
+			wndplayer::SetWindowsStatTitle(fps);
+			previousTimer = currentTime;
+		}
 	}
 
 	GameEngine::Release();
