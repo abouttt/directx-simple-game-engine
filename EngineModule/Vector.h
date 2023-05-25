@@ -1,5 +1,7 @@
 #pragma once
 
+struct Quaternion;
+
 struct Vector
 {
 	// 생성자
@@ -23,26 +25,28 @@ struct Vector
 	float GetMin() const;
 	void Normalize();
 	Vector GetNormalize() const;
+	Quaternion ToQuaternion() const;
 	tstring ToString();
 
 	// 연산자
 	float operator[](BYTE index) const;
 	float& operator[](BYTE index);
-	Vector operator+(const Vector& other) const;
+	Vector operator+(const Vector& v) const;
 	Vector operator+(const float bias) const;
 	Vector operator-() const;
-	Vector operator-(const Vector& other) const;
+	Vector operator-(const Vector& v) const;
 	Vector operator-(const float bias) const;
 	Vector operator*(const float scale) const;
-	Vector operator*(const Vector& other) const;
+	Vector operator*(const Vector& v) const;
+	Vector operator*(const Quaternion& q) const;
 	Vector operator/(const float scale) const;
-	Vector operator/(const Vector& other) const;
-	Vector operator+=(const Vector& other);
-	Vector operator-=(const Vector& other);
-	Vector operator*=(const Vector& other);
-	Vector operator/=(const Vector& other);
-	bool operator==(const Vector& other) const;
-	bool operator!=(const Vector& other) const;
+	Vector operator/(const Vector& v) const;
+	Vector operator+=(const Vector& v);
+	Vector operator-=(const Vector& v);
+	Vector operator*=(const Vector& v);
+	Vector operator/=(const Vector& v);
+	bool operator==(const Vector& v) const;
+	bool operator!=(const Vector& v) const;
 
 	// 정적멤버변수
 	static const Vector Backward;

@@ -66,6 +66,9 @@
     <ClInclude Include="MathUtil.h">
       <Filter>Math\Public</Filter>
     </ClInclude>
+    <ClInclude Include="Quaternion.h">
+      <Filter>Math\Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -84,6 +87,9 @@
       <Filter>Core\Private</Filter>
     </ClCompile>
     <ClCompile Include="Vector.cpp">
+      <Filter>Math\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Quaternion.cpp">
       <Filter>Math\Private</Filter>
     </ClCompile>
   </ItemGroup>

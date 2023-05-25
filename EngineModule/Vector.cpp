@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "MathUtil.h"
+#include "Quaternion.h"
 #include "Vector.h"
 
 const Vector Vector::Backward = Vector(0.f, 0.f, -1.f);
@@ -109,6 +110,23 @@ Vector Vector::GetNormalize() const
 	return Vector(X * invLength, Y * invLength, Z * invLength);
 }
 
+Quaternion Vector::ToQuaternion() const
+{
+	float sp = 0.f, sy = 0.f, sr = 0.f;
+	float cp = 0.f, cy = 0.f, cr = 0.f;
+
+	Math::GetSinCos(&sp, &cp, X * 0.5f);
+	Math::GetSinCos(&sy, &cy, Y * 0.5f);
+	Math::GetSinCos(&sr, &cr, Z * 0.5f);
+
+	Quaternion q;
+	q.W = sy * sp * sr + cy * cp * cr;
+	q.X = sy * sr * cp + sp * cy * cr;
+	q.Y = sy * cp * cr - sp * sr * cy;
+	q.Z = -sy * sp * cr + sr * cy * cp;
+	return q;
+}
+
 tstring Vector::ToString()
 {
 	TCHAR result[64]{};
@@ -161,6 +179,11 @@ Vector Vector::operator*(const float scale) const
 Vector Vector::operator*(const Vector& v) const
 {
 	return Vector(X * v.X, Y * v.Y, Z * v.Z);
+}
+
+Vector Vector::operator*(const Quaternion& q) const
+{
+	return q * (*this);
 }
 
 Vector Vector::operator/(const float scale) const

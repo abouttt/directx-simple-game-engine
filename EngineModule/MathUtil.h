@@ -96,7 +96,7 @@ struct Math
 	}
 
 	// 언리얼 엔진 코드에서 가져옴. 지정된 각도에 대한 두 삼각함수를 함께 가져오는 함수. 
-	static inline constexpr void GetSinCosRad(float& outSin, float& outCos, float radian)
+	static inline constexpr void GetSinCosRad(float* const outSin, float* const outCos, float radian)
 	{
 		// Copied from UE4 Source Code
 		// Map Value to y in [-pi,pi], x = 2*pi*quotient + remainder.
@@ -131,35 +131,35 @@ struct Math
 		float y2 = y * y;
 
 		// 11-degree minimax approximation
-		outSin = (((((-2.3889859e-08f * y2 + 2.7525562e-06f) * y2 - 0.00019840874f) * y2 + 0.0083333310f) * y2 - 0.16666667f) * y2 + 1.0f) * y;
+		*outSin = (((((-2.3889859e-08f * y2 + 2.7525562e-06f) * y2 - 0.00019840874f) * y2 + 0.0083333310f) * y2 - 0.16666667f) * y2 + 1.0f) * y;
 
 		// 10-degree minimax approximation
 		float p = ((((-2.6051615e-07f * y2 + 2.4760495e-05f) * y2 - 0.0013888378f) * y2 + 0.041666638f) * y2 - 0.5f) * y2 + 1.0f;
-		outCos = sign * p;
+		*outCos = sign * p;
 	}
 
 
-	static inline constexpr void GetSinCos(float& outSin, float& outCos, float degree)
+	static inline constexpr void GetSinCos(float* const outSin, float* const outCos, float degree)
 	{
 		if (degree == 0.f)
 		{
-			outSin = 0.f;
-			outCos = 1.f;
+			*outSin = 0.f;
+			*outCos = 1.f;
 		}
 		else if (degree == 90.f)
 		{
-			outSin = 1.f;
-			outCos = 0.f;
+			*outSin = 1.f;
+			*outCos = 0.f;
 		}
 		else if (degree == 180.f)
 		{
-			outSin = 0.f;
-			outCos = -1.f;
+			*outSin = 0.f;
+			*outCos = -1.f;
 		}
 		else if (degree == 270.f)
 		{
-			outSin = -1.f;
-			outCos = 0.f;
+			*outSin = -1.f;
+			*outCos = 0.f;
 		}
 		else
 		{

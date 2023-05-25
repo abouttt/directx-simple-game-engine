@@ -12,7 +12,6 @@ struct Quaternion
 
 	// ¸â¹öÇÔ¼ö
 	Vector Euler() const;
-	float GetAngle() const;
 	Vector GetAxisX() const;
 	Vector GetAxisY() const;
 	Vector GetAxisZ() const;
@@ -28,12 +27,13 @@ struct Quaternion
 	Quaternion operator-() const;
 	Quaternion operator-(const Quaternion& q) const;
 	Quaternion operator*(const Quaternion& q) const;
-	Quaternion operator/(const Quaternion& q) const;
+	Vector operator*(const Vector& v) const;
+	Quaternion operator/(const float scale) const;
 
 	Quaternion operator+=(const Quaternion& q);
 	Quaternion operator-=(const Quaternion& q);
 	Quaternion operator*=(const Quaternion& q);
-	Quaternion operator/=(const Quaternion& q);
+	Quaternion operator/=(const float scale);
 
 	bool operator==(const Quaternion& q);
 	bool operator!=(const Quaternion& q);
