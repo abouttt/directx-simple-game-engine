@@ -34,6 +34,15 @@
     <Filter Include="Core\Public">
       <UniqueIdentifier>{6004f6f3-c4d7-48e6-b20b-d32bae76c6d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{273199ae-23e8-4e9b-ae0c-66c5553f14a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\Private">
+      <UniqueIdentifier>{f4630517-2eb6-4714-97df-1c09d38011f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\Public">
+      <UniqueIdentifier>{46960692-7c93-4c4b-ac7d-3fa8404a09b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -51,6 +60,12 @@
     <ClInclude Include="InputManager.h">
       <Filter>Core\Public</Filter>
     </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>Math\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="MathUtil.h">
+      <Filter>Math\Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -67,6 +82,9 @@
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector.cpp">
+      <Filter>Math\Private</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

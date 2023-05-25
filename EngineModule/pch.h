@@ -6,6 +6,7 @@
 #include <array>
 #include <algorithm>
 #include <d3dx9.h>
+#include <d3dx9math.h>
 #include <cassert>
 #include <cmath>
 #include <dinput.h>
@@ -18,3 +19,6 @@
 #include <unordered_set>
 #include <vector>
 #include <Windows.h>
+#include <xmmintrin.h>
+
+using tstring = std::basic_string<TCHAR>;
