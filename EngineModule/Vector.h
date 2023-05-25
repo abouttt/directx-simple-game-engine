@@ -5,14 +5,13 @@ struct Vector
 	// 생성자
 	Vector() = default;
 	Vector(float x, float y, float z);
-	Vector(const Vector& vector);
-	
+
 	// 정적멤버함수
 	static float Angle(const Vector& v1, const Vector& v2);
-	static Vector CrossProduct(const Vector& v1, const Vector& v2);
+	static Vector Cross(const Vector& v1, const Vector& v2);
 	static float Distance(const Vector& v1, const Vector& v2);
 	static float DistanceSq(const Vector& v1, const Vector& v2);
-	static float DotProduct(const Vector& v1, const Vector& v2);
+	static float Dot(const Vector& v1, const Vector& v2);
 
 	// 멤버함수
 	bool IsZero() const;
@@ -24,6 +23,7 @@ struct Vector
 	float GetMin() const;
 	void Normalize();
 	Vector GetNormalize() const;
+	tstring ToString();
 
 	// 연산자
 	float operator[](BYTE index) const;
@@ -43,7 +43,7 @@ struct Vector
 	Vector operator/=(const Vector& other);
 	bool operator==(const Vector& other) const;
 	bool operator!=(const Vector& other) const;
-	
+
 	// 정적멤버변수
 	static const Vector Backward;
 	static const Vector Down;

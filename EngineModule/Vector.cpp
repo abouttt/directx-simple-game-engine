@@ -12,20 +12,20 @@ const Vector Vector::Up = Vector(0.f, 1.f, 0.f);
 const Vector Vector::Zero = Vector(0.f, 0.f, 0.f);
 
 Vector::Vector(float x, float y, float z)
-	: Scalars({ x, y, z })
+	: Scalars({ x,y,z })
 {
 }
 
 float Vector::Angle(const Vector& v1, const Vector& v2)
 {
 	float length = std::sqrtf(v1.GetSizeSq() * v2.GetSizeSq());
-	float dot = DotProduct(v1, v2);
+	float dot = Dot(v1, v2);
 	float cosAngle = std::acosf(dot / length);
 	cosAngle = Math::Rad2Deg(cosAngle);
 	return (v1.X * v2.Y - v1.Y * v2.X > 0.0f) ? cosAngle : -cosAngle;
 }
 
-Vector Vector::CrossProduct(const Vector& v1, const Vector& v2)
+Vector Vector::Cross(const Vector& v1, const Vector& v2)
 {
 	return Vector(
 		v1.Y * v2.Z - v1.Z * v2.Y,
@@ -46,7 +46,7 @@ float Vector::DistanceSq(const Vector& v1, const Vector& v2)
 	return (xLength * xLength) + (yLength * yLength) + (zLength * zLength);
 }
 
-float Vector::DotProduct(const Vector& v1, const Vector& v2)
+float Vector::Dot(const Vector& v1, const Vector& v2)
 {
 	return (v1.X * v2.X) + (v1.Y + v2.Y) + (v1.Z + v2.Z);
 }
@@ -90,17 +90,30 @@ float Vector::GetMin() const
 
 void Vector::Normalize()
 {
-	float size = GetSize();
-	X /= size;
-	Y /= size;
-	Z /= size;
+	*this = GetNormalize();
 }
 
 Vector Vector::GetNormalize() const
 {
-	Vector v(*this);
-	v.Normalize();
-	return v;
+	float sizeSq = GetSizeSq();
+	if (sizeSq == 1.f)
+	{
+		return *this;
+	}
+	else if (sizeSq == 0.f)
+	{
+		return Vector::Zero;
+	}
+
+	float invLength = Math::InvSqrt(sizeSq);
+	return Vector(X * invLength, Y * invLength, Z * invLength);
+}
+
+tstring Vector::ToString()
+{
+	TCHAR result[64]{};
+	_sntprintf(result, sizeof(result), _T("(%.3f, %.3f, %.3f)"), X, Y, Z);
+	return result;
 }
 
 float Vector::operator[](BYTE index) const
