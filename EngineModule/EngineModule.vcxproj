@@ -153,6 +153,7 @@
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="MathUtil.h" />
+    <ClInclude Include="Matrix.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="TimeManager.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="DXContext.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
