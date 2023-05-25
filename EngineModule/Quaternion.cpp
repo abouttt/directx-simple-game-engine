@@ -22,7 +22,7 @@ Quaternion Quaternion::Slerp(const Quaternion& q1, const Quaternion& q2, float s
 	return Quaternion(result.x, result.y, result.z, result.w);
 }
 
-Vector Quaternion::Euler() const
+Vector Quaternion::ToEuler() const
 {
 	Vector result;
 
@@ -126,7 +126,7 @@ float Quaternion::SizeSq() const
 tstring Quaternion::ToString() const
 {
 	TCHAR result[64]{};
-	Vector euler = Euler();
+	Vector euler = ToEuler();
 	_sntprintf(result, sizeof(result), _T("(%.3f, %.3f, %.3f)"), euler.X, euler.Y, euler.Z);
 	return result;
 }
@@ -162,11 +162,11 @@ Quaternion Quaternion::operator*(const Quaternion& q) const
 
 Vector Quaternion::operator*(const Vector& v) const
 {
-	D3DXQUATERNION q(X, Y, Z, W);
-	D3DXQUATERNION q1, q2;
-	D3DXQuaternionConjugate(&q1, &q);
-	q2 = q1 * D3DXQUATERNION(v.X, v.Y, v.Z, 1.0f) * q;
-	return Vector(q2.x, q2.y, q2.z);
+	Quaternion q(X, Y, Z, W);
+	Quaternion q1, q2;
+	q1 = q.Inverse();
+	q2 = q1 * Quaternion(v.X, v.Y, v.Z, 1.0f) * q;
+	return Vector(q2.X, q2.Y, q2.Z);
 }
 
 Quaternion Quaternion::operator/(const float scale) const

@@ -11,7 +11,7 @@ struct Quaternion
 	static Quaternion Slerp(const Quaternion& q1, const Quaternion& q2, float slerp);
 
 	// ¸â¹öÇÔ¼ö
-	Vector Euler() const;
+	Vector ToEuler() const;
 	Vector GetAxisX() const;
 	Vector GetAxisY() const;
 	Vector GetAxisZ() const;
