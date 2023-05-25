@@ -16,27 +16,51 @@
     <Filter Include="PCH">
       <UniqueIdentifier>{3e89492a-57c2-40bc-8649-d10faf04b597}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{c3566f44-c8ed-4f9f-a3f5-0d869aa22102}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Private">
+      <UniqueIdentifier>{2f8c2b26-f1cf-4e21-a895-21b09869a0d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Public">
+      <UniqueIdentifier>{f2cc79d3-6170-40b1-a24d-f327b49e550b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{300974e2-ebd1-49e8-8ba8-aa3c5f6407af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Private">
+      <UniqueIdentifier>{12fae54a-adf5-4ec5-8f90-9a233b5f5b78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Public">
+      <UniqueIdentifier>{6004f6f3-c4d7-48e6-b20b-d32bae76c6d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
       <Filter>PCH</Filter>
     </ClInclude>
-    <ClInclude Include="DXContext.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="GameEngine.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="DXContext.h">
+      <Filter>Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>Core\Public</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
       <Filter>PCH</Filter>
     </ClCompile>
-    <ClCompile Include="DXContext.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="GameEngine.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="DXContext.cpp">
+      <Filter>Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>Core\Private</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

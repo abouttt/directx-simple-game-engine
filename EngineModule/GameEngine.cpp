@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "DXContext.h"
 #include "GameEngine.h"
+#include "TimeManager.h"
 
 bool GameEngine::mbInit = false;
 
@@ -15,6 +16,8 @@ bool GameEngine::Init(const HINSTANCE hInstance, const HWND hWnd, const int widt
 	{
 		return false;
 	}
+
+	TimeManager::init();
 
 	mbInit = true;
     return true;
@@ -34,4 +37,7 @@ void GameEngine::Release()
 
 void GameEngine::Tick()
 {
+	TimeManager::beginTick();
+
+	TimeManager::endTick();
 }
