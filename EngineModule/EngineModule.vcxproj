@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Component.h" />
     <ClInclude Include="DXContext.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="InputManager.h" />
@@ -162,6 +163,7 @@
     <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Component.cpp" />
     <ClCompile Include="DXContext.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="InputManager.cpp" />
