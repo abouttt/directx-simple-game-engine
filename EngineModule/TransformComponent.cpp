@@ -224,7 +224,7 @@ void TransformComponent::AddRotationZ(const float degree)
 	updateLocal();
 }
 
-TransformComponent* TransformComponent::FindChild(const tstring& name)
+TransformComponent* TransformComponent::FindChild(const std::wstring& name)
 {
 	for (auto child : mChildren)
 	{

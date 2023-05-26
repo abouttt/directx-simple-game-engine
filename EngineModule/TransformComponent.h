@@ -60,7 +60,7 @@ public: // ¿ùµå Æ®·£½ºÆû.
 	void AddRotationZ(const float degree);
 
 public: // °èÃþ °ü·Ã.
-	TransformComponent* FindChild(const tstring& name);
+	TransformComponent* FindChild(const std::wstring& name);
 	TransformComponent* GetChild(std::size_t index);
 	bool IsChildOf(const TransformComponent* const child);
 	std::size_t GetChildCount();

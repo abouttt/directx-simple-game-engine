@@ -17,7 +17,7 @@ struct Matrix
 	Matrix GetTranspose() const;
 	Matrix GetInverse() const;
 	void SetIdentity();
-	std::vector<tstring> ToString() const;
+	std::vector<std::wstring> ToString() const;
 
 	// ¿¬»êÀÚ
 	Matrix operator+(const Matrix& m) const;

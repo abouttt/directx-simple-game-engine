@@ -125,7 +125,7 @@ void Vector::Set(float x, float y, float z)
 	Z = z;
 }
 
-tstring Vector::ToString()
+std::wstring Vector::ToString()
 {
 	TCHAR result[64]{};
 	_sntprintf(result, sizeof(result), _T("(%.3f, %.3f, %.3f)"), X, Y, Z);

@@ -25,15 +25,6 @@
     <Filter Include="Components\Public">
       <UniqueIdentifier>{f2cc79d3-6170-40b1-a24d-f327b49e550b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core">
-      <UniqueIdentifier>{300974e2-ebd1-49e8-8ba8-aa3c5f6407af}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Private">
-      <UniqueIdentifier>{12fae54a-adf5-4ec5-8f90-9a233b5f5b78}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Public">
-      <UniqueIdentifier>{6004f6f3-c4d7-48e6-b20b-d32bae76c6d3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Math">
       <UniqueIdentifier>{273199ae-23e8-4e9b-ae0c-66c5553f14a7}</UniqueIdentifier>
     </Filter>
@@ -43,22 +34,37 @@
     <Filter Include="Math\Public">
       <UniqueIdentifier>{46960692-7c93-4c4b-ac7d-3fa8404a09b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engines">
+      <UniqueIdentifier>{300974e2-ebd1-49e8-8ba8-aa3c5f6407af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engines\Private">
+      <UniqueIdentifier>{12fae54a-adf5-4ec5-8f90-9a233b5f5b78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engines\Public">
+      <UniqueIdentifier>{6004f6f3-c4d7-48e6-b20b-d32bae76c6d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{e385bfe0-58e2-4394-89f3-b7f4ba10f3f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Public">
+      <UniqueIdentifier>{7c4cc995-76c2-4384-afcf-bff13647f92e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Private">
+      <UniqueIdentifier>{37c4843e-bb61-4be5-b58e-32ffc54ee57f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
       <Filter>PCH</Filter>
     </ClInclude>
     <ClInclude Include="GameEngine.h">
-      <Filter>Core\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="DXContext.h">
-      <Filter>Core\Public</Filter>
+      <Filter>Engines\Public</Filter>
     </ClInclude>
     <ClInclude Include="TimeManager.h">
-      <Filter>Core\Public</Filter>
+      <Filter>Engines\Public</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
-      <Filter>Core\Public</Filter>
+      <Filter>Engines\Public</Filter>
     </ClInclude>
     <ClInclude Include="Vector.h">
       <Filter>Math\Public</Filter>
@@ -76,7 +82,7 @@
       <Filter>Math\Public</Filter>
     </ClInclude>
     <ClInclude Include="RenderEngine.h">
-      <Filter>Core\Public</Filter>
+      <Filter>Engines\Public</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
       <Filter>Components\Public</Filter>
@@ -84,22 +90,25 @@
     <ClInclude Include="TransformComponent.h">
       <Filter>Components\Public</Filter>
     </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Objects\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Objects\Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
       <Filter>PCH</Filter>
     </ClCompile>
     <ClCompile Include="GameEngine.cpp">
-      <Filter>Core\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="DXContext.cpp">
-      <Filter>Core\Private</Filter>
+      <Filter>Engines\Private</Filter>
     </ClCompile>
     <ClCompile Include="TimeManager.cpp">
-      <Filter>Core\Private</Filter>
+      <Filter>Engines\Private</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
-      <Filter>Core\Private</Filter>
+      <Filter>Engines\Private</Filter>
     </ClCompile>
     <ClCompile Include="Vector.cpp">
       <Filter>Math\Private</Filter>
@@ -114,13 +123,19 @@
       <Filter>Math\Private</Filter>
     </ClCompile>
     <ClCompile Include="RenderEngine.cpp">
-      <Filter>Core\Private</Filter>
+      <Filter>Engines\Private</Filter>
     </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>Components\Private</Filter>
     </ClCompile>
     <ClCompile Include="TransformComponent.cpp">
       <Filter>Components\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Objects\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Objects\Private</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

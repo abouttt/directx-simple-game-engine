@@ -25,7 +25,7 @@ struct Quaternion
 	void Set(float x, float y, float z, float w);
 	void ToAxisAndAngle(Vector* const outAxis, float* const outAngle) const;
 	Vector ToEuler() const;
-	tstring ToString() const;
+	std::wstring ToString() const;
 
 	// ¿¬»êÀÚ
 	Quaternion operator+(const Quaternion& q) const;

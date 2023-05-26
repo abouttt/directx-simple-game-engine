@@ -1,34 +1,33 @@
 #include "pch.h"
 #include "Component.h"
+#include "GameObject.h"
 
 Component::Component()
+    : mGameObject(nullptr)
 {
 }
 
-Component::~Component()
+const std::wstring& Component::GetName() const
 {
+    return mGameObject->GetName();
 }
 
-const tstring& Component::GetName() const
+const std::wstring& Component::GetTag() const
 {
-    return nullptr;
-}
-
-const tstring& Component::GetTag() const
-{
-    return nullptr;
+    return mGameObject->GetTag();
 }
 
 GameObject* Component::GetGameObject()
 {
-    return nullptr;
+    return mGameObject;
 }
 
 TransformComponent* Component::GetTransform()
 {
-    return nullptr;
+    return mGameObject->GetTransform();
 }
 
-void Component::SetName(const tstring& name)
+void Component::SetName(const std::wstring& name)
 {
+    mGameObject->SetName(name);
 }

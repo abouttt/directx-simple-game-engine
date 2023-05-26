@@ -21,5 +21,3 @@
 #include <vector>
 #include <Windows.h>
 #include <xmmintrin.h>
-
-using tstring = std::basic_string<TCHAR>;

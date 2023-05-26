@@ -124,7 +124,7 @@ Vector Quaternion::ToEuler() const
 	return Vector(result.x, result.y, result.z);
 }
 
-tstring Quaternion::ToString() const
+std::wstring Quaternion::ToString() const
 {
 	TCHAR result[64]{};
 	Vector euler = ToEuler();

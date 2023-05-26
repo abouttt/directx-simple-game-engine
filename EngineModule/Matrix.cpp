@@ -54,9 +54,9 @@ void Matrix::SetIdentity()
 	*this = Identity;
 }
 
-std::vector<tstring> Matrix::ToString() const
+std::vector<std::wstring> Matrix::ToString() const
 {
-	std::vector<tstring> result;
+	std::vector<std::wstring> result;
 	Matrix trMatrix = this->GetTranspose();
 	for (BYTE i = 0; i < 4; ++i)
 	{

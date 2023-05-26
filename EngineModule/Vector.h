@@ -25,7 +25,7 @@ struct Vector
 	Vector GetNormalize() const;
 	void Normalize();
 	void Set(float x, float y, float z);
-	tstring ToString();
+	std::wstring ToString();
 
 	// ¿¬»êÀÚ
 	Vector operator+(const Vector& v) const;
