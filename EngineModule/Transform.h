@@ -30,7 +30,7 @@ public:
 	void AddPosition(const Vector& position);
 	void AddRotation(const Quaternion& rotation);
 	void AddRotation(const Vector& euler);
-	void AddSacle(const Vector& scale);
+	void AddScale(const Vector& scale);
 	void AddRotationX(const float degree);
 	void AddRotationY(const float degree);
 	void AddRotationZ(const float degree);

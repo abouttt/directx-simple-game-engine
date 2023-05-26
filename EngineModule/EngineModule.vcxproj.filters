@@ -81,6 +81,9 @@
     <ClInclude Include="Component.h">
       <Filter>Components\Public</Filter>
     </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Components\Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -114,6 +117,9 @@
       <Filter>Core\Private</Filter>
     </ClCompile>
     <ClCompile Include="Component.cpp">
+      <Filter>Components\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformComponent.cpp">
       <Filter>Components\Private</Filter>
     </ClCompile>
   </ItemGroup>

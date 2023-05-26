@@ -122,7 +122,7 @@ void Transform::AddRotation(const Vector& euler)
 	clampEuler(mEulerAngles);
 }
 
-void Transform::AddSacle(const Vector& scale)
+void Transform::AddScale(const Vector& scale)
 {
 	mScale += scale;
 }
