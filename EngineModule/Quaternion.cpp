@@ -21,72 +21,61 @@ Quaternion::Quaternion(float x, float y, float z, float w)
 {
 }
 
-Quaternion::Quaternion(const Quaternion& q)
-	: X(q.X)
-	, Y(q.Y)
-	, Z(q.Z)
-	, W(q.X)
+float Quaternion::Dot(const Quaternion& q1, const Quaternion& q2)
 {
+	D3DXQUATERNION dq1(q1.X, q1.Y, q1.Z, q1.W);
+	D3DXQUATERNION dq2(q2.X, q2.Y, q2.Z, q2.W);
+	return D3DXQuaternionDot(&dq1, &dq2);
 }
 
-Quaternion Quaternion::Slerp(const Quaternion& q1, const Quaternion& q2, float slerp)
+Quaternion Quaternion::Slerp(const Quaternion& q1, const Quaternion& q2, float t)
 {
 	D3DXQUATERNION result;
 	D3DXQUATERNION dq1(q1.X, q1.Y, q1.Z, q1.W);
 	D3DXQUATERNION dq2(q2.X, q2.Y, q2.Z, q2.W);
-	D3DXQuaternionSlerp(&result, &dq1, &dq2, slerp);
+	D3DXQuaternionSlerp(&result, &dq1, &dq2, t);
 	return Quaternion(result.x, result.y, result.z, result.w);
 }
 
-Vector Quaternion::ToEuler() const
+float Quaternion::GetAngle() const
 {
-	D3DXVECTOR3 result;
-	D3DXMATRIX mat;
-	D3DXQUATERNION quat(X, Y, Z, W);
-	D3DXMatrixRotationQuaternion(&mat, &quat);
-	D3DXMatrixDecompose(&result, nullptr, nullptr, &mat);
-	return Vector(result.x, result.y, result.z);
+	return 2.f * std::acosf(W);
 }
 
 Vector Quaternion::GetAxisX() const
 {
-	D3DXVECTOR3 axisX;
-	D3DXMATRIX mat;
-	D3DXQUATERNION quat(X, Y, Z, W);
-	D3DXMatrixRotationQuaternion(&mat, &quat);
-	axisX.x = mat._11;
-	axisX.y = mat._21;
-	axisX.z = mat._31;
-	return Vector(axisX.x, axisX.y, axisX.z);
+	D3DXMATRIX dm;
+	D3DXQUATERNION dq(X, Y, Z, W);
+	D3DXMatrixRotationQuaternion(&dm, &dq);
+	return Vector(dm._11, dm._21, dm._31);
 }
 
 Vector Quaternion::GetAxisY() const
 {
-	D3DXVECTOR3 axisY;
-	D3DXMATRIX mat;
-	D3DXQUATERNION quat(X, Y, Z, W);
-	D3DXMatrixRotationQuaternion(&mat, &quat);
-	axisY.x = mat._12;
-	axisY.y = mat._22;
-	axisY.z = mat._32;
-	return Vector(axisY.x, axisY.y, axisY.z);
+	D3DXMATRIX dm;
+	D3DXQUATERNION dq(X, Y, Z, W);
+	D3DXMatrixRotationQuaternion(&dm, &dq);
+	return Vector(dm._12, dm._22, dm._32);
 }
 
 Vector Quaternion::GetAxisZ() const
 {
-	D3DXVECTOR3 axisZ;
-	D3DXMATRIX mat;
-	D3DXQUATERNION quat(X, Y, Z, W);
-	D3DXMatrixRotationQuaternion(&mat, &quat);
-	axisZ.x = mat._13;
-	axisZ.y = mat._23;
-	axisZ.z = mat._33;
-	return Vector(axisZ.x, axisZ.y, axisZ.z);
+	D3DXMATRIX dm;
+	D3DXQUATERNION dq(X, Y, Z, W);
+	D3DXMatrixRotationQuaternion(&dm, &dq);
+	return Vector(dm._13, dm._23, dm._33);
 }
 
-void Quaternion::Normalize()
+float Quaternion::GetSize() const
 {
-	*this = GetNormalize();
+	D3DXQUATERNION dq(X, Y, Z, W);
+	return D3DXQuaternionLength(&dq);
+}
+
+float Quaternion::GetSizeSq() const
+{
+	D3DXQUATERNION dq(X, Y, Z, W);
+	return D3DXQuaternionLengthSq(&dq);
 }
 
 Quaternion Quaternion::GetNormalize() const
@@ -97,21 +86,42 @@ Quaternion Quaternion::GetNormalize() const
 	return Quaternion(result.x, result.y, result.z, result.w);
 }
 
-Quaternion Quaternion::Inverse()
+void Quaternion::Normalize()
+{
+	*this = GetNormalize();
+}
+
+Quaternion Quaternion::GetInverse() const
 {
 	return Quaternion(-X, -Y, -Z, W);
 }
 
-float Quaternion::Size() const
+void Quaternion::Set(float x, float y, float z, float w)
 {
-	D3DXQUATERNION result(X, Y, Z, W);
-	return D3DXQuaternionLength(&result);
+	X = x;
+	Y = y;
+	Z = z;
+	W = w;
 }
 
-float Quaternion::SizeSq() const
+void Quaternion::ToAxisAndAngle(Vector* const outAxis, float* const outAngle) const
 {
-	D3DXQUATERNION result(X, Y, Z, W);
-	return D3DXQuaternionLengthSq(&result);
+	D3DXQUATERNION q(X, Y, Z, W);
+	D3DXVECTOR3 v;
+	D3DXQuaternionToAxisAngle(&q, &v, outAngle);
+	outAxis->Set(v.x, v.y, v.z);
+}
+
+Vector Quaternion::ToEuler() const
+{
+	D3DXVECTOR3 result;
+	D3DXMATRIX dm;
+	D3DXQUATERNION dq(X, Y, Z, W);
+	D3DXMatrixRotationQuaternion(&dm, &dq);
+	result.x = std::atan2f(dm._32, dm._33);
+	result.y = std::asinf(-dm._31);
+	result.z = std::atan2f(dm._21, dm._11);
+	return Vector(result.x, result.y, result.z);
 }
 
 tstring Quaternion::ToString() const
@@ -124,38 +134,42 @@ tstring Quaternion::ToString() const
 
 Quaternion Quaternion::operator+(const Quaternion& q) const
 {
-	return Quaternion(*this) += q;
-}
-
-Quaternion Quaternion::operator-() const
-{
-	return Quaternion(-X, -Y, -Z, -W);
+	return Quaternion(X + q.X, Y + q.Y, Z + q.Z, W + q.W);
 }
 
 Quaternion Quaternion::operator-(const Quaternion& q) const
 {
-	return Quaternion(*this) -= q;
+	return Quaternion(X - q.X, Y - q.Y, Z - q.Z, W - q.W);
+}
+
+Quaternion Quaternion::operator*(const float scale) const
+{
+	return Quaternion(X * scale, Y * scale, Z * scale, W * scale);
 }
 
 Quaternion Quaternion::operator*(const Quaternion& q) const
 {
-	return Quaternion(*this) *= q;
+	D3DXQUATERNION result;
+	D3DXQUATERNION dq1(X, Y, Z, W);
+	D3DXQUATERNION dq2(q.X, q.Y, q.Z, q.W);
+	D3DXQuaternionMultiply(&result, &dq1, &dq2);
+	return Quaternion(result.x, result.y, result.z, result.w);
 }
 
 Vector Quaternion::operator*(const Vector& v) const
 {
 	D3DXVECTOR3 result;
-	D3DXMATRIX mat;
+	D3DXMATRIX dm;
 	D3DXQUATERNION dq(X, Y, Z, W);
 	D3DXVECTOR3 dv(v.X, v.Y, v.Z);
-	D3DXMatrixRotationQuaternion(&mat, &dq);
-	D3DXVec3TransformCoord(&result, &dv, &mat);
+	D3DXMatrixRotationQuaternion(&dm, &dq);
+	D3DXVec3TransformCoord(&result, &dv, &dm);
 	return Vector(result.x, result.y, result.z);
 }
 
-Quaternion Quaternion::operator/(const float scalar) const
+Quaternion Quaternion::operator/(const float scale) const
 {
-	return Quaternion(*this) /= scalar;
+	return Quaternion(*this) /= scale;
 }
 
 Quaternion Quaternion::operator+=(const Quaternion& q)
@@ -179,9 +193,9 @@ Quaternion Quaternion::operator-=(const Quaternion& q)
 Quaternion Quaternion::operator*=(const Quaternion& q)
 {
 	D3DXQUATERNION result;
-	D3DXQUATERNION q1(X, Y, Z, W);
-	D3DXQUATERNION q2(q.X, q.Y, q.Z, q.W);
-	D3DXQuaternionMultiply(&result, &q1, &q2);
+	D3DXQUATERNION dq1(X, Y, Z, W);
+	D3DXQUATERNION dq2(q.X, q.Y, q.Z, q.W);
+	D3DXQuaternionMultiply(&result, &dq1, &dq2);
 	X = result.x;
 	Y = result.y;
 	Z = result.z;
@@ -189,14 +203,13 @@ Quaternion Quaternion::operator*=(const Quaternion& q)
 	return *this;
 }
 
-Quaternion Quaternion::operator/=(const float scalar)
+Quaternion Quaternion::operator/=(const float scale)
 {
-	D3DXQUATERNION result(X, Y, Z, W);
-	result /= scalar;
-	X = result.x;
-	Y = result.y;
-	Z = result.z;
-	W = result.w;
+	float fInv = 1.f / scale;
+	X *= fInv;
+	Y *= fInv;
+	Z *= fInv;
+	W *= fInv;
 	return *this;
 }
 

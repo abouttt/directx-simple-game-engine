@@ -46,8 +46,8 @@ private:
 	float getAxisClampedValue(float rotationValue);
 
 private:
-	Vector mPosition = Vector::Zero;
-	Vector mEulerAngles = Vector::Zero;
-	Vector mScale = Vector::One;
+	Vector mPosition;
+	Vector mEulerAngles;
+	Vector mScale;
 };
 

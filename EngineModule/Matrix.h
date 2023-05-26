@@ -4,6 +4,7 @@ struct Quaternion;
 
 struct Matrix
 {
+	// »ı¼ºÀÚ
 	Matrix() = default;
 	Matrix(const Matrix& m);
 	Matrix(float _11, float _12, float _13, float _14,

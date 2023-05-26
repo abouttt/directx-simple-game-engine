@@ -26,13 +26,6 @@ Vector::Vector(float x, float y, float z)
 {
 }
 
-Vector::Vector(const Vector& v)
-	: X(v.X)
-	, Y(v.Y)
-	, Z(v.Z)
-{
-}
-
 float Vector::Angle(const Vector& v1, const Vector& v2)
 {
 	float length = std::sqrtf(v1.GetSizeSq() * v2.GetSizeSq());
@@ -57,10 +50,10 @@ float Vector::Distance(const Vector& v1, const Vector& v2)
 
 float Vector::DistanceSq(const Vector& v1, const Vector& v2)
 {
-	float xDist = v2.X - v1.X;
-	float yDist = v2.Y - v1.Y;
-	float zDist = v2.Z - v1.Z;
-	return (xDist * xDist) + (yDist * yDist) + (zDist * zDist);
+	float xLength = v2.X - v1.X;
+	float yLength = v2.Y - v1.Y;
+	float zLength = v2.Z - v1.Z;
+	return (xLength * xLength) + (yLength * yLength) + (zLength * zLength);
 }
 
 float Vector::Dot(const Vector& v1, const Vector& v2)
@@ -68,9 +61,13 @@ float Vector::Dot(const Vector& v1, const Vector& v2)
 	return (v1.X * v2.X) + (v1.Y + v2.Y) + (v1.Z + v2.Z);
 }
 
-bool Vector::IsZero() const
+Vector Vector::Lerp(const Vector& v1, const Vector& v2, float t)
 {
-	return *this == Zero;
+	D3DXVECTOR3 result;
+	D3DXVECTOR3 dv1(v1.X, v1.Y, v1.Z);
+	D3DXVECTOR3 dv2(v2.X, v2.Y, v2.Z);
+	D3DXVec3Lerp(&result, &dv1, &dv2, t);
+	return Vector(result.x, result.y, result.z);
 }
 
 Vector Vector::GetAbs() const
@@ -100,11 +97,6 @@ float Vector::GetMin() const
 	return Math::Min(min, Z);
 }
 
-void Vector::Normalize()
-{
-	*this = GetNormalize();
-}
-
 Vector Vector::GetNormalize() const
 {
 	float sizeSq = GetSizeSq();
@@ -121,21 +113,16 @@ Vector Vector::GetNormalize() const
 	return Vector(X * invLength, Y * invLength, Z * invLength);
 }
 
-Quaternion Vector::ToQuaternion() const
+void Vector::Normalize()
 {
-	float sp = 0.f, sy = 0.f, sr = 0.f;
-	float cp = 0.f, cy = 0.f, cr = 0.f;
+	*this = GetNormalize();
+}
 
-	Math::GetSinCos(&sp, &cp, X * 0.5f);
-	Math::GetSinCos(&sy, &cy, Y * 0.5f);
-	Math::GetSinCos(&sr, &cr, Z * 0.5f);
-
-	Quaternion q;
-	q.W = sy * sp * sr + cy * cp * cr;
-	q.X = sy * sr * cp + sp * cy * cr;
-	q.Y = sy * cp * cr - sp * sr * cy;
-	q.Z = -sy * sp * cr + sr * cy * cp;
-	return q;
+void Vector::Set(float x, float y, float z)
+{
+	X = x;
+	Y = y;
+	Z = z;
 }
 
 tstring Vector::ToString()
@@ -182,7 +169,9 @@ Vector Vector::operator*(const Vector& v) const
 
 Vector Vector::operator*(const Quaternion& q) const
 {
-	return q * (*this);
+	Quaternion q1 = q.GetInverse();
+	Quaternion q2 = q1 * Quaternion(X, Y, Z, 1.f) * q;
+	return Vector(q2.X, q2.Y, q2.Z);
 }
 
 Vector Vector::operator/(const float scale) const
@@ -211,11 +200,27 @@ Vector Vector::operator-=(const Vector& v)
 	return *this;
 }
 
+Vector Vector::operator*=(const float scale)
+{
+	X *= scale;
+	Y *= scale;
+	Z *= scale;
+	return *this;
+}
+
 Vector Vector::operator*=(const Vector& v)
 {
 	X *= v.X;
 	Y *= v.Y;
 	Z *= v.Z;
+	return *this;
+}
+
+Vector Vector::operator/=(const float scale)
+{
+	X /= scale;
+	Y /= scale;
+	Z /= scale;
 	return *this;
 }
 

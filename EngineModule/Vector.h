@@ -7,7 +7,6 @@ struct Vector
 	// 생성자
 	Vector();
 	Vector(float x, float y, float z);
-	Vector(const Vector& v);
 
 	// 정적멤버함수
 	static float Angle(const Vector& v1, const Vector& v2);
@@ -15,17 +14,17 @@ struct Vector
 	static float Distance(const Vector& v1, const Vector& v2);
 	static float DistanceSq(const Vector& v1, const Vector& v2);
 	static float Dot(const Vector& v1, const Vector& v2);
+	static Vector Lerp(const Vector& v1, const Vector& v2, float t);
 
 	// 멤버함수
-	bool IsZero() const;
 	Vector GetAbs() const;
 	float GetSize() const;
 	float GetSizeSq() const;
 	float GetMax() const;
 	float GetMin() const;
-	void Normalize();
 	Vector GetNormalize() const;
-	Quaternion ToQuaternion() const;
+	void Normalize();
+	void Set(float x, float y, float z);
 	tstring ToString();
 
 	// 연산자
@@ -41,7 +40,9 @@ struct Vector
 	Vector operator/(const Vector& v) const;
 	Vector operator+=(const Vector& v);
 	Vector operator-=(const Vector& v);
+	Vector operator*=(const float scale);
 	Vector operator*=(const Vector& v);
+	Vector operator/=(const float scale);
 	Vector operator/=(const Vector& v);
 	bool operator==(const Vector& v) const;
 	bool operator!=(const Vector& v) const;

@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "MathUtil.h"
-#include "Transform.h"
 #include "Matrix.h"
 #include "Quaternion.h"
+#include "Transform.h"
 
 Transform::Transform()
 	: mPosition(Vector::Zero)
@@ -25,7 +25,7 @@ Vector Transform::GetPosition() const
 
 Quaternion Transform::GetRotation() const
 {
-	return mEulerAngles.ToQuaternion();
+	return Math::EulerToQuaternion(mEulerAngles);
 }
 
 Vector Transform::GetEulerAngles() const
@@ -40,21 +40,21 @@ Vector Transform::GetScale() const
 
 Vector Transform::GetAxisX() const
 {
-	Quaternion rotation = mEulerAngles.ToQuaternion();
+	Quaternion rotation = Math::EulerToQuaternion(mEulerAngles);
 	rotation.Normalize();
 	return rotation.GetAxisX();
 }
 
 Vector Transform::GetAxisY() const
 {
-	Quaternion rotation = mEulerAngles.ToQuaternion();
+	Quaternion rotation = Math::EulerToQuaternion(mEulerAngles);
 	rotation.Normalize();
 	return rotation.GetAxisY();
 }
 
 Vector Transform::GetAxisZ() const
 {
-	Quaternion rotation = mEulerAngles.ToQuaternion();
+	Quaternion rotation = Math::EulerToQuaternion(mEulerAngles);
 	rotation.Normalize();
 	return rotation.GetAxisZ();
 }
@@ -69,19 +69,19 @@ Matrix Transform::GetMatrix() const
 
 D3DXMATRIX Transform::GetD3DXMatrix() const
 {
-	D3DXMATRIX matPos;
-	D3DXMatrixTranslation(&matPos, mPosition.X, mPosition.Y, mPosition.Z);
+	D3DXMATRIX dmPos;
+	D3DXMatrixTranslation(&dmPos, mPosition.X, mPosition.Y, mPosition.Z);
 
-	D3DXMATRIX matRot;
+	D3DXMATRIX dmRot;
 	D3DXQUATERNION rotation;
 	Vector euler = D3DXToRadian(mEulerAngles);
 	D3DXQuaternionRotationYawPitchRoll(&rotation, euler.Y, euler.X, euler.Z);
-	D3DXMatrixRotationQuaternion(&matRot, &rotation);
+	D3DXMatrixRotationQuaternion(&dmRot, &rotation);
 
-	D3DXMATRIX matScale;
-	D3DXMatrixScaling(&matScale, mScale.X, mScale.Y, mScale.Z);
+	D3DXMATRIX dmScale;
+	D3DXMatrixScaling(&dmScale, mScale.X, mScale.Y, mScale.Z);
 
-	return matScale * matRot * matPos;
+	return dmScale * dmRot * dmPos;
 }
 
 void Transform::SetPosition(const Vector& position)
@@ -113,11 +113,13 @@ void Transform::AddRotation(const Quaternion& rotation)
 {
 	Vector euler = rotation.ToEuler();
 	mEulerAngles += euler;
+	clampEuler(mEulerAngles);
 }
 
 void Transform::AddRotation(const Vector& euler)
 {
 	mEulerAngles += euler;
+	clampEuler(mEulerAngles);
 }
 
 void Transform::AddSacle(const Vector& scale)
@@ -128,16 +130,19 @@ void Transform::AddSacle(const Vector& scale)
 void Transform::AddRotationX(const float degree)
 {
 	mEulerAngles.X += degree;
+	clampEuler(mEulerAngles);
 }
 
 void Transform::AddRotationY(const float degree)
 {
 	mEulerAngles.Y += degree;
+	clampEuler(mEulerAngles);
 }
 
 void Transform::AddRotationZ(const float degree)
 {
 	mEulerAngles.Z += degree;
+	clampEuler(mEulerAngles);
 }
 
 void Transform::Translate(const Vector& translation)
@@ -172,7 +177,7 @@ Transform Transform::Inverse() const
 
 	Transform result;
 	result.SetScale(reciprocalScale);
-	result.SetRotation(mEulerAngles.ToQuaternion().Inverse());
+	result.SetRotation(Math::EulerToQuaternion(mEulerAngles).GetInverse());
 	result.SetPosition(result.GetScale() * (result.GetRotation() * -GetPosition()));
 	return result;
 }
