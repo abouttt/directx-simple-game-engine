@@ -7,11 +7,6 @@ Component::Component()
 {
 }
 
-const std::wstring& Component::GetName() const
-{
-    return mGameObject->GetName();
-}
-
 const std::wstring& Component::GetTag() const
 {
     return mGameObject->GetTag();
@@ -25,6 +20,11 @@ GameObject* Component::GetGameObject()
 TransformComponent* Component::GetTransform()
 {
     return mGameObject->GetTransform();
+}
+
+const std::wstring& Component::GetName() const
+{
+    return mGameObject->GetName();
 }
 
 void Component::SetName(const std::wstring& name)

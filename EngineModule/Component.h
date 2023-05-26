@@ -15,11 +15,10 @@ public:
 	virtual ~Component() = default;
 
 public:
-	const std::wstring& GetName() const override;
 	const std::wstring& GetTag() const;
 	GameObject* GetGameObject();
 	TransformComponent* GetTransform();
-
+	const std::wstring& GetName() const override;
 	void SetName(const std::wstring& name) override;
 
 private:

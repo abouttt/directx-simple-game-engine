@@ -96,6 +96,9 @@
     <ClInclude Include="Object.h">
       <Filter>Objects\Public</Filter>
     </ClInclude>
+    <ClInclude Include="CameraComponent.h">
+      <Filter>Components\Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -136,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>Objects\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraComponent.cpp">
+      <Filter>Components\Private</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
