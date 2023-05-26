@@ -75,6 +75,9 @@
     <ClInclude Include="Transform.h">
       <Filter>Math\Public</Filter>
     </ClInclude>
+    <ClInclude Include="RenderEngine.h">
+      <Filter>Core\Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -103,6 +106,9 @@
     </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>Math\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderEngine.cpp">
+      <Filter>Core\Private</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
