@@ -1,9 +1,13 @@
 #include "pch.h"
+#include "BehaviourComponent.h"
 #include "EngineUtil.h"
 #include "GameEngine.h"
 #include "InputManager.h"
+#include "LightComponent.h"
+#include "MeshComponent.h"
 #include "RenderingEngine.h"
 #include "ResourceManager.h"
+#include "Scene.h"
 #include "SceneManager.h"
 #include "TimeManager.h"
 
@@ -38,6 +42,7 @@ void GameEngine::Release()
 		return;
 	}
 
+	SceneManager::release();
 	InputManager::release();
 	RenderingEngine::release();
 
@@ -56,9 +61,23 @@ void GameEngine::OnTick()
 	TimeManager::beginTick();
 
 	// Initialization.
-	
+
 	// Input Event.
 	InputManager::update();
+
+	if (InputManager::GetKeyDown(DIK_Q))
+	{
+		auto cube = SceneManager::GetActiveScene()->FindGameObject(_T("Main Camera"));
+		SceneManager::GetActiveScene()->RemoveGameObject(cube);
+	}
+	
+	if (InputManager::GetKeyDown(DIK_W))
+	{
+		auto cube = SceneManager::GetActiveScene()->FindGameObject(_T("Cube"));
+		cube->SetActive(!cube->IsActive());
+		//bool enabled = light->GetComponent<MeshComponent>()->IsEnabled();
+		//light->GetComponent<MeshComponent>()->SetEnable(!enabled);
+	}
 
 	// Game Logic.
 
@@ -78,6 +97,7 @@ void GameEngine::OnTick()
 	RenderingEngine::postRender();
 
 	// Decommissioning.
+	SceneManager::cleanup();
 
 	// 성능 측정 종료.
 	TimeManager::endTick();

@@ -70,21 +70,22 @@ GameObject* Scene::CreateLight(const std::wstring& name, const D3DLIGHTTYPE ligh
 	return newGameObject;
 }
 
-bool Scene::RemoveGameObject(GameObject* const gameObject)
+void Scene::RemoveGameObject(GameObject* const gameObject)
 {
-	auto it = std::find_if(mGameObjects.begin(), mGameObjects.end(),
-		[&](auto& unique)
-		{
-			return unique.get() == gameObject;
-		});
-
-	if (it != mGameObjects.end())
+	if (!gameObject)
 	{
-		mGameObjects.erase(it);
-		return true;
+		return;
 	}
 
-	return false;
+	for (auto it = mGameObjects.begin(); it != mGameObjects.end(); ++it)
+	{
+		if (it->get() == gameObject)
+		{
+			(*it)->SetActive(false);
+			(*it)->mbDestroyed = true;
+			break;
+		}
+	}
 }
 
 GameObject* Scene::FindGameObject(const std::wstring& name)
@@ -92,6 +93,11 @@ GameObject* Scene::FindGameObject(const std::wstring& name)
 	auto it = std::find_if(mGameObjects.begin(), mGameObjects.end(),
 		[&](auto& gameObject)
 		{
+			if (!gameObject->IsActive())
+			{
+				return false;
+			}
+
 			return gameObject->GetName() == name;
 		});
 
@@ -103,15 +109,15 @@ GameObject* Scene::FindGameObjectWithTag(const std::wstring& tag)
 	auto it = std::find_if(mGameObjects.begin(), mGameObjects.end(),
 		[&](auto& gameObject)
 		{
+			if (!gameObject->IsActive())
+			{
+				return false;
+			}
+
 			return gameObject->GetTag() == tag;
 		});
 
 	return it != mGameObjects.end() ? it->get() : nullptr;
-}
-
-void Scene::release()
-{
-	mGameObjects.clear();
 }
 
 GameObject* Scene::createGameObjectWithMesh(const std::wstring& name, const std::wstring& meshName)
@@ -119,4 +125,27 @@ GameObject* Scene::createGameObjectWithMesh(const std::wstring& name, const std:
 	auto newGameObject = CreateGameObject(name);
 	newGameObject->AddComponent<MeshComponent>(ResourceManager::GetMesh(meshName));
 	return newGameObject;
+}
+
+void Scene::cleanup()
+{
+	auto it = mGameObjects.rbegin();
+	while (it != mGameObjects.rend())
+	{
+		if ((*it)->mbDestroyed)
+		{
+			std::unique_ptr<GameObject> destroyedGameObject(it->release());
+			it = decltype(it)(mGameObjects.erase(std::next(it).base()));
+		}
+		else
+		{
+			(*it)->cleanup();
+			++it;
+		}
+	}
+}
+
+void Scene::release()
+{
+	mGameObjects.clear();
 }

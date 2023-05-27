@@ -18,6 +18,10 @@ CameraComponent::CameraComponent()
 
 CameraComponent::~CameraComponent()
 {
+	if (this == GetCurrentCamera())
+	{
+		RenderingEngine::SetCurrentCamera(SceneManager::GetActiveScene()->FindComponent<CameraComponent>());
+	}
 }
 
 CameraComponent* CameraComponent::GetCurrentCamera()
@@ -78,16 +82,14 @@ void CameraComponent::SetEnable(const bool bEnable)
 
 	if (bEnable)
 	{
-		auto currentCamera = RenderingEngine::GetCurrentCamera();
-		if (!currentCamera)
+		if (!RenderingEngine::GetCurrentCamera())
 		{
 			RenderingEngine::SetCurrentCamera(this);
 		}
 	}
 	else
 	{
-		auto currentCamera = RenderingEngine::GetCurrentCamera();
-		if (this == currentCamera)
+		if (this == RenderingEngine::GetCurrentCamera())
 		{
 			auto nextCamera = SceneManager::GetActiveScene()->FindComponent<CameraComponent>();
 			RenderingEngine::SetCurrentCamera(nextCamera);

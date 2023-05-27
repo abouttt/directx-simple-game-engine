@@ -29,6 +29,11 @@ MeshComponent::MeshComponent(Mesh* const mesh, Material* const material)
 	RenderingEngine::AddMeshComponent(this);
 }
 
+MeshComponent::~MeshComponent()
+{
+	RenderingEngine::RemoveMeshComponent(this);
+}
+
 Mesh* MeshComponent::GetMesh()
 {
 	return mMesh;
@@ -47,16 +52,6 @@ void MeshComponent::SetMesh(Mesh* const mesh)
 void MeshComponent::SetMaterial(Material* const material)
 {
 	mMaterial = material;
-}
-
-void MeshComponent::SetEnable(const bool bEnable)
-{
-	if (IsEnabled() == bEnable)
-	{
-		return;
-	}
-
-	BehaviourComponent::SetEnable(bEnable);
 }
 
 void MeshComponent::render(IDirect3DDevice9* const device)

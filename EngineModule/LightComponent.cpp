@@ -15,6 +15,11 @@ LightComponent::LightComponent(const D3DLIGHTTYPE lightType)
 	RenderingEngine::AddLightComponent(this);
 }
 
+LightComponent::~LightComponent()
+{
+	RenderingEngine::RemoveLightComponent(this);
+}
+
 void LightComponent::SetLightType(const D3DLIGHTTYPE lightType)
 {
 	::ZeroMemory(&mD3DLight, sizeof(D3DLIGHT9));
@@ -42,25 +47,6 @@ void LightComponent::SetColor(const D3DXCOLOR& color)
 void LightComponent::SetRange(const float range)
 {
 	mD3DLight.Range = range;
-}
-
-void LightComponent::SetEnable(const bool bEnable)
-{
-	if (IsEnabled() == bEnable)
-	{
-		return;
-	}
-
-	BehaviourComponent::SetEnable(bEnable);
-
-	if (bEnable)
-	{
-		RenderingEngine::GetDevice()->LightEnable(mIndex, true);
-	}
-	else
-	{
-		RenderingEngine::GetDevice()->LightEnable(mIndex, false);
-	}
 }
 
 void LightComponent::initDirectionLight()

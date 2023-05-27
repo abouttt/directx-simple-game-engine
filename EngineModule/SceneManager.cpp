@@ -54,9 +54,19 @@ bool SceneManager::isReserved()
 
 void SceneManager::loadScene()
 {
-	mScenes[mCurrentSceneIndex]->release();
+	mScenes[mCurrentSceneIndex]->mGameObjects.clear();
 	mScenes[mNextSceneIndex]->init();
 	mCurrentSceneIndex = mNextSceneIndex;
 	mNextSceneIndex = -1;
 	mbReserve = false;
+}
+
+void SceneManager::cleanup()
+{
+	mScenes[mCurrentSceneIndex]->cleanup();
+}
+
+void SceneManager::release()
+{
+	mScenes[mCurrentSceneIndex]->release();
 }

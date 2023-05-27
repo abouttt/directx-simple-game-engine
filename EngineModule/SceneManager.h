@@ -25,6 +25,8 @@ public:
 private:
 	static bool isReserved();
 	static void loadScene();
+	static void cleanup();
+	static void release();
 
 private:
 	static bool mbReserve;

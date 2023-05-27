@@ -5,6 +5,9 @@
 class GameObject
 {
 public:
+	friend class Scene;
+
+public:
 	GameObject();
 	GameObject(const std::wstring& name);
 	GameObject(const std::wstring& name, const std::wstring& tag);
@@ -34,10 +37,14 @@ public: // Component
 	std::vector<T*> GetComponentsInChildren();
 	template<typename T>
 	std::vector<T*> GetComponentsInParent();
-	bool RemoveComponent(Component* const component);
+	void RemoveComponent(Component* const component);
+
+private:
+	void cleanup();
 
 private:
 	bool mbActive;
+	bool mbDestroyed;
 	std::wstring mName;
 	std::wstring mTag;
 	std::vector<std::unique_ptr<Component>> mComponents;
@@ -72,6 +79,11 @@ inline T* GameObject::GetComponent()
 
 	for (auto& component : mComponents)
 	{
+		if (component->mbDestroyed)
+		{
+			continue;
+		}
+
 		if (auto t = dynamic_cast<T*>(component.get()))
 		{
 			return t;
@@ -88,6 +100,14 @@ inline T* GameObject::GetComponentInChildren()
 
 	for (std::size_t i = 0; i < mTransform->GetChildCount(); i++)
 	{
+		auto child = mTransform->GetChild(i);
+
+		if (child->GetGameObject()->mbDestroyed ||
+			!child->IsActive())
+		{
+			continue;
+		}
+
 		if (auto component = mTransform->GetChild(i)->GetGameObject().GetComponent<T>())
 		{
 			return component;
@@ -119,6 +139,11 @@ inline std::vector<T*> GameObject::GetComponents()
 
 	for (auto& component : mComponents)
 	{
+		if (component->mbDestroyed)
+		{
+			continue;
+		}
+
 		if (auto t = dynamic_cast<T*>(component.get()))
 		{
 			result.emplace_back(t);

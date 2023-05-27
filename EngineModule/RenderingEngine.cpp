@@ -58,11 +58,6 @@ void RenderingEngine::AddMeshComponent(MeshComponent* const mesh)
 	if (std::find(meshComponents.begin(), meshComponents.end(), mesh) == meshComponents.end())
 	{
 		meshComponents.emplace_back(mesh);
-
-		if (mode == eRenderingMode::Transparency)
-		{
-			sortTransparencyMeshes();
-		}
 	}
 }
 
@@ -73,8 +68,8 @@ void RenderingEngine::AddLightComponent(LightComponent* const light)
 	if (std::find(mLightComponents.begin(), mLightComponents.end(), light) == mLightComponents.end())
 	{
 		light->mIndex = mCurrentLightCount++;
-		mD3DDevice->LightEnable(light->mIndex, true);
 		mD3DDevice->SetLight(light->mIndex, &light->mD3DLight);
+		mD3DDevice->LightEnable(light->mIndex, true);
 		mLightComponents.emplace_back(light);
 	}
 }
@@ -102,7 +97,6 @@ void RenderingEngine::RemoveLightComponent(LightComponent* const light)
 	if (it != mLightComponents.end())
 	{
 		mD3DDevice->LightEnable(light->mIndex, false);
-		mD3DDevice->SetLight(light->mIndex, nullptr);
 		mLightComponents.erase(it);
 	}
 }
@@ -117,9 +111,9 @@ void RenderingEngine::preRender()
 	if (mCurrentCamera)
 	{
 		updateCamera();
+		updateLights();
+		sortTransparencyMeshes();
 	}
-
-	updateLights();
 
 	// 배경 지우기 / 렌더 시작.
 	if (mD3DDevice)
@@ -163,12 +157,8 @@ void RenderingEngine::updateLights()
 {
 	for (auto light : mLightComponents)
 	{
-		if (!light->IsActiveAndEnabled())
-		{
-			continue;
-		}
-
 		light->updatePositionAndDirection();
+		mD3DDevice->LightEnable(light->mIndex, light->IsActiveAndEnabled());
 	}
 }
 
@@ -190,12 +180,10 @@ void RenderingEngine::renderMeshes(std::vector<MeshComponent*>& meshComponents)
 {
 	for (auto meshComponent : meshComponents)
 	{
-		if (!meshComponent->IsActiveAndEnabled())
+		if (meshComponent->IsActiveAndEnabled())
 		{
-			continue;
+			meshComponent->render(mD3DDevice);
 		}
-
-		meshComponent->render(mD3DDevice);
 	}
 }
 
