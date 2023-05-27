@@ -3,6 +3,9 @@
 class Texture
 {
 public:
+	friend class ResourceManager;
+
+public:
 	Texture();
 	~Texture();
 

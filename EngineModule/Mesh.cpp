@@ -15,6 +15,11 @@ Mesh::~Mesh()
 	}
 }
 
+ID3DXMesh* Mesh::GetNativeMesh()
+{
+	return mD3DMesh;
+}
+
 const std::wstring& Mesh::GetName() const
 {
 	return *mName;

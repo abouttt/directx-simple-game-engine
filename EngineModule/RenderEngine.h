@@ -12,6 +12,7 @@ public:
 	~RenderEngine() = delete;
 
 public:
+	static IDirect3DDevice9* GetDevice();
 	static D3DCOLOR GetBackgroundColor();
 
 	static void SetBackgroundColor(const D3DCOLOR color);

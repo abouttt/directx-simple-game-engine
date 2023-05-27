@@ -2,6 +2,7 @@
 #include "GameEngine.h"
 #include "InputManager.h"
 #include "RenderEngine.h"
+#include "ResourceManager.h"
 #include "SceneManager.h"
 #include "TimeManager.h"
 
@@ -20,6 +21,7 @@ bool GameEngine::Init(const HINSTANCE hInstance, const HWND hWnd, const int widt
 		return false;
 	}
 
+	ResourceManager::init();
 	TimeManager::init();
 
 	mbInit = true;
@@ -32,6 +34,7 @@ void GameEngine::Release()
 	{
 		return;
 	}
+
 
 	RenderEngine::release();
 	InputManager::release();

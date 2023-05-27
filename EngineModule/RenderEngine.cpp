@@ -7,6 +7,11 @@ int RenderEngine::mHeight = 0;
 IDirect3DDevice9* RenderEngine::mD3DDevice = nullptr;
 D3DCOLOR RenderEngine::mBackgroundColor = D3DCOLOR_XRGB(128, 128, 128);
 
+IDirect3DDevice9* RenderEngine::GetDevice()
+{
+	return mD3DDevice;
+}
+
 D3DCOLOR RenderEngine::GetBackgroundColor()
 {
 	return mBackgroundColor;

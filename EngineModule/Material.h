@@ -7,6 +7,8 @@ class Texture;
 class Material
 {
 public:
+	friend class ResourceManager;
+public:
 	Material();
 
 public:

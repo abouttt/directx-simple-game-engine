@@ -3,10 +3,14 @@
 class Mesh
 {
 public:
+	friend class ResourceManager;
+
+public:
 	Mesh();
 	~Mesh();
 
 public:
+	ID3DXMesh* GetNativeMesh();
 	const std::wstring& GetName() const;
 
 private:
