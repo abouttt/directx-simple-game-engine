@@ -1,12 +1,28 @@
 #include "pch.h"
 #include "Scene.h"
 #include "GameObject.h"
+
 #include "CameraComponent.h"
 
 Scene::Scene(const std::wstring& name)
 	: mName(name)
 	, mGameObjects()
 {
+}
+
+std::size_t Scene::GetRootCount() const
+{
+	return mGameObjects.size();
+}
+
+std::vector<GameObject*> Scene::GetRootGameObjects()
+{
+	std::vector<GameObject*> result(mGameObjects.size());
+	for (auto& gameObject : mGameObjects)
+	{
+		result.emplace_back(gameObject.get());
+	}
+	return result;
 }
 
 GameObject* Scene::CreateGameObject(const std::wstring& name, const std::wstring& tag = _T("UnTagged"))
@@ -44,17 +60,7 @@ GameObject* Scene::FindGameObjectWithTag(const std::wstring& tag)
 	return it != mGameObjects.end() ? it->get() : nullptr;
 }
 
-std::size_t Scene::GetRootCount() const
+void Scene::release()
 {
-	return mGameObjects.size();
-}
-
-std::vector<GameObject*> Scene::GetRootGameObjects()
-{
-	std::vector<GameObject*> result(mGameObjects.size());
-	for (auto& gameObject : mGameObjects)
-	{
-		result.emplace_back(gameObject.get());
-	}
-	return result;
+	mGameObjects.clear();
 }

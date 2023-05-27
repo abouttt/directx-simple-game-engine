@@ -5,6 +5,9 @@ class Scene;
 class SceneManager
 {
 public:
+	friend class GameEngine;
+
+public:
 	SceneManager() = delete;
 	SceneManager(const SceneManager&) = delete;
 	SceneManager& operator=(SceneManager&&) = delete;
@@ -15,13 +18,19 @@ public:
 	static void CreateScene();
 	static std::size_t GetSceneCount();
 	static Scene* GetActiveScene();
-	static Scene* GetSceneAt(std::size_t index);
-	static void LoadScene(std::size_t index);
-	static void LoadScene(const std::wstring name);
+	static Scene* GetSceneAt(const std::size_t index);
+	static void LoadScene(const std::size_t index);
+	static void LoadScene(const std::wstring& name);
 
 private:
+	static bool isReserved();
+	static void loadScene();
+
+private:
+	static bool mbReserve;
 	static std::vector<std::unique_ptr<Scene>> mScenes;
 	static std::size_t mCurrentSceneIndex;
+	static std::size_t mNextSceneIndex;
 };
 
 template<typename T>

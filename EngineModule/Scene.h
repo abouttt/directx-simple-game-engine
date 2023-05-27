@@ -5,10 +5,16 @@
 class Scene
 {
 public:
+	friend class SceneManager;
+
+public:
 	Scene(const std::wstring& name);
 	virtual ~Scene() = default;
 
 public:
+	std::size_t GetRootCount() const;
+	std::vector<GameObject*> GetRootGameObjects();
+
 	GameObject* CreateGameObject(const std::wstring& name, const std::wstring& tag);
 	GameObject* CreateCamera(const std::wstring& name);
 
@@ -17,14 +23,13 @@ public:
 	template<typename T>
 	T* FindComponent();
 
-public:
-	std::size_t GetRootCount() const;
-	std::vector<GameObject*> GetRootGameObjects();
+private:
+	virtual void init() abstract;
+	virtual void release();
 
 private:
 	std::wstring mName;
 	std::vector<std::unique_ptr<GameObject>> mGameObjects;
-	std::vector<std::unique_ptr<GameObject>> mUnactiveGameObjects;
 };
 
 template<typename T>

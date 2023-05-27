@@ -20,6 +20,7 @@ private:
 	static bool init();
 	static void beginTick();
 	static void endTick();
+	static void reset();
 	static float getCyclesPerMilliSeconds();
 	static long long getCurrentTimeStamp();
 

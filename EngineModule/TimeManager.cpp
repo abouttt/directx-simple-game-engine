@@ -60,6 +60,18 @@ void TimeManager::endTick()
 	mAverageFPS = mElapsedTime == 0.f ? 0.f : 1000.f / mElapsedTime * mFrameCount;
 }
 
+void TimeManager::reset()
+{
+	mStartTimeStamp = 0;
+	mFrameTimeStamp = 0;
+	mFrameCount = 0;
+	mCyclesPerMilliSeconds;
+	mFrameTime = -1.f;
+	mElapsedTime = 0.f;
+	mAverageFPS = 0.f;
+	mFPS = 0.f;
+}
+
 float TimeManager::getCyclesPerMilliSeconds()
 {
 	LARGE_INTEGER frequency;

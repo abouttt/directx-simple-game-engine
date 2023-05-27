@@ -2,6 +2,7 @@
 #include "GameEngine.h"
 #include "InputManager.h"
 #include "RenderEngine.h"
+#include "SceneManager.h"
 #include "TimeManager.h"
 
 bool GameEngine::mbInit = false;
@@ -55,6 +56,14 @@ void GameEngine::OnTick()
 	InputManager::update();
 
 	// Game Logic.
+
+	// Load Scene.
+	if (SceneManager::isReserved())
+	{
+		TimeManager::reset();
+		SceneManager::loadScene();
+		return;
+	}
 
 	// Scene Rendering.
 	RenderEngine::preRender();
