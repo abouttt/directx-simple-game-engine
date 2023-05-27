@@ -17,7 +17,7 @@ Texture::~Texture()
 	}
 }
 
-IDirect3DTexture9* Texture::GetNativeTexturePtr()
+IDirect3DTexture9* Texture::GetNativeTexture()
 {
 	return mD3DTexture;
 }

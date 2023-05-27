@@ -7,7 +7,7 @@ public:
 	~Texture();
 
 public:
-	IDirect3DTexture9* GetNativeTexturePtr();
+	IDirect3DTexture9* GetNativeTexture();
 	UINT GetWidth() const;
 	UINT GetHeight() const;
 	D3DTEXTUREFILTERTYPE GetFilterMode() const;

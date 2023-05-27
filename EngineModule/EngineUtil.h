@@ -1,6 +1,17 @@
 #pragma once
 
 //
+// Enum
+//
+
+enum class eRenderingMode
+{
+	Opaque,
+	Transparency,
+	Cutout,
+};
+
+//
 // Color
 //
 
@@ -13,3 +24,80 @@ const D3DXCOLOR COLOR_BLUE(D3DCOLOR_XRGB(0, 0, 255));
 const D3DXCOLOR COLOR_YELLOW(D3DCOLOR_XRGB(255, 255, 0));
 const D3DXCOLOR COLOR_CYAN(D3DCOLOR_XRGB(0, 255, 255));
 const D3DXCOLOR COLOR_MAGENTA(D3DCOLOR_XRGB(255, 0, 255));
+
+//
+// Materials
+//
+
+inline D3DMATERIAL9 InitMtrl(D3DXCOLOR ambient, D3DXCOLOR diffuse, D3DXCOLOR specular, D3DXCOLOR emissive, const float power)
+{
+	D3DMATERIAL9 mtrl{};
+	mtrl.Ambient = ambient;
+	mtrl.Diffuse = diffuse;
+	mtrl.Specular = specular;
+	mtrl.Emissive = emissive;
+	mtrl.Power = power;
+	return mtrl;
+}
+
+const D3DMATERIAL9 WHITE_MTRL = InitMtrl(COLOR_WHITE, COLOR_WHITE, COLOR_WHITE, COLOR_BLACK, 8.0f);
+const D3DMATERIAL9 RED_MTRL = InitMtrl(COLOR_RED, COLOR_RED, COLOR_RED, COLOR_BLACK, 8.0f);
+const D3DMATERIAL9 GREEN_MTRL = InitMtrl(COLOR_GREEN, COLOR_GREEN, COLOR_GREEN, COLOR_BLACK, 8.0f);
+const D3DMATERIAL9 BLUE_MTRL = InitMtrl(COLOR_BLUE, COLOR_BLUE, COLOR_BLUE, COLOR_BLACK, 8.0f);
+const D3DMATERIAL9 YELLOW_MTRL = InitMtrl(COLOR_YELLOW, COLOR_YELLOW, COLOR_YELLOW, COLOR_BLACK, 8.0f);
+
+//
+// Mesh
+//
+
+inline ID3DXMesh* GetCubeMesh()
+{
+	return nullptr;
+}
+
+inline ID3DXMesh* GetSphereMesh()
+{
+	return nullptr;
+}
+
+inline ID3DXMesh* GetQuadMesh()
+{
+	return nullptr;
+}
+
+inline void SetNormalFVF(ID3DXMesh** const outMesh)
+{
+
+}
+
+inline void SetTextureFVF(ID3DXMesh** const outMesh)
+{
+
+}
+
+//
+// Vertex
+//
+
+struct Vertex
+{
+	Vertex()
+		: X(0), Y(0), Z(0)
+		, NX(0), NY(0), NZ(0)
+		, U(0), V(0)
+	{}
+
+	Vertex(float x, float y, float z,
+		float nx, float ny, float nz,
+		float u, float v)
+		: X(x), Y(y), Z(z)
+		, NX(nx), NY(ny), NZ(nz)
+		, U(u), V(v)
+	{}
+
+	float X, Y, Z;
+	float NX, NY, NZ;
+	float U, V;
+
+	static const DWORD FVF;
+};
