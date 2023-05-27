@@ -11,6 +11,11 @@ public:
 	RenderEngine& operator=(RenderEngine&&) = delete;
 	~RenderEngine() = delete;
 
+public:
+	static D3DCOLOR GetBackgroundColor();
+
+	static void SetBackgroundColor(const D3DCOLOR color);
+
 private:
 	static bool init(const HWND hWnd, const int width, const int height, const bool bWindowed);
 	static void release();

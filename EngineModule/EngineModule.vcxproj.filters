@@ -114,6 +114,9 @@
     <ClInclude Include="LightComponent.h">
       <Filter>Components\Public</Filter>
     </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Objects\Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -166,6 +169,9 @@
     </ClCompile>
     <ClCompile Include="LightComponent.cpp">
       <Filter>Components\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Objects\Private</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
