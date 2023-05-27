@@ -17,6 +17,7 @@ public:
 
 	GameObject* CreateGameObject(const std::wstring& name, const std::wstring& tag);
 	GameObject* CreateCamera(const std::wstring& name);
+	GameObject* CreateLight(const std::wstring& name, const D3DLIGHTTYPE lightType);
 
 	GameObject* FindGameObject(const std::wstring& name);
 	GameObject* FindGameObjectWithTag(const std::wstring& tag);

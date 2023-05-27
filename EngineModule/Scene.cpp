@@ -3,6 +3,7 @@
 #include "GameObject.h"
 
 #include "CameraComponent.h"
+#include "LightComponent.h"
 
 Scene::Scene(const std::wstring& name)
 	: mName(name)
@@ -35,6 +36,13 @@ GameObject* Scene::CreateCamera(const std::wstring& name)
 {
 	auto newGameObject = CreateGameObject(name);
 	newGameObject->AddComponent<CameraComponent>();
+	return newGameObject;
+}
+
+GameObject* Scene::CreateLight(const std::wstring& name, const D3DLIGHTTYPE lightType)
+{
+	auto newGameObject = CreateGameObject(name);
+	newGameObject->AddComponent<LightComponent>(lightType);
 	return newGameObject;
 }
 

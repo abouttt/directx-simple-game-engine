@@ -104,7 +104,7 @@ void Quaternion::Set(float x, float y, float z, float w)
 	W = w;
 }
 
-void Quaternion::ToAxisAndAngle(Vector* const outAxis, float* const outAngle) const
+void Quaternion::GetAxisAndAngle(Vector* const outAxis, float* const outAngle) const
 {
 	D3DXQUATERNION q(X, Y, Z, W);
 	D3DXVECTOR3 v;

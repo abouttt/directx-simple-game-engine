@@ -52,6 +52,9 @@
     <Filter Include="Objects\Private">
       <UniqueIdentifier>{37c4843e-bb61-4be5-b58e-32ffc54ee57f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{d710ab44-ee2a-4045-a320-7d2aa735f394}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -105,6 +108,12 @@
     <ClInclude Include="BehaviourComponent.h">
       <Filter>Components\Public</Filter>
     </ClInclude>
+    <ClInclude Include="EngineUtil.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="LightComponent.h">
+      <Filter>Components\Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -153,6 +162,9 @@
       <Filter>Engines\Private</Filter>
     </ClCompile>
     <ClCompile Include="BehaviourComponent.cpp">
+      <Filter>Components\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="LightComponent.cpp">
       <Filter>Components\Private</Filter>
     </ClCompile>
   </ItemGroup>

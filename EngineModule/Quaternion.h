@@ -23,7 +23,7 @@ struct Quaternion
 	void Normalize();
 	Quaternion GetInverse() const;
 	void Set(float x, float y, float z, float w);
-	void ToAxisAndAngle(Vector* const outAxis, float* const outAngle) const;
+	void GetAxisAndAngle(Vector* const outAxis, float* const outAngle) const;
 	Vector ToEuler() const;
 	std::wstring ToString() const;
 
