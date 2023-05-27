@@ -21,7 +21,6 @@ public:
 	void SetColor(const D3DXCOLOR& color);
 	void SetAlpha(const float alpha);
 
-
 private:
 	void setNativeMaterial(const std::wstring* const name, const eRenderingMode mode, const D3DMATERIAL9& nativeMtrl, Texture* const texture);
 

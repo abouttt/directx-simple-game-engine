@@ -120,6 +120,9 @@
     <ClInclude Include="Material.h">
       <Filter>Objects\Public</Filter>
     </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Objects\Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -177,6 +180,9 @@
       <Filter>Objects\Private</Filter>
     </ClCompile>
     <ClCompile Include="Material.cpp">
+      <Filter>Objects\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
       <Filter>Objects\Private</Filter>
     </ClCompile>
   </ItemGroup>
