@@ -46,16 +46,6 @@ void CameraComponent::SetFieldOfView(const int value)
 	mFov = value;
 }
 
-void CameraComponent::SetActive(bool bActive)
-{
-	if (IsActive() == bActive)
-	{
-		return;
-	}
-
-	Object::SetActive(bActive);
-}
-
 const D3DXMATRIX& CameraComponent::getViewMatrix()
 {
 	Vector right = GetTransform()->GetLocalAxisX();

@@ -4,25 +4,30 @@
 GameObject::GameObject()
 	: mName(_T("GameObject"))
 	, mTag(_T("Untagged"))
-	, mTransform(AddComponent<TransformComponent>())
 	, mComponents()
+	, mTransform(AddComponent<TransformComponent>())
 {
 }
 
 GameObject::GameObject(const std::wstring& name)
 	: mName(name)
 	, mTag(_T("Untagged"))
-	, mTransform(AddComponent<TransformComponent>())
 	, mComponents()
+	, mTransform(AddComponent<TransformComponent>())
 {
 }
 
 GameObject::GameObject(const std::wstring& name, const std::wstring& tag)
 	: mName(name)
 	, mTag(tag)
-	, mTransform(AddComponent<TransformComponent>())
 	, mComponents()
+	, mTransform(AddComponent<TransformComponent>())
 {
+}
+
+bool GameObject::IsActive() const
+{
+	return mbActive;
 }
 
 const std::wstring& GameObject::GetTag() const
@@ -52,8 +57,6 @@ void GameObject::SetActive(const bool bActive)
 	{
 		return;
 	}
-
-	Object::SetActive(bActive);
 
 	for (std::size_t i = 0; i < mTransform->GetChildCount(); i++)
 	{

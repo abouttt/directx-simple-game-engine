@@ -1,11 +1,9 @@
 #pragma once
 
-#include "Object.h"
-
 class GameObject;
 class TransformComponent;
 
-class Component : public Object
+class Component
 {
 public:
 	friend class GameObject;
@@ -15,11 +13,15 @@ public:
 	virtual ~Component() = default;
 
 public:
-	const std::wstring& GetTag() const;
+	bool IsActive() const;
+
 	GameObject* GetGameObject();
 	TransformComponent* GetTransform();
-	const std::wstring& GetName() const override;
-	void SetName(const std::wstring& name) override;
+	const std::wstring& GetTag() const;
+	const std::wstring& GetName() const;
+
+	void SetActive(bool mbActive);
+	void SetName(const std::wstring& name);
 
 private:
 	GameObject* mGameObject;

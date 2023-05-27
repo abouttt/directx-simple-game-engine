@@ -93,11 +93,14 @@
     <ClInclude Include="GameObject.h">
       <Filter>Objects\Public</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>Objects\Public</Filter>
-    </ClInclude>
     <ClInclude Include="CameraComponent.h">
       <Filter>Components\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Objects\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Engines\Public</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -137,11 +140,14 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Objects\Private</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>Objects\Private</Filter>
-    </ClCompile>
     <ClCompile Include="CameraComponent.cpp">
       <Filter>Components\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Objects\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Engines\Private</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

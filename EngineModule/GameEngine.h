@@ -11,7 +11,6 @@ public:
 public:
 	static bool Init(const HINSTANCE hInstance, const HWND hWnd, const int width, const int height, const bool bWindowed);
 	static void Release();
-
 	static void OnTick();
 
 private:

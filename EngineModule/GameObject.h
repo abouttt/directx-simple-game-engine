@@ -1,9 +1,8 @@
 #pragma once
 
-#include "Object.h"
 #include "TransformComponent.h"
 
-class GameObject : public Object
+class GameObject
 {
 public:
 	GameObject();
@@ -11,13 +10,14 @@ public:
 	GameObject(const std::wstring& name, const std::wstring& tag);
 
 public:
+	bool IsActive() const;
 	const std::wstring& GetTag() const;
 	TransformComponent* GetTransform();
-	const std::wstring& GetName() const override;
+	const std::wstring& GetName() const;
 
 	void SetTag(const std::wstring& tag);
-	void SetActive(const bool bActive) override;
-	void SetName(const std::wstring& name) override;
+	void SetActive(const bool bActive);
+	void SetName(const std::wstring& name);
 
 public: // Component
 	template<typename T, typename ...Args>
@@ -37,10 +37,11 @@ public: // Component
 	bool RemoveComponent(Component* const component);
 
 private:
+	bool mbActive;
 	std::wstring mName;
 	std::wstring mTag;
-	TransformComponent* mTransform;
 	std::vector<std::unique_ptr<Component>> mComponents;
+	TransformComponent* mTransform;
 };
 
 template<typename T, typename ...Args>

@@ -2,7 +2,7 @@
 
 #include "Component.h"
 
-class CameraComponent : Component
+class CameraComponent : public Component
 {
 public:
 	friend class RenderEngine;
@@ -19,7 +19,6 @@ public:
 	void SetNear(const float value);
 	void SetFar(const float value);
 	void SetFieldOfView(const int value);
-	void SetActive(bool bActive) override;
 
 private:
 	const D3DXMATRIX& getViewMatrix();

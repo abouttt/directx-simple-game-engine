@@ -7,6 +7,11 @@ Component::Component()
 {
 }
 
+bool Component::IsActive() const
+{
+    return mGameObject->IsActive();
+}
+
 const std::wstring& Component::GetTag() const
 {
     return mGameObject->GetTag();
@@ -25,6 +30,11 @@ TransformComponent* Component::GetTransform()
 const std::wstring& Component::GetName() const
 {
     return mGameObject->GetName();
+}
+
+void Component::SetActive(bool mbActive)
+{
+    mGameObject->SetActive(mbActive);
 }
 
 void Component::SetName(const std::wstring& name)
