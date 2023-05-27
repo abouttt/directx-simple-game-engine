@@ -16,7 +16,7 @@ bool BehaviourComponent::IsEnabled() const
     return mbEnabled;
 }
 
-void BehaviourComponent::SetEnabled(const bool bEnabled)
+void BehaviourComponent::SetEnable(const bool bEnable)
 {
-    mbEnabled = bEnabled;
+    mbEnabled = bEnable;
 }

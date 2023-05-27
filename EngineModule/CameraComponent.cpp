@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "CameraComponent.h"
+#include "RenderingEngine.h"
+#include "Scene.h"
+#include "SceneManager.h"
 #include "TransformComponent.h"
 #include "Vector.h"
 
@@ -10,10 +13,28 @@ CameraComponent::CameraComponent()
 	, mViewMatrix()
 	, mProjMatrix()
 {
+	RenderingEngine::SetCurrentCamera(this);
 }
 
 CameraComponent::~CameraComponent()
 {
+}
+
+CameraComponent* CameraComponent::GetCurrentCamera()
+{
+	return RenderingEngine::GetCurrentCamera();
+}
+
+CameraComponent* CameraComponent::GetMainCamera()
+{
+	auto scene = SceneManager::GetActiveScene();
+	auto mainCamera = scene->FindGameObjectWithTag(_T("MainCamera"));
+	if (!mainCamera)
+	{
+		return nullptr;
+	}
+
+	return mainCamera->GetComponent<CameraComponent>();
 }
 
 int CameraComponent::GetFieldOfView() const
@@ -44,6 +65,34 @@ void CameraComponent::SetFar(const float value)
 void CameraComponent::SetFieldOfView(const int value)
 {
 	mFov = value;
+}
+
+void CameraComponent::SetEnable(const bool bEnable)
+{
+	if (IsEnabled() == bEnable)
+	{
+		return;
+	}
+
+	BehaviourComponent::SetEnable(bEnable);
+
+	if (bEnable)
+	{
+		auto currentCamera = RenderingEngine::GetCurrentCamera();
+		if (!currentCamera)
+		{
+			RenderingEngine::SetCurrentCamera(this);
+		}
+	}
+	else
+	{
+		auto currentCamera = RenderingEngine::GetCurrentCamera();
+		if (this == currentCamera)
+		{
+			auto nextCamera = SceneManager::GetActiveScene()->FindComponent<CameraComponent>();
+			RenderingEngine::SetCurrentCamera(nextCamera);
+		}
+	}
 }
 
 const D3DXMATRIX& CameraComponent::getViewMatrix()

@@ -14,6 +14,9 @@ public:
 	static void OnTick();
 
 private:
+	static void loadResources();
+
+private:
 	static bool mbInit;
 };
 

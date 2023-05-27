@@ -12,11 +12,11 @@ public:
 	Material();
 
 public:
+	const std::wstring& GetName() const;
 	eRenderingMode GetRenderingMode() const;
 	const D3DMATERIAL9& GetNativeMaterial();
 	Texture* GetTexture() const;
 	const D3DCOLORVALUE& GetColor() const;
-	const std::wstring& GetName() const;
 
 	void SetRenderingMode(const eRenderingMode mode);
 	void SetTexture(Texture* const texture);

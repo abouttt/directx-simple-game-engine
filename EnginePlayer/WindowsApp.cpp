@@ -3,6 +3,8 @@
 #include "WindowsPlayer.h"
 #include "WindowsUtil.h"
 #include "TimeManager.h"
+#include "SceneManager.h"
+#include "DevScene.h"
 
 int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ PSTR lpCmdLine, _In_ int nCmdShow)
 {
@@ -15,6 +17,9 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 	{
 		return 0;
 	}
+
+	SceneManager::CreateScene<DevScene>(_T("DevScene"));
+	SceneManager::LoadScene(_T("DevScene"));
 
 	wndutil::Show(wndplayer::gWndHandler);
 	wndutil::SetCenterWindow(wndplayer::gWndHandler);

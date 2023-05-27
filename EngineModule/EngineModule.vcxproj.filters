@@ -84,7 +84,7 @@
     <ClInclude Include="Transform.h">
       <Filter>Math\Public</Filter>
     </ClInclude>
-    <ClInclude Include="RenderEngine.h">
+    <ClInclude Include="RenderingEngine.h">
       <Filter>Managers\Public</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
@@ -155,7 +155,7 @@
     <ClCompile Include="Transform.cpp">
       <Filter>Math\Private</Filter>
     </ClCompile>
-    <ClCompile Include="RenderEngine.cpp">
+    <ClCompile Include="RenderingEngine.cpp">
       <Filter>Managers\Private</Filter>
     </ClCompile>
     <ClCompile Include="Component.cpp">
@@ -196,6 +196,9 @@
     </ClCompile>
     <ClCompile Include="MeshComponent.cpp">
       <Filter>Components\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineUtil.cpp">
+      <Filter>Util</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -35,13 +35,14 @@ public:
 	static void GetMousePosition(int* const outMouseX, int* const outMouseY);
 
 private:
-	static bool init(const HINSTANCE hInstance, const HWND hWnd);
-	static void release();
 	static void update();
 	static void keyboardUpdate();
 	static void mouseUpdate();
 	static bool readKeyboard();
 	static bool readMouse();
+	static bool init(const HINSTANCE hInstance, const HWND hWnd);
+	static void clear();
+	static void release();
 
 private:
 	static bool mbInit;

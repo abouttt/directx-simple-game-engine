@@ -15,7 +15,7 @@ public:
 
 public:
 	template<typename T>
-	static void CreateScene();
+	static void CreateScene(const std::wstring& name);
 	static std::size_t GetSceneCount();
 	static Scene* GetActiveScene();
 	static Scene* GetSceneAt(const std::size_t index);
@@ -34,8 +34,9 @@ private:
 };
 
 template<typename T>
-inline void SceneManager::CreateScene()
+inline void SceneManager::CreateScene(const std::wstring& name)
 {
 	auto newScene = std::make_unique<T>();
+	newScene->mName = name;
 	mScenes.emplace_back(std::move(newScene));
 }

@@ -58,7 +58,7 @@ float Vector::DistanceSq(const Vector& v1, const Vector& v2)
 
 float Vector::Dot(const Vector& v1, const Vector& v2)
 {
-	return (v1.X * v2.X) + (v1.Y + v2.Y) + (v1.Z + v2.Z);
+	return (v1.X * v2.X) + (v1.Y * v2.Y) + (v1.Z * v2.Z);
 }
 
 Vector Vector::Lerp(const Vector& v1, const Vector& v2, float t)

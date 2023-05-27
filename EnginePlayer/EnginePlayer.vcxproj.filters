@@ -22,6 +22,9 @@
     <Filter Include="Private\Windows">
       <UniqueIdentifier>{7e28206f-f77d-4015-9743-3a369d4da352}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{b873a39a-d03a-4f90-a0f4-9d646245bb8a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -33,6 +36,9 @@
     <ClCompile Include="WindowsPlayer.cpp">
       <Filter>Private\Windows</Filter>
     </ClCompile>
+    <ClCompile Include="DevScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -43,6 +49,9 @@
     </ClInclude>
     <ClInclude Include="WindowsUtil.h">
       <Filter>Private\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="DevScene.h">
+      <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -10,105 +10,6 @@ std::array<InputManager::State, 256> InputManager::mKeyboardState;
 DIMOUSESTATE InputManager::mMouseButtons;
 std::array<InputManager::State, 4> InputManager::mMouseState;
 
-bool InputManager::init(const HINSTANCE hInstance, const HWND hWnd)
-{
-	if (mbInit)
-	{
-		return false;
-	}
-
-	// Direct Input 초기화.
-	if (FAILED(DirectInput8Create(hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&mInput, nullptr)))
-	{
-		::MessageBox(nullptr, _T("InputManager/Init/DirectInput8Create : FAILED"), _T("Error"), MB_ICONEXCLAMATION | MB_OK);
-		return false;
-	}
-
-	// 키보드 생성.
-	if (FAILED(mInput->CreateDevice(GUID_SysKeyboard, &mKeyboard, nullptr)))
-	{
-		::MessageBox(nullptr, _T("InputManager/Init/Keyboard CreateDevice : FAILED"), _T("Error"), MB_ICONEXCLAMATION | MB_OK);
-		return false;
-	}
-
-	// 키보드 데이터 형식 설정.
-	if (FAILED(mKeyboard->SetDataFormat(&c_dfDIKeyboard)))
-	{
-		::MessageBox(nullptr, _T("InputManager/Keyboard SetDataFormat : FAILED"), _T("Error"), MB_ICONEXCLAMATION | MB_OK);
-		return false;
-	}
-
-	// 키보드 협조레벨 설정.
-	if (FAILED(mKeyboard->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_EXCLUSIVE)))
-	{
-		::MessageBox(nullptr, _T("InputManager/Init/Keyboard SetCooperativeLevel : FAILED"), _T("Error"), MB_ICONEXCLAMATION | MB_OK);
-		return false;
-	}
-
-	// 키보드 할당.
-	mKeyboard->Acquire();
-
-	// 마우스 생성.
-	if (FAILED(mInput->CreateDevice(GUID_SysMouse, &mMouse, nullptr)))
-	{
-		::MessageBox(nullptr, _T("InputManager/Init/Mouse CreateDevice : FAILED"), _T("Error"), MB_ICONEXCLAMATION | MB_OK);
-		return false;
-	}
-
-	// 마우스 데이터 형식 설정.
-	if (FAILED(mMouse->SetDataFormat(&c_dfDIMouse)))
-	{
-		::MessageBox(nullptr, _T("InputManager/Init/Mouse SetDataFormat : FAILED"), _T("Error"), MB_ICONEXCLAMATION | MB_OK);
-		return false;
-	}
-
-	// 마우스 협조레벨 설정.
-	if (FAILED(mMouse->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE)))
-	{
-		::MessageBox(nullptr, _T("InputManager/Init/Mouse SetCooperativeLevel : FAILED"), _T("Error"), MB_ICONEXCLAMATION | MB_OK);
-		return false;
-	}
-
-	// 마우스 할당.
-	mMouse->Acquire();
-
-	mbInit = true;
-	return true;
-}
-
-void InputManager::release()
-{
-	if (!mbInit)
-	{
-		return;
-	}
-
-	if (mKeyboard)
-	{
-		mKeyboard->Unacquire();
-		mKeyboard->Release();
-	}
-
-	if (mMouse)
-	{
-		mMouse->Unacquire();
-		mMouse->Release();
-	}
-
-	if (mInput)
-	{
-		mInput->Release();
-	}
-
-	mbInit = false;
-}
-
-void InputManager::update()
-{
-	keyboardUpdate();
-	mouseUpdate();
-}
-
 bool InputManager::GetKey(const unsigned int key)
 {
 	return mKeyboardState[key].bPressing;
@@ -161,6 +62,12 @@ void InputManager::GetMousePosition(int* const outMouseX, int* const outMouseY)
 
 	*outMouseX = mMouseButtons.lX;
 	*outMouseY = mMouseButtons.lY;
+}
+
+void InputManager::update()
+{
+	keyboardUpdate();
+	mouseUpdate();
 }
 
 void InputManager::keyboardUpdate()
@@ -249,4 +156,114 @@ bool InputManager::readMouse()
 	}
 
 	return true;
+}
+
+bool InputManager::init(const HINSTANCE hInstance, const HWND hWnd)
+{
+	if (mbInit)
+	{
+		return false;
+	}
+
+	// Direct Input 초기화.
+	if (FAILED(DirectInput8Create(hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&mInput, nullptr)))
+	{
+		::MessageBox(nullptr, _T("InputManager/Init/DirectInput8Create : FAILED"), _T("Error"), MB_ICONEXCLAMATION | MB_OK);
+		return false;
+	}
+
+	// 키보드 생성.
+	if (FAILED(mInput->CreateDevice(GUID_SysKeyboard, &mKeyboard, nullptr)))
+	{
+		::MessageBox(nullptr, _T("InputManager/Init/Keyboard CreateDevice : FAILED"), _T("Error"), MB_ICONEXCLAMATION | MB_OK);
+		return false;
+	}
+
+	// 키보드 데이터 형식 설정.
+	if (FAILED(mKeyboard->SetDataFormat(&c_dfDIKeyboard)))
+	{
+		::MessageBox(nullptr, _T("InputManager/Keyboard SetDataFormat : FAILED"), _T("Error"), MB_ICONEXCLAMATION | MB_OK);
+		return false;
+	}
+
+	// 키보드 협조레벨 설정.
+	if (FAILED(mKeyboard->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_EXCLUSIVE)))
+	{
+		::MessageBox(nullptr, _T("InputManager/Init/Keyboard SetCooperativeLevel : FAILED"), _T("Error"), MB_ICONEXCLAMATION | MB_OK);
+		return false;
+	}
+
+	// 키보드 할당.
+	mKeyboard->Acquire();
+
+	// 마우스 생성.
+	if (FAILED(mInput->CreateDevice(GUID_SysMouse, &mMouse, nullptr)))
+	{
+		::MessageBox(nullptr, _T("InputManager/Init/Mouse CreateDevice : FAILED"), _T("Error"), MB_ICONEXCLAMATION | MB_OK);
+		return false;
+	}
+
+	// 마우스 데이터 형식 설정.
+	if (FAILED(mMouse->SetDataFormat(&c_dfDIMouse)))
+	{
+		::MessageBox(nullptr, _T("InputManager/Init/Mouse SetDataFormat : FAILED"), _T("Error"), MB_ICONEXCLAMATION | MB_OK);
+		return false;
+	}
+
+	// 마우스 협조레벨 설정.
+	if (FAILED(mMouse->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE)))
+	{
+		::MessageBox(nullptr, _T("InputManager/Init/Mouse SetCooperativeLevel : FAILED"), _T("Error"), MB_ICONEXCLAMATION | MB_OK);
+		return false;
+	}
+
+	// 마우스 할당.
+	mMouse->Acquire();
+
+	mbInit = true;
+	return true;
+}
+
+void InputManager::clear()
+{
+	for (int i = 0; i < 256; i++)
+	{
+		mKeyboardState[i].bUp = false;
+		mKeyboardState[i].bPressed = false;
+		mKeyboardState[i].bPressing = false;
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		mMouseState[i].bUp = false;
+		mMouseState[i].bPressed = false;
+		mMouseState[i].bPressing = false;
+	}
+}
+
+void InputManager::release()
+{
+	if (!mbInit)
+	{
+		return;
+	}
+
+	if (mKeyboard)
+	{
+		mKeyboard->Unacquire();
+		mKeyboard->Release();
+	}
+
+	if (mMouse)
+	{
+		mMouse->Unacquire();
+		mMouse->Release();
+	}
+
+	if (mInput)
+	{
+		mInput->Release();
+	}
+
+	mbInit = false;
 }

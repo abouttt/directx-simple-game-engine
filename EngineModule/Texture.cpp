@@ -49,6 +49,11 @@ void Texture::SetFilterMode(const D3DTEXTUREFILTERTYPE filterType)
 
 void Texture::setNativeTexture(const std::wstring* const name, IDirect3DTexture9* const texture)
 {
+	if (mD3DTexture)
+	{
+		mD3DTexture->Release();
+	}
+
 	mName = name;
 	mD3DTexture = texture;
 	mD3DTexture->GetLevelDesc(0, &mDesc);

@@ -29,16 +29,7 @@ const D3DXCOLOR COLOR_MAGENTA(D3DCOLOR_XRGB(255, 0, 255));
 // Materials
 //
 
-inline D3DMATERIAL9 InitMtrl(D3DXCOLOR ambient, D3DXCOLOR diffuse, D3DXCOLOR specular, D3DXCOLOR emissive, const float power)
-{
-	D3DMATERIAL9 mtrl{};
-	mtrl.Ambient = ambient;
-	mtrl.Diffuse = diffuse;
-	mtrl.Specular = specular;
-	mtrl.Emissive = emissive;
-	mtrl.Power = power;
-	return mtrl;
-}
+D3DMATERIAL9 InitMtrl(D3DXCOLOR ambient, D3DXCOLOR diffuse, D3DXCOLOR specular, D3DXCOLOR emissive, const float power);
 
 const D3DMATERIAL9 WHITE_MTRL = InitMtrl(COLOR_WHITE, COLOR_WHITE, COLOR_WHITE, COLOR_BLACK, 8.0f);
 const D3DMATERIAL9 RED_MTRL = InitMtrl(COLOR_RED, COLOR_RED, COLOR_RED, COLOR_BLACK, 8.0f);
@@ -50,30 +41,11 @@ const D3DMATERIAL9 YELLOW_MTRL = InitMtrl(COLOR_YELLOW, COLOR_YELLOW, COLOR_YELL
 // Mesh
 //
 
-inline ID3DXMesh* GetCubeMesh()
-{
-	return nullptr;
-}
-
-inline ID3DXMesh* GetSphereMesh()
-{
-	return nullptr;
-}
-
-inline ID3DXMesh* GetQuadMesh()
-{
-	return nullptr;
-}
-
-inline void SetNormalFVF(ID3DXMesh** const outMesh)
-{
-
-}
-
-inline void SetTextureFVF(ID3DXMesh** const outMesh)
-{
-
-}
+ID3DXMesh* GetCubeMesh();
+ID3DXMesh* GetSphereMesh();
+ID3DXMesh* GetQuadMesh();
+void SetNormalFVF(ID3DXMesh** const outMesh);
+void SetTextureFVF(ID3DXMesh** const outMesh);
 
 //
 // Vertex

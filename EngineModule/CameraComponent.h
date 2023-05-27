@@ -5,11 +5,15 @@
 class CameraComponent : public BehaviourComponent
 {
 public:
-	friend class RenderEngine;
+	friend class RenderingEngine;
 
 public:
 	CameraComponent();
 	~CameraComponent();
+
+public:
+	static CameraComponent* GetCurrentCamera();
+	static CameraComponent* GetMainCamera();
 
 public:
 	int GetFieldOfView() const;
@@ -19,6 +23,7 @@ public:
 	void SetNear(const float value);
 	void SetFar(const float value);
 	void SetFieldOfView(const int value);
+	void SetEnable(const bool bEnable) override;
 
 private:
 	const D3DXMATRIX& getViewMatrix();

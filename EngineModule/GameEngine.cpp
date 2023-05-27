@@ -1,7 +1,8 @@
 #include "pch.h"
+#include "EngineUtil.h"
 #include "GameEngine.h"
 #include "InputManager.h"
-#include "RenderEngine.h"
+#include "RenderingEngine.h"
 #include "ResourceManager.h"
 #include "SceneManager.h"
 #include "TimeManager.h"
@@ -15,7 +16,7 @@ bool GameEngine::Init(const HINSTANCE hInstance, const HWND hWnd, const int widt
 		return false;
 	}
 
-	if (!RenderEngine::init(hWnd, width, height, bWindowed) ||
+	if (!RenderingEngine::init(hWnd, width, height, bWindowed) ||
 		!InputManager::init(hInstance, hWnd))
 	{
 		return false;
@@ -24,8 +25,10 @@ bool GameEngine::Init(const HINSTANCE hInstance, const HWND hWnd, const int widt
 	ResourceManager::init();
 	TimeManager::init();
 
+	loadResources();
+
 	mbInit = true;
-    return true;
+	return true;
 }
 
 void GameEngine::Release()
@@ -35,9 +38,8 @@ void GameEngine::Release()
 		return;
 	}
 
-
-	RenderEngine::release();
 	InputManager::release();
+	RenderingEngine::release();
 
 	mbInit = false;
 }
@@ -54,7 +56,7 @@ void GameEngine::OnTick()
 	TimeManager::beginTick();
 
 	// Initialization.
-	// 
+	
 	// Input Event.
 	InputManager::update();
 
@@ -63,18 +65,36 @@ void GameEngine::OnTick()
 	// Load Scene.
 	if (SceneManager::isReserved())
 	{
-		TimeManager::reset();
+		InputManager::clear();
+		RenderingEngine::clear();
+		TimeManager::clear();
 		SceneManager::loadScene();
 		return;
 	}
 
 	// Scene Rendering.
-	RenderEngine::preRender();
-	RenderEngine::render();
-	RenderEngine::postRender();
+	RenderingEngine::preRender();
+	RenderingEngine::render();
+	RenderingEngine::postRender();
 
 	// Decommissioning.
 
 	// 성능 측정 종료.
 	TimeManager::endTick();
+}
+
+void GameEngine::loadResources()
+{
+	// Mesh
+	ResourceManager::AddNativeMesh(_T("Cube"), GetCubeMesh());
+	ResourceManager::AddNativeMesh(_T("Sphere"), GetSphereMesh());
+	ResourceManager::AddNativeMesh(_T("Quad"), GetQuadMesh());
+
+	// Texture
+	ResourceManager::LoadNativeTexture(_T("Crate"), _T("Textures/crate.jpg"));
+	ResourceManager::LoadNativeTexture(_T("DoomGuy"), _T("Textures/doomguy.png"));
+
+	// Material
+	ResourceManager::AddMaterial(_T("Default-Material"), eRenderingMode::Opaque, WHITE_MTRL, nullptr);
+	ResourceManager::AddMaterial(_T("Crate"), eRenderingMode::Opaque, WHITE_MTRL, ResourceManager::GetTexture(_T("Crate")));
 }

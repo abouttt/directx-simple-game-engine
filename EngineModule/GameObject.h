@@ -11,13 +11,13 @@ public:
 
 public:
 	bool IsActive() const;
+	const std::wstring& GetName() const;
 	const std::wstring& GetTag() const;
 	TransformComponent* GetTransform();
-	const std::wstring& GetName() const;
 
-	void SetTag(const std::wstring& tag);
 	void SetActive(const bool bActive);
 	void SetName(const std::wstring& name);
+	void SetTag(const std::wstring& tag);
 
 public: // Component
 	template<typename T, typename ...Args>

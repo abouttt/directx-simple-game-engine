@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "EngineUtil.h"
-#include "RenderEngine.h"
+#include "RenderingEngine.h"
 #include "ResourceManager.h"
 #include "Material.h"
 #include "Mesh.h"
@@ -14,34 +14,35 @@ std::unordered_map<std::wstring, std::unique_ptr<Texture>> ResourceManager::mTex
 Material* ResourceManager::GetMaterial(const std::wstring& name)
 {
 	auto it = mMaterials.find(name);
-	if (it != mMaterials.end())
+	if (it == mMaterials.end())
 	{
-		return it->second.get();
+		return nullptr;
 	}
 
-	return nullptr;
+	return it->second.get();
 }
 
 Mesh* ResourceManager::GetMesh(const std::wstring& name)
 {
 	auto it = mMeshes.find(name);
-	if (it != mMeshes.end())
+	if (it == mMeshes.end())
 	{
-		return it->second.get();
+		return nullptr;
 	}
 
-	return nullptr;
+	return it->second.get();
 }
 
 Texture* ResourceManager::GetTexture(const std::wstring& name)
 {
 	auto it = mTextures.find(name);
-	if (it != mTextures.end())
+	if (it == mTextures.end())
 	{
-		return it->second.get();
+		return nullptr;
+		
 	}
 
-	return nullptr;
+	return it->second.get();
 }
 
 bool ResourceManager::AddMaterial(const std::wstring& name, const eRenderingMode mode, const D3DMATERIAL9& nativeMtrl, Texture* const texture)
@@ -80,7 +81,7 @@ bool ResourceManager::LoadNativeTexture(const std::wstring& name, const std::wst
 	}
 
 	IDirect3DTexture9* ntexture = nullptr;
-	HRESULT hr = D3DXCreateTextureFromFile(RenderEngine::GetDevice(), (_T("../Resources/") + path).c_str(), &ntexture);
+	HRESULT hr = D3DXCreateTextureFromFile(RenderingEngine::GetDevice(), (_T("../Resources/") + path).c_str(), &ntexture);
 
 	if (FAILED(hr))
 	{

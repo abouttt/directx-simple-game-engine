@@ -11,7 +11,7 @@ public:
 public:
 	bool IsActiveAndEnabled() const;
 	bool IsEnabled() const;
-	virtual void SetEnabled(const bool bEnabled);
+	virtual void SetEnable(const bool bEnable);
 
 private:
 	bool mbEnabled;

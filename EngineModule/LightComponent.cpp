@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "EngineUtil.h"
-#include "MathUtil.h"
 #include "LightComponent.h"
+#include "MathUtil.h"
 #include "Quaternion.h"
+#include "RenderingEngine.h"
 #include "TransformComponent.h"
 #include "Vector.h"
 
@@ -11,10 +12,7 @@ LightComponent::LightComponent(const D3DLIGHTTYPE lightType)
 {
 	SetLightType(lightType);
 	SetColor(COLOR_WHITE);
-}
-
-LightComponent::~LightComponent()
-{
+	RenderingEngine::AddLightComponent(this);
 }
 
 void LightComponent::SetLightType(const D3DLIGHTTYPE lightType)
@@ -46,6 +44,25 @@ void LightComponent::SetRange(const float range)
 	mD3DLight.Range = range;
 }
 
+void LightComponent::SetEnable(const bool bEnable)
+{
+	if (IsEnabled() == bEnable)
+	{
+		return;
+	}
+
+	BehaviourComponent::SetEnable(bEnable);
+
+	if (bEnable)
+	{
+		RenderingEngine::GetDevice()->LightEnable(mIndex, true);
+	}
+	else
+	{
+		RenderingEngine::GetDevice()->LightEnable(mIndex, false);
+	}
+}
+
 void LightComponent::initDirectionLight()
 {
 	mD3DLight.Type = D3DLIGHT_DIRECTIONAL;
@@ -73,7 +90,7 @@ void LightComponent::initSpotLight()
 	mD3DLight.Phi = 0.7f;
 }
 
-void LightComponent::updateTransform()
+void LightComponent::updatePositionAndDirection()
 {
 	Vector position = GetTransform()->GetPosition();
 	auto rot = GetTransform()->GetRotation();

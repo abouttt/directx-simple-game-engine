@@ -9,6 +9,11 @@ Material::Material()
 {
 }
 
+const std::wstring& Material::GetName() const
+{
+	return *mName;
+}
+
 eRenderingMode Material::GetRenderingMode() const
 {
 	return mRenderingMode;
@@ -27,11 +32,6 @@ Texture* Material::GetTexture() const
 const D3DCOLORVALUE& Material::GetColor() const
 {
 	return mD3DMaterial.Diffuse;
-}
-
-const std::wstring& Material::GetName() const
-{
-	return *mName;
 }
 
 void Material::SetRenderingMode(const eRenderingMode mode)

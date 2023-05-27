@@ -33,6 +33,11 @@ bool GameObject::IsActive() const
 	return mbActive;
 }
 
+const std::wstring& GameObject::GetName() const
+{
+	return mName;
+}
+
 const std::wstring& GameObject::GetTag() const
 {
 	return mTag;
@@ -41,16 +46,6 @@ const std::wstring& GameObject::GetTag() const
 TransformComponent* GameObject::GetTransform()
 {
 	return mTransform;
-}
-
-const std::wstring& GameObject::GetName() const
-{
-	return mName;
-}
-
-void GameObject::SetTag(const std::wstring& tag)
-{
-	mTag = tag;
 }
 
 void GameObject::SetActive(const bool bActive)
@@ -70,6 +65,11 @@ void GameObject::SetActive(const bool bActive)
 void GameObject::SetName(const std::wstring& name)
 {
 	mName = name;
+}
+
+void GameObject::SetTag(const std::wstring& tag)
+{
+	mTag = tag;
 }
 
 bool GameObject::RemoveComponent(Component* const component)

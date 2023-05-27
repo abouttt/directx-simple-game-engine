@@ -317,12 +317,14 @@ void TransformComponent::removeFromParent()
 	}
 
 	auto it = std::find(mParent->mChildren.begin(), mParent->mChildren.end(), this);
-	if (it != mParent->mChildren.end())
+	if (it == mParent->mChildren.end())
 	{
-		mParent->mChildren.erase(it);
-		mParent = nullptr;
-		updateLocal();
+		return;
 	}
+
+	mParent->mChildren.erase(it);
+	mParent = nullptr;
+	updateLocal();
 }
 
 void TransformComponent::updateLocal()

@@ -17,10 +17,10 @@ public:
 	static float GetFPS();
 
 private:
-	static bool init();
 	static void beginTick();
 	static void endTick();
-	static void reset();
+	static bool init();
+	static void clear();
 	static float getCyclesPerMilliSeconds();
 	static long long getCurrentTimeStamp();
 

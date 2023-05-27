@@ -19,10 +19,7 @@ Scene* SceneManager::GetActiveScene()
 
 Scene* SceneManager::GetSceneAt(const std::size_t index)
 {
-	if (index < 0 || index >= mScenes.size())
-	{
-		return nullptr;
-	}
+	assert(index >= 0 && index < mScenes.size());
 
 	return mScenes[index].get();
 }
@@ -42,9 +39,8 @@ void SceneManager::LoadScene(const std::wstring& name)
 
 	for (std::size_t i = 0; i < mScenes.size(); i++)
 	{
-		if (mScenes[i]->mName == name)
+		if (mScenes[i]->GetName() == name)
 		{
-			mNextSceneIndex = i;
 			LoadScene(i);
 			break;
 		}
@@ -58,8 +54,9 @@ bool SceneManager::isReserved()
 
 void SceneManager::loadScene()
 {
-	mScenes[mNextSceneIndex]->init();
 	mScenes[mCurrentSceneIndex]->release();
+	mScenes[mNextSceneIndex]->init();
 	mCurrentSceneIndex = mNextSceneIndex;
 	mNextSceneIndex = -1;
+	mbReserve = false;
 }

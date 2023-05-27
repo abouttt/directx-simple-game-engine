@@ -11,19 +11,6 @@ float TimeManager::mElapsedTime = 0.f;
 float TimeManager::mAverageFPS = 0.f;
 float TimeManager::mFPS = 0.f;
 
-bool TimeManager::init()
-{
-	if (mbInit)
-	{
-		return false;
-	}
-
-	mCyclesPerMilliSeconds = getCyclesPerMilliSeconds();
-
-	mbInit = true;
-	return true;
-}
-
 float TimeManager::GetElapsedTime()
 {
 	return mElapsedTime;
@@ -60,12 +47,24 @@ void TimeManager::endTick()
 	mAverageFPS = mElapsedTime == 0.f ? 0.f : 1000.f / mElapsedTime * mFrameCount;
 }
 
-void TimeManager::reset()
+bool TimeManager::init()
+{
+	if (mbInit)
+	{
+		return false;
+	}
+
+	mCyclesPerMilliSeconds = getCyclesPerMilliSeconds();
+
+	mbInit = true;
+	return true;
+}
+
+void TimeManager::clear()
 {
 	mStartTimeStamp = 0;
 	mFrameTimeStamp = 0;
 	mFrameCount = 0;
-	mCyclesPerMilliSeconds;
 	mFrameTime = -1.f;
 	mElapsedTime = 0.f;
 	mAverageFPS = 0.f;
