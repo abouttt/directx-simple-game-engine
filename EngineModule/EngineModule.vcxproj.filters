@@ -102,6 +102,9 @@
     <ClInclude Include="SceneManager.h">
       <Filter>Engines\Public</Filter>
     </ClInclude>
+    <ClInclude Include="BehaviourComponent.h">
+      <Filter>Components\Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -148,6 +151,9 @@
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Engines\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="BehaviourComponent.cpp">
+      <Filter>Components\Private</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Component.h"
+#include "BehaviourComponent.h"
 
-class CameraComponent : public Component
+class CameraComponent : public BehaviourComponent
 {
 public:
 	friend class RenderEngine;

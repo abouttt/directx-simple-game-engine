@@ -2,7 +2,8 @@
 #include "GameObject.h"
 
 GameObject::GameObject()
-	: mName(_T("GameObject"))
+	: mbActive(true)
+	, mName(_T("GameObject"))
 	, mTag(_T("Untagged"))
 	, mComponents()
 	, mTransform(AddComponent<TransformComponent>())
@@ -10,7 +11,8 @@ GameObject::GameObject()
 }
 
 GameObject::GameObject(const std::wstring& name)
-	: mName(name)
+	: mbActive(true)
+	, mName(name)
 	, mTag(_T("Untagged"))
 	, mComponents()
 	, mTransform(AddComponent<TransformComponent>())
@@ -18,7 +20,8 @@ GameObject::GameObject(const std::wstring& name)
 }
 
 GameObject::GameObject(const std::wstring& name, const std::wstring& tag)
-	: mName(name)
+	: mbActive(true)
+	, mName(name)
 	, mTag(tag)
 	, mComponents()
 	, mTransform(AddComponent<TransformComponent>())
