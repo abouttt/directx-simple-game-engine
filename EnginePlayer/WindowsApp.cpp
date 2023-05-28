@@ -18,6 +18,8 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 		return 0;
 	}
 
+	AllocConsole();
+
 	SceneManager::CreateScene<DevScene>(_T("DevScene"));
 	SceneManager::LoadScene(_T("DevScene"));
 

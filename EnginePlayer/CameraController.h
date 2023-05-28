@@ -44,6 +44,11 @@ public:
 		mCameraPtr->GetTransform()->AddRotationY(Input::GetAxisMouseX() * 0.2f);
 	}
 
+	void LateUpdate() override
+	{
+		Debug::Log(GetTransform()->GetPosition());
+	}
+
 private:
 	CameraComponent* mCameraPtr = nullptr;
 	float mSpeed = 50;

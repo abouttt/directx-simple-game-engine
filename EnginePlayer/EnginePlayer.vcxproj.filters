@@ -28,6 +28,9 @@
     <Filter Include="Game">
       <UniqueIdentifier>{22b9a925-fa0e-4a64-94cc-c021052cad63}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{aed64a24-9de6-4873-bcf3-6e6afb6711b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -42,8 +45,11 @@
     <ClCompile Include="DevScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Debug.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
     <ClCompile Include="CameraController.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -59,8 +65,11 @@
     <ClInclude Include="DevScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
     <ClInclude Include="CameraController.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

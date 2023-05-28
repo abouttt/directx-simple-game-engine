@@ -1,7 +1,6 @@
 #include "pch.h"
-#include "BehaviourComponent.h"
-#include "GameBehaviourEventManager.h"
 #include "EngineUtil.h"
+#include "GameBehaviourEventManager.h"
 #include "GameEngine.h"
 #include "Input.h"
 #include "Renderer.h"
