@@ -6,6 +6,7 @@
 #include "MeshComponent.h"
 #include "Renderer.h"
 #include "TransformComponent.h"
+#include "UIComponent.h"
 
 bool Renderer::mbInit = false;
 int Renderer::mWidth = 0;
@@ -15,6 +16,7 @@ D3DCOLOR Renderer::mBackgroundColor = D3DCOLOR_XRGB(128, 128, 128);
 CameraComponent* Renderer::mCurrentCamera = nullptr;
 std::unordered_map<eRenderingMode, std::vector<MeshComponent*>> Renderer::mMeshComponents;
 std::vector<LightComponent*> Renderer::mLightComponents;
+std::vector<UIComponent*> Renderer::mUIComponents;
 DWORD Renderer::mCurrentLightCount = 0;
 
 int Renderer::GetWidth()
@@ -74,6 +76,16 @@ void Renderer::AddLightComponent(LightComponent* const light)
 	}
 }
 
+void Renderer::AddUIComponent(UIComponent* const ui)
+{
+	assert(ui);
+
+	if (std::find(mUIComponents.begin(), mUIComponents.end(), ui) == mUIComponents.end())
+	{
+		mUIComponents.emplace_back(ui);
+	}
+}
+
 void Renderer::RemoveMeshComponent(MeshComponent* const mesh)
 {
 	assert(mesh);
@@ -98,6 +110,17 @@ void Renderer::RemoveLightComponent(LightComponent* const light)
 	{
 		mD3DDevice->LightEnable(light->mIndex, false);
 		mLightComponents.erase(it);
+	}
+}
+
+void Renderer::RemoveUIComponent(UIComponent* const ui)
+{
+	assert(ui);
+
+	auto it = std::find(mUIComponents.begin(), mUIComponents.end(), ui);
+	if (it != mUIComponents.end())
+	{
+		mUIComponents.erase(it);
 	}
 }
 
@@ -134,6 +157,17 @@ void Renderer::render()
 		// Åõ¸í ·»´õ¸µ.
 		mD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 		renderMeshes(mMeshComponents[eRenderingMode::Transparency]);
+	}
+}
+
+void Renderer::drawUI()
+{
+	for (auto ui : mUIComponents)
+	{
+		if (ui->IsActiveAndEnabled())
+		{
+			ui->Draw(mD3DDevice);
+		}
 	}
 }
 

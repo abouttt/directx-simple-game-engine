@@ -132,6 +132,9 @@
     <ClInclude Include="Quaternion.h">
       <Filter>Math\Public</Filter>
     </ClInclude>
+    <ClInclude Include="UIComponent.h">
+      <Filter>Components\Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -199,6 +202,9 @@
     </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>Math\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="UIComponent.cpp">
+      <Filter>Components\Private</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

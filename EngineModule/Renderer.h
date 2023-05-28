@@ -3,6 +3,7 @@
 class CameraComponent;
 class MeshComponent;
 class LightComponent;
+class UIComponent;
 enum class eRenderingMode;
 
 class Renderer
@@ -28,13 +29,16 @@ public:
 
 	static void AddMeshComponent(MeshComponent* const mesh);
 	static void AddLightComponent(LightComponent* const light);
-	
+	static void AddUIComponent(UIComponent* const ui);
+
 	static void RemoveMeshComponent(MeshComponent* const mesh);
 	static void RemoveLightComponent(LightComponent* const light);
+	static void RemoveUIComponent(UIComponent* const ui);
 
 private:
 	static void preRender();
 	static void render();
+	static void drawUI();
 	static void postRender();
 
 	static void updateCamera();
@@ -58,6 +62,7 @@ private:
 	static CameraComponent* mCurrentCamera;
 	static std::unordered_map<eRenderingMode, std::vector<MeshComponent*>> mMeshComponents;
 	static std::vector<LightComponent*> mLightComponents;
+	static std::vector<UIComponent*> mUIComponents;
 	static DWORD mCurrentLightCount;
 };
 

@@ -85,6 +85,7 @@ void GameEngine::OnTick()
 	// Scene Rendering.
 	Renderer::preRender();
 	Renderer::render();
+	Renderer::drawUI();
 	Renderer::postRender();
 
 	// Decommissioning.
