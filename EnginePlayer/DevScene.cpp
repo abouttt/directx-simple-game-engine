@@ -9,6 +9,7 @@
 
 #include "CameraComponent.h"
 #include "GameObject.h"
+#include "ImageComponent.h"
 #include "MeshComponent.h"
 #include "TransformComponent.h"
 
@@ -34,4 +35,9 @@ void DevScene::init()
 	auto cube = CreateCube(_T("Cube"));
 	cube->GetTransform()->SetPosition(D3DXVECTOR3(0, 0, 0));
 	cube->GetComponent<MeshComponent>()->SetMaterial(Resources::GetMaterial(_T("Crate")));
+
+	auto image = CreateImage(_T("DoomGuy Image"));
+	image->GetTransform()->SetPosition(D3DXVECTOR3(10, 50, 0));
+	image->GetTransform()->SetScale(D3DXVECTOR3(0.1f, 0.1f, 0.f));
+	image->GetComponent<ImageComponent>()->SetTexture(Resources::GetTexture(_T("DoomGuy")));
 }

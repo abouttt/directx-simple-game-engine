@@ -157,6 +157,7 @@
     <ClInclude Include="GameBehaviourEventManager.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="ImageComponent.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="LightComponent.h" />
     <ClInclude Include="Material.h" />
@@ -185,6 +186,7 @@
     <ClCompile Include="GameBehaviourEventManager.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="ImageComponent.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="LightComponent.cpp" />
     <ClCompile Include="Material.cpp" />

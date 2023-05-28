@@ -1,9 +1,11 @@
 #include "pch.h"
+#include "Scene.h"
+
 #include "CameraComponent.h"
+#include "ImageComponent.h"
 #include "LightComponent.h"
 #include "MeshComponent.h"
 #include "Resources.h"
-#include "Scene.h"
 
 Scene::Scene()
 	: mGameObjects()
@@ -67,6 +69,13 @@ GameObject* Scene::CreateLight(const std::wstring& name, const D3DLIGHTTYPE ligh
 {
 	auto newGameObject = CreateGameObject(name);
 	newGameObject->AddComponent<LightComponent>(lightType);
+	return newGameObject;
+}
+
+GameObject* Scene::CreateImage(const std::wstring& name)
+{
+	auto newGameObject = CreateGameObject(name);
+	newGameObject->AddComponent<ImageComponent>();
 	return newGameObject;
 }
 

@@ -135,6 +135,9 @@
     <ClInclude Include="UIComponent.h">
       <Filter>Components\Public</Filter>
     </ClInclude>
+    <ClInclude Include="ImageComponent.h">
+      <Filter>Components\Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -204,6 +207,9 @@
       <Filter>Math\Private</Filter>
     </ClCompile>
     <ClCompile Include="UIComponent.cpp">
+      <Filter>Components\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageComponent.cpp">
       <Filter>Components\Private</Filter>
     </ClCompile>
   </ItemGroup>
