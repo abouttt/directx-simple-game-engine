@@ -3,21 +3,20 @@
 #include "LightComponent.h"
 #include "MathUtil.h"
 #include "Quaternion.h"
-#include "RenderingEngine.h"
+#include "Renderer.h"
 #include "TransformComponent.h"
-#include "Vector.h"
 
 LightComponent::LightComponent(const D3DLIGHTTYPE lightType)
 	: mD3DLight()
 {
 	SetLightType(lightType);
 	SetColor(COLOR_WHITE);
-	RenderingEngine::AddLightComponent(this);
+	Renderer::AddLightComponent(this);
 }
 
 LightComponent::~LightComponent()
 {
-	RenderingEngine::RemoveLightComponent(this);
+	Renderer::RemoveLightComponent(this);
 }
 
 void LightComponent::SetLightType(const D3DLIGHTTYPE lightType)
@@ -78,12 +77,10 @@ void LightComponent::initSpotLight()
 
 void LightComponent::updatePositionAndDirection()
 {
-	Vector position = GetTransform()->GetPosition();
-	auto rot = GetTransform()->GetRotation();
-	Vector axis;
+	mD3DLight.Position = GetTransform()->GetPosition();
+	D3DXQUATERNION rotation = GetTransform()->GetRotation();
+	D3DXVECTOR3 axis;
 	float angle;
-	rot.GetAxisAndAngle(&axis, &angle);
-	axis.Normalize();
-	mD3DLight.Position = D3DXVECTOR3(position.X, position.Y, position.Z);
-	mD3DLight.Direction = D3DXVECTOR3(axis.X, axis.Y, axis.Z);
+	D3DXQuaternionToAxisAngle(&rotation, &axis, &angle);
+	D3DXVec3Normalize(static_cast<D3DXVECTOR3*>(&mD3DLight.Direction), &axis);
 }

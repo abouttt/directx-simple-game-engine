@@ -5,15 +5,15 @@ class Mesh;
 class Texture;
 enum class eRenderingMode;
 
-class ResourceManager
+class Resources
 {
 public:
 	friend class GameEngine;
 public:
-	ResourceManager() = delete;
-	ResourceManager(const ResourceManager&) = delete;
-	ResourceManager& operator=(ResourceManager&&) = delete;
-	~ResourceManager() = delete;
+	Resources() = delete;
+	Resources(const Resources&) = delete;
+	Resources& operator=(Resources&&) = delete;
+	~Resources() = delete;
 
 public:
 	static Material* GetMaterial(const std::wstring& name);

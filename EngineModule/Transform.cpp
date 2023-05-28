@@ -1,162 +1,172 @@
 #include "pch.h"
-#include "MathUtil.h"
-#include "Matrix.h"
-#include "Quaternion.h"
 #include "Transform.h"
+#include "Vector3.h"
+#include "Quaternion.h"
 
 Transform::Transform()
-	: mPosition(Vector::Zero)
-	, mEulerAngles(Vector::Zero)
-	, mScale(Vector::One)
+	: mPosition(VECTOR3_ZERO)
+	, mEulerAngles(VECTOR3_ZERO)
+	, mScale(VECTOR3_ONE)
 {
 }
 
-Transform::Transform(const Vector& positon, const Vector& euler, const Vector& scale)
-	: mPosition(positon)
+Transform::Transform(const D3DXVECTOR3& position)
+	: mPosition(position)
+	, mEulerAngles(VECTOR3_ZERO)
+	, mScale(VECTOR3_ONE)
+{
+}
+
+Transform::Transform(const D3DXVECTOR3& position, const D3DXQUATERNION& rotation)
+	: mPosition(position)
+	, mEulerAngles(QuaternionToEuler(rotation))
+	, mScale(VECTOR3_ONE)
+{
+}
+
+Transform::Transform(const D3DXVECTOR3& position, const D3DXVECTOR3& euler)
+	: mPosition(position)
+	, mEulerAngles(euler)
+	, mScale(VECTOR3_ONE)
+{
+}
+
+Transform::Transform(const D3DXVECTOR3& position, const D3DXQUATERNION& rotation, const D3DXVECTOR3& scale)
+	: mPosition(position)
+	, mEulerAngles(QuaternionToEuler(rotation))
+	, mScale(scale)
+{
+}
+
+Transform::Transform(const D3DXVECTOR3& position, const D3DXVECTOR3& euler, const D3DXVECTOR3& scale)
+	: mPosition(position)
 	, mEulerAngles(euler)
 	, mScale(scale)
 {
 }
 
-Vector Transform::GetPosition() const
+D3DXVECTOR3 Transform::GetPosition() const
 {
 	return mPosition;
 }
 
-Quaternion Transform::GetRotation() const
+D3DXQUATERNION Transform::GetRotation() const
 {
-	return Math::EulerToQuaternion(mEulerAngles);
+	return EulerToQuaternion(mEulerAngles);
 }
 
-Vector Transform::GetEulerAngles() const
+D3DXVECTOR3 Transform::GetEulerAngles() const
 {
 	return mEulerAngles;
 }
 
-Vector Transform::GetScale() const
+D3DXVECTOR3 Transform::GetScale() const
 {
 	return mScale;
 }
 
-Vector Transform::GetAxisX() const
+D3DXVECTOR3 Transform::GetAxisX() const
 {
-	Quaternion rotation = Math::EulerToQuaternion(mEulerAngles);
-	rotation.Normalize();
-	return Vector::Right * rotation;
-	//return rotation.GetAxisX();
+	D3DXQUATERNION rotation = EulerToQuaternion(mEulerAngles);
+	D3DXQuaternionNormalize(&rotation, &rotation);
+	return rotation * VECTOR3_RIGHT;
 }
 
-Vector Transform::GetAxisY() const
+D3DXVECTOR3 Transform::GetAxisY() const
 {
-	Quaternion rotation = Math::EulerToQuaternion(mEulerAngles);
-	rotation.Normalize();
-	return Vector::Up * rotation;
-	//return rotation.GetAxisY();
+	D3DXQUATERNION rotation = EulerToQuaternion(mEulerAngles);
+	D3DXQuaternionNormalize(&rotation, &rotation);
+	return rotation * VECTOR3_UP;
 }
 
-Vector Transform::GetAxisZ() const
+D3DXVECTOR3 Transform::GetAxisZ() const
 {
-	Quaternion rotation = Math::EulerToQuaternion(mEulerAngles);
-	rotation.Normalize();
-	return Vector::Forward * rotation;
-	//return rotation.GetAxisZ();
+	D3DXQUATERNION rotation = EulerToQuaternion(mEulerAngles);
+	D3DXQuaternionNormalize(&rotation, &rotation);
+	return rotation * VECTOR3_FORWARD;
 }
 
-Matrix Transform::GetMatrix() const
+D3DXMATRIX Transform::GetMatrix() const
 {
-	D3DXMATRIX dr = GetD3DXMatrix();
-	Matrix result;
-	memcpy(&result.M, &dr.m, sizeof(Matrix));
-	return result;
-}
-
-D3DXMATRIX Transform::GetD3DXMatrix() const
-{
-	D3DXMATRIX dmPos;
-	D3DXMatrixTranslation(&dmPos, mPosition.X, mPosition.Y, mPosition.Z);
-
-	D3DXMATRIX dmRot;
+	D3DXMATRIX matPos;
+	D3DXMATRIX matRot;
+	D3DXMATRIX matScale;
 	D3DXQUATERNION rotation;
-	Vector euler = D3DXToRadian(mEulerAngles);
-	D3DXQuaternionRotationYawPitchRoll(&rotation, euler.Y, euler.X, euler.Z);
-	D3DXMatrixRotationQuaternion(&dmRot, &rotation);
+	D3DXVECTOR3 euler = D3DXToRadian(mEulerAngles);
 
-	D3DXMATRIX dmScale;
-	D3DXMatrixScaling(&dmScale, mScale.X, mScale.Y, mScale.Z);
+	D3DXMatrixTranslation(&matPos, mPosition.x, mPosition.y, mPosition.z);
+	D3DXQuaternionRotationYawPitchRoll(&rotation, euler.y, euler.x, euler.z);
+	D3DXMatrixRotationQuaternion(&matRot, &rotation);
+	D3DXMatrixScaling(&matScale, mScale.x, mScale.y, mScale.z);
 
-	return dmScale * dmRot * dmPos;
+	return matScale * matRot * matPos;
 }
 
-void Transform::SetPosition(const Vector& position)
+void Transform::SetPosition(const D3DXVECTOR3& position)
 {
 	mPosition = position;
 }
 
-void Transform::SetRotation(const Quaternion& rotation)
+void Transform::SetRotation(const D3DXQUATERNION& rotation)
 {
-	mEulerAngles = rotation.ToEuler();
+	mEulerAngles = QuaternionToEuler(rotation);
 }
 
-void Transform::SetRotation(const Vector& euler)
+void Transform::SetRotation(const D3DXVECTOR3& euler)
 {
 	mEulerAngles = euler;
 }
 
-void Transform::SetScale(const Vector& scale)
+void Transform::SetScale(const D3DXVECTOR3& scale)
 {
 	mScale = scale;
 }
 
-void Transform::AddPosition(const Vector& position)
+void Transform::AddPosition(const D3DXVECTOR3& position)
 {
 	mPosition += position;
 }
 
-void Transform::AddRotation(const Quaternion& rotation)
+void Transform::AddRotation(const D3DXQUATERNION& rotation)
 {
-	Vector euler = rotation.ToEuler();
+	D3DXVECTOR3 euler = QuaternionToEuler(rotation);
 	mEulerAngles += euler;
-	clampEuler(mEulerAngles);
 }
 
-void Transform::AddRotation(const Vector& euler)
+void Transform::AddRotation(const D3DXVECTOR3& euler)
 {
 	mEulerAngles += euler;
-	clampEuler(mEulerAngles);
 }
 
-void Transform::AddScale(const Vector& scale)
+void Transform::AddScale(const D3DXVECTOR3& scale)
 {
 	mScale += scale;
 }
 
 void Transform::AddRotationX(const float degree)
 {
-	mEulerAngles.X += degree;
-	clampEuler(mEulerAngles);
+	mEulerAngles.x += degree;
 }
 
 void Transform::AddRotationY(const float degree)
 {
-	mEulerAngles.Y += degree;
-	clampEuler(mEulerAngles);
+	mEulerAngles.y += degree;
 }
 
 void Transform::AddRotationZ(const float degree)
 {
-	mEulerAngles.Z += degree;
-	clampEuler(mEulerAngles);
+	mEulerAngles.z += degree;
 }
 
-void Transform::Translate(const Vector& translation)
+void Transform::Translate(const D3DXVECTOR3& translation)
 {
-	Vector right = GetAxisX();
-	Vector up = GetAxisY();
-	Vector look = GetAxisZ();
+	D3DXVECTOR3 right = GetAxisX();
+	D3DXVECTOR3 up = GetAxisY();
+	D3DXVECTOR3 look = GetAxisZ();
 
-	Vector posX = Vector(right.X, right.Y, right.Z) * translation.X;
-	Vector posY = Vector(up.X, up.Y, up.Z) * translation.Y;
-	Vector posZ = Vector(look.X, look.Y, look.Z) * translation.Z;
+	D3DXVECTOR3 posX = D3DXVECTOR3(right.x, right.y, right.z) * translation.x;
+	D3DXVECTOR3 posY = D3DXVECTOR3(up.x, up.y, up.z) * translation.y;
+	D3DXVECTOR3 posZ = D3DXVECTOR3(look.x, look.y, look.z) * translation.z;
 
 	mPosition += posX + posY + posZ;
 }
@@ -164,24 +174,31 @@ void Transform::Translate(const Vector& translation)
 Transform Transform::Inverse() const
 {
 	// 로컬 정보만 남기기 위한 트랜스폼 ( 역행렬 )
-	Vector reciprocalScale = Vector::Zero;
-	if (!Math::EqualsInTolerance(mScale.X, 0.f))
+	D3DXVECTOR3 reciprocalScale = VECTOR3_ZERO;
+	if (!Math::EqualsInTolerance(mScale.x, 0.f))
 	{
-		reciprocalScale.X = 1.f / mScale.X;
+		reciprocalScale.x = 1.f / mScale.x;
 	}
-	if (!Math::EqualsInTolerance(mScale.Y, 0.f))
+	if (!Math::EqualsInTolerance(mScale.y, 0.f))
 	{
-		reciprocalScale.Y = 1.f / mScale.Y;
+		reciprocalScale.y = 1.f / mScale.y;
 	}
-	if (!Math::EqualsInTolerance(mScale.Z, 0.f))
+	if (!Math::EqualsInTolerance(mScale.z, 0.f))
 	{
-		reciprocalScale.Z = 1.f / mScale.Z;
+		reciprocalScale.z = 1.f / mScale.z;
 	}
 
 	Transform result;
+
 	result.SetScale(reciprocalScale);
-	result.SetRotation(Math::EulerToQuaternion(mEulerAngles).GetInverse());
-	result.SetPosition(result.GetScale() * (result.GetRotation() * -GetPosition()));
+
+	D3DXQUATERNION rot = EulerToQuaternion(mEulerAngles);
+	D3DXQuaternionConjugate(&rot, &rot);
+	result.SetRotation(rot);
+
+	D3DXVECTOR3 pos = -mPosition * result.GetRotation() * result.GetScale();
+	result.SetPosition(pos);
+
 	return result;
 }
 
@@ -190,7 +207,8 @@ Transform Transform::LocalToWorld(const Transform& parentWorldTransform) const
 	Transform result;
 	result.SetScale(parentWorldTransform.GetScale() * GetScale());
 	result.SetRotation(parentWorldTransform.GetRotation() * GetRotation());
-	result.SetPosition(parentWorldTransform.GetPosition() + parentWorldTransform.GetRotation() * (parentWorldTransform.GetScale() * GetPosition()));
+	result.SetPosition(parentWorldTransform.GetPosition() + ((parentWorldTransform.GetScale() * GetPosition()) * parentWorldTransform.GetRotation()));
+
 	return result;
 }
 
@@ -201,15 +219,16 @@ Transform Transform::WorldToLocal(const Transform& parentWorldTransform) const
 	Transform result;
 	result.SetScale(invParent.GetScale() * GetScale());
 	result.SetRotation(invParent.GetRotation() * GetRotation());
-	result.SetPosition(invParent.GetPosition() + (invParent.GetScale() * (invParent.GetRotation() * GetPosition())));
+	result.SetPosition(invParent.GetPosition() + (invParent.GetScale() * (GetPosition() * invParent.GetRotation())));
+
 	return result;
 }
 
-void Transform::clampEuler(Vector& euler)
+void Transform::clampEuler(D3DXVECTOR3& euler)
 {
-	euler.X = getAxisClampedValue(euler.X);
-	euler.Y = getAxisClampedValue(euler.Y);
-	euler.Z = getAxisClampedValue(euler.Z);
+	euler.x = getAxisClampedValue(euler.x);
+	euler.y = getAxisClampedValue(euler.y);
+	euler.z = getAxisClampedValue(euler.z);
 }
 
 float Transform::getAxisClampedValue(float rotationValue)

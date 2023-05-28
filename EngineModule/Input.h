@@ -1,6 +1,6 @@
 #pragma once
 
-class InputManager
+class Input
 {
 public:
 	struct State
@@ -14,10 +14,10 @@ public:
 	friend class GameEngine;
 
 public:
-	InputManager() = delete;
-	InputManager(const InputManager&) = delete;
-	InputManager& operator=(InputManager&&) = delete;
-	~InputManager() = delete;
+	Input() = delete;
+	Input(const Input&) = delete;
+	Input& operator=(Input&&) = delete;
+	~Input() = delete;
 
 public:
 	// Å°º¸µå.

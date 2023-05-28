@@ -2,9 +2,9 @@
 #include "DevScene.h"
 #include "GameEngine.h"
 
-#include "RenderingEngine.h"
-#include "InputManager.h"
-#include "ResourceManager.h"
+#include "Renderer.h"
+#include "Input.h"
+#include "Resources.h"
 #include "Time.h"
 
 #include "CameraComponent.h"
@@ -25,13 +25,13 @@ DevScene::~DevScene()
 void DevScene::init()
 {
 	auto camera = CreateCamera(_T("Main Camera"));
-	camera->GetTransform()->SetPosition(Vector(0.f, 0.f, -10.f));
+	camera->GetTransform()->SetPosition(D3DXVECTOR3(0.f, 0.f, -10.f));
 	camera->AddComponent<CameraController>();
 
 	auto light = CreateLight(_T("Directional Light"), D3DLIGHTTYPE::D3DLIGHT_DIRECTIONAL);
-	light->GetTransform()->SetRotation(Vector(10, -10, 10));
+	light->GetTransform()->SetRotation(D3DXVECTOR3(10, -10, 10));
 
 	auto cube = CreateCube(_T("Cube"));
-	cube->GetTransform()->SetPosition(Vector(0, 0, 0));
-	cube->GetComponent<MeshComponent>()->SetMaterial(ResourceManager::GetMaterial(_T("Crate")));
+	cube->GetTransform()->SetPosition(D3DXVECTOR3(0, 0, 0));
+	cube->GetComponent<MeshComponent>()->SetMaterial(Resources::GetMaterial(_T("Crate")));
 }

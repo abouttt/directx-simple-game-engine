@@ -4,50 +4,50 @@
 #include "LightComponent.h"
 #include "Material.h"
 #include "MeshComponent.h"
-#include "RenderingEngine.h"
+#include "Renderer.h"
 #include "TransformComponent.h"
 
-bool RenderingEngine::mbInit = false;
-int RenderingEngine::mWidth = 0;
-int RenderingEngine::mHeight = 0;
-IDirect3DDevice9* RenderingEngine::mD3DDevice = nullptr;
-D3DCOLOR RenderingEngine::mBackgroundColor = D3DCOLOR_XRGB(128, 128, 128);
-CameraComponent* RenderingEngine::mCurrentCamera = nullptr;
-std::unordered_map<eRenderingMode, std::vector<MeshComponent*>> RenderingEngine::mMeshComponents;
-std::vector<LightComponent*> RenderingEngine::mLightComponents;
-DWORD RenderingEngine::mCurrentLightCount = 0;
+bool Renderer::mbInit = false;
+int Renderer::mWidth = 0;
+int Renderer::mHeight = 0;
+IDirect3DDevice9* Renderer::mD3DDevice = nullptr;
+D3DCOLOR Renderer::mBackgroundColor = D3DCOLOR_XRGB(128, 128, 128);
+CameraComponent* Renderer::mCurrentCamera = nullptr;
+std::unordered_map<eRenderingMode, std::vector<MeshComponent*>> Renderer::mMeshComponents;
+std::vector<LightComponent*> Renderer::mLightComponents;
+DWORD Renderer::mCurrentLightCount = 0;
 
-int RenderingEngine::GetWidth()
+int Renderer::GetWidth()
 {
 	return mWidth;
 }
 
-int RenderingEngine::GetHeight()
+int Renderer::GetHeight()
 {
 	return mHeight;
 }
 
-IDirect3DDevice9* RenderingEngine::GetDevice()
+IDirect3DDevice9* Renderer::GetDevice()
 {
 	return mD3DDevice;
 }
 
-D3DCOLOR RenderingEngine::GetBackgroundColor()
+D3DCOLOR Renderer::GetBackgroundColor()
 {
 	return mBackgroundColor;
 }
 
-void RenderingEngine::SetBackgroundColor(const D3DCOLOR color)
+void Renderer::SetBackgroundColor(const D3DCOLOR color)
 {
 	mBackgroundColor = color;
 }
 
-void RenderingEngine::SetCurrentCamera(CameraComponent* camera)
+void Renderer::SetCurrentCamera(CameraComponent* camera)
 {
 	mCurrentCamera = camera;
 }
 
-void RenderingEngine::AddMeshComponent(MeshComponent* const mesh)
+void Renderer::AddMeshComponent(MeshComponent* const mesh)
 {
 	assert(mesh);
 
@@ -61,7 +61,7 @@ void RenderingEngine::AddMeshComponent(MeshComponent* const mesh)
 	}
 }
 
-void RenderingEngine::AddLightComponent(LightComponent* const light)
+void Renderer::AddLightComponent(LightComponent* const light)
 {
 	assert(light);
 
@@ -74,7 +74,7 @@ void RenderingEngine::AddLightComponent(LightComponent* const light)
 	}
 }
 
-void RenderingEngine::RemoveMeshComponent(MeshComponent* const mesh)
+void Renderer::RemoveMeshComponent(MeshComponent* const mesh)
 {
 	assert(mesh);
 
@@ -89,7 +89,7 @@ void RenderingEngine::RemoveMeshComponent(MeshComponent* const mesh)
 	}
 }
 
-void RenderingEngine::RemoveLightComponent(LightComponent* const light)
+void Renderer::RemoveLightComponent(LightComponent* const light)
 {
 	assert(light);
 
@@ -101,12 +101,12 @@ void RenderingEngine::RemoveLightComponent(LightComponent* const light)
 	}
 }
 
-CameraComponent* RenderingEngine::GetCurrentCamera()
+CameraComponent* Renderer::GetCurrentCamera()
 {
 	return mCurrentCamera;
 }
 
-void RenderingEngine::preRender()
+void Renderer::preRender()
 {
 	if (mCurrentCamera)
 	{
@@ -123,7 +123,7 @@ void RenderingEngine::preRender()
 	}
 }
 
-void RenderingEngine::render()
+void Renderer::render()
 {
 	if (mD3DDevice)
 	{
@@ -137,7 +137,7 @@ void RenderingEngine::render()
 	}
 }
 
-void RenderingEngine::postRender()
+void Renderer::postRender()
 {
 	// 렌더 마무리 / 백 버퍼 스왑.
 	if (mD3DDevice)
@@ -147,13 +147,13 @@ void RenderingEngine::postRender()
 	}
 }
 
-void RenderingEngine::updateCamera()
+void Renderer::updateCamera()
 {
 	mD3DDevice->SetTransform(D3DTS_VIEW, &mCurrentCamera->getViewMatrix());
 	mD3DDevice->SetTransform(D3DTS_PROJECTION, &mCurrentCamera->getProjectionMatrix(mWidth, mHeight));
 }
 
-void RenderingEngine::updateLights()
+void Renderer::updateLights()
 {
 	for (auto light : mLightComponents)
 	{
@@ -163,7 +163,7 @@ void RenderingEngine::updateLights()
 }
 
 // 카메라와의 거리에 따라 정렬.
-void RenderingEngine::sortTransparencyMeshes()
+void Renderer::sortTransparencyMeshes()
 {
 	auto camPos = mCurrentCamera->GetTransform()->GetPosition();
 	auto& meshComponents = mMeshComponents[eRenderingMode::Transparency];
@@ -172,11 +172,11 @@ void RenderingEngine::sortTransparencyMeshes()
 		{
 			auto gapA = camPos - a->GetTransform()->GetPosition();
 			auto gapB = camPos - b->GetTransform()->GetPosition();
-			return gapA.GetSizeSq() > gapB.GetSizeSq();
+			return D3DXVec3LengthSq(&gapA) > D3DXVec3LengthSq(&gapB);
 		});
 }
 
-void RenderingEngine::renderMeshes(std::vector<MeshComponent*>& meshComponents)
+void Renderer::renderMeshes(std::vector<MeshComponent*>& meshComponents)
 {
 	for (auto meshComponent : meshComponents)
 	{
@@ -187,7 +187,7 @@ void RenderingEngine::renderMeshes(std::vector<MeshComponent*>& meshComponents)
 	}
 }
 
-bool RenderingEngine::init(const HWND hWnd, const int width, const int height, const bool bWindowed)
+bool Renderer::init(const HWND hWnd, const int width, const int height, const bool bWindowed)
 {
 	if (mbInit)
 	{
@@ -201,6 +201,10 @@ bool RenderingEngine::init(const HWND hWnd, const int width, const int height, c
 	{
 		return false;
 	}
+	else
+	{
+		initPipeline();
+	}
 
 	mMeshComponents.insert({ eRenderingMode::Opaque, std::vector<MeshComponent*>() });
 	mMeshComponents.insert({ eRenderingMode::Transparency, std::vector<MeshComponent*>() });
@@ -209,7 +213,7 @@ bool RenderingEngine::init(const HWND hWnd, const int width, const int height, c
 	return true;
 }
 
-bool RenderingEngine::initDevice(const HWND hWnd, const bool bWindowed)
+bool Renderer::initDevice(const HWND hWnd, const bool bWindowed)
 {
 	IDirect3D9* d3d9;
 	d3d9 = Direct3DCreate9(D3D_SDK_VERSION);
@@ -260,7 +264,37 @@ bool RenderingEngine::initDevice(const HWND hWnd, const bool bWindowed)
 	return true;
 }
 
-void RenderingEngine::clear()
+void Renderer::initPipeline()
+{
+	if (mD3DDevice)
+	{
+		// 기본.
+		mD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+		mD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+		mD3DDevice->SetRenderState(D3DRS_ZENABLE, true);
+		mD3DDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
+
+		// 라이트.
+		mD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
+		mD3DDevice->SetRenderState(D3DRS_SPECULARENABLE, false);	// 정반사광.	
+		mD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);	// 법선 정리.
+
+		// 텍스처.
+		mD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_ANISOTROPIC);
+		mD3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_ANISOTROPIC);
+		mD3DDevice->SetSamplerState(0, D3DSAMP_MAXANISOTROPY, 16);
+
+		mD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
+
+		// 밉맵.
+		mD3DDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_POINT);
+
+		mD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+		mD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	}
+}
+
+void Renderer::clear()
 {
 	mCurrentCamera = nullptr;
 	mMeshComponents.clear();
@@ -273,7 +307,7 @@ void RenderingEngine::clear()
 	mCurrentLightCount = 0;
 }
 
-void RenderingEngine::release()
+void Renderer::release()
 {
 	if (!mbInit)
 	{

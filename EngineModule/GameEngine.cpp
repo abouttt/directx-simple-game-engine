@@ -3,14 +3,14 @@
 #include "GameBehaviourEventManager.h"
 #include "EngineUtil.h"
 #include "GameEngine.h"
-#include "InputManager.h"
+#include "Input.h"
 #include "LightComponent.h"
 #include "MeshComponent.h"
-#include "RenderingEngine.h"
-#include "ResourceManager.h"
+#include "Renderer.h"
+#include "Resources.h"
 #include "Scene.h"
 #include "SceneManager.h"
-#include "TimeManager.h"
+#include "Time.h"
 
 bool GameEngine::mbInit = false;
 
@@ -21,14 +21,14 @@ bool GameEngine::Init(const HINSTANCE hInstance, const HWND hWnd, const int widt
 		return false;
 	}
 
-	if (!RenderingEngine::init(hWnd, width, height, bWindowed) ||
-		!InputManager::init(hInstance, hWnd))
+	if (!Renderer::init(hWnd, width, height, bWindowed) ||
+		!Input::init(hInstance, hWnd))
 	{
 		return false;
 	}
 
-	ResourceManager::init();
-	TimeManager::init();
+	Resources::init();
+	Time::init();
 
 	loadResources();
 
@@ -44,8 +44,8 @@ void GameEngine::Release()
 	}
 
 	SceneManager::release();
-	InputManager::release();
-	RenderingEngine::release();
+	Input::release();
+	Renderer::release();
 
 	mbInit = false;
 }
@@ -59,12 +59,12 @@ void GameEngine::OnTick()
 	}
 
 	// 성능 측정 시작.
-	TimeManager::beginTick();
+	Time::beginTick();
 
 	// Initialization.
 
 	// Input Event.
-	InputManager::update();
+	Input::update();
 	GameBehaviourEventManager::onEnable();
 	GameBehaviourEventManager::onStart();
 
@@ -75,17 +75,17 @@ void GameEngine::OnTick()
 	// Load Scene.
 	if (SceneManager::isReserved())
 	{
-		InputManager::clear();
-		RenderingEngine::clear();
-		TimeManager::clear();
+		Input::clear();
+		Renderer::clear();
+		Time::clear();
 		SceneManager::loadScene();
 		return;
 	}
 
 	// Scene Rendering.
-	RenderingEngine::preRender();
-	RenderingEngine::render();
-	RenderingEngine::postRender();
+	Renderer::preRender();
+	Renderer::render();
+	Renderer::postRender();
 
 	// Decommissioning.
 	GameBehaviourEventManager::onDisable();
@@ -94,21 +94,21 @@ void GameEngine::OnTick()
 	SceneManager::cleanup();
 
 	// 성능 측정 종료.
-	TimeManager::endTick();
+	Time::endTick();
 }
 
 void GameEngine::loadResources()
 {
 	// Mesh
-	ResourceManager::AddNativeMesh(_T("Cube"), GetCubeMesh());
-	ResourceManager::AddNativeMesh(_T("Sphere"), GetSphereMesh());
-	ResourceManager::AddNativeMesh(_T("Quad"), GetQuadMesh());
+	Resources::AddNativeMesh(_T("Cube"), GetCubeMesh());
+	Resources::AddNativeMesh(_T("Sphere"), GetSphereMesh());
+	Resources::AddNativeMesh(_T("Quad"), GetQuadMesh());
 
 	// Texture
-	ResourceManager::LoadNativeTexture(_T("Crate"), _T("Textures/crate.jpg"));
-	ResourceManager::LoadNativeTexture(_T("DoomGuy"), _T("Textures/doomguy.png"));
+	Resources::LoadNativeTexture(_T("Crate"), _T("Textures/crate.jpg"));
+	Resources::LoadNativeTexture(_T("DoomGuy"), _T("Textures/doomguy.png"));
 
 	// Material
-	ResourceManager::AddMaterial(_T("Default-Material"), eRenderingMode::Opaque, WHITE_MTRL, nullptr);
-	ResourceManager::AddMaterial(_T("Crate"), eRenderingMode::Opaque, WHITE_MTRL, ResourceManager::GetTexture(_T("Crate")));
+	Resources::AddMaterial(_T("Default-Material"), eRenderingMode::Opaque, WHITE_MTRL, nullptr);
+	Resources::AddMaterial(_T("Crate"), eRenderingMode::Opaque, WHITE_MTRL, Resources::GetTexture(_T("Crate")));
 }

@@ -5,7 +5,7 @@
 class CameraComponent : public BehaviourComponent
 {
 public:
-	friend class RenderingEngine;
+	friend class Renderer;
 
 public:
 	CameraComponent();

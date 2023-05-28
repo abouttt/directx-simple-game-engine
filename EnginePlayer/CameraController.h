@@ -2,7 +2,6 @@
 
 #include "CameraComponent.h"
 #include "GameBehaviourComponent.h"
-#include "Vector.h"
 
 class CameraController : public GameBehaviourComponent
 {
@@ -14,35 +13,35 @@ public:
 
 	void Update() override
 	{
-		if (InputManager::GetKey(DIK_W))
+		if (Input::GetKey(DIK_W))
 		{
-			mCameraPtr->GetTransform()->Translate(Vector(0, 0, mSpeed * TimeManager::GetDeltaTime()));
+			mCameraPtr->GetTransform()->Translate(D3DXVECTOR3(0, 0, mSpeed * Time::GetDeltaTime()));
 		}
-		if (InputManager::GetKey(DIK_S))
+		if (Input::GetKey(DIK_S))
 		{
-			mCameraPtr->GetTransform()->Translate(Vector(0, 0, -mSpeed * TimeManager::GetDeltaTime()));
+			mCameraPtr->GetTransform()->Translate(D3DXVECTOR3(0, 0, -mSpeed * Time::GetDeltaTime()));
 		}
-		if (InputManager::GetKey(DIK_A))
+		if (Input::GetKey(DIK_A))
 		{
-			mCameraPtr->GetTransform()->Translate(Vector(-mSpeed * TimeManager::GetDeltaTime(), 0, 0));
+			mCameraPtr->GetTransform()->Translate(D3DXVECTOR3(-mSpeed * Time::GetDeltaTime(), 0, 0));
 		}
-		if (InputManager::GetKey(DIK_D))
+		if (Input::GetKey(DIK_D))
 		{
-			mCameraPtr->GetTransform()->Translate(Vector(mSpeed * TimeManager::GetDeltaTime(), 0, 0));
+			mCameraPtr->GetTransform()->Translate(D3DXVECTOR3(mSpeed * Time::GetDeltaTime(), 0, 0));
 		}
-		if (InputManager::GetKey(DIK_R))
+		if (Input::GetKey(DIK_R))
 		{
-			mCameraPtr->GetTransform()->AddPosition(Vector(0, mSpeed * TimeManager::GetDeltaTime(), 0));
+			mCameraPtr->GetTransform()->AddPosition(D3DXVECTOR3(0, mSpeed * Time::GetDeltaTime(), 0));
 		}
-		if (InputManager::GetKey(DIK_F))
+		if (Input::GetKey(DIK_F))
 		{
-			mCameraPtr->GetTransform()->AddPosition(Vector(0, -mSpeed * TimeManager::GetDeltaTime(), 0));
+			mCameraPtr->GetTransform()->AddPosition(D3DXVECTOR3(0, -mSpeed * Time::GetDeltaTime(), 0));
 		}
 
-		float x = InputManager::GetAxisMouseY() * 0.2f;
-		float y = InputManager::GetAxisMouseX() * 0.2f;
-		mCameraPtr->GetTransform()->AddRotationX(InputManager::GetAxisMouseY() * 0.2f);
-		mCameraPtr->GetTransform()->AddRotationY(InputManager::GetAxisMouseX() * 0.2f);
+		float x = Input::GetAxisMouseY() * 0.2f;
+		float y = Input::GetAxisMouseX() * 0.2f;
+		mCameraPtr->GetTransform()->AddRotationX(Input::GetAxisMouseY() * 0.2f);
+		mCameraPtr->GetTransform()->AddRotationY(Input::GetAxisMouseX() * 0.2f);
 	}
 
 private:

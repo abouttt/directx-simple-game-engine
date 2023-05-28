@@ -1,14 +1,16 @@
 #pragma once
 
 #include "BehaviourComponent.h"
-#include "GameObject.h"
-#include "InputManager.h"
-#include "ResourceManager.h"
-#include "TimeManager.h"
 #include "TransformComponent.h"
 
+#include "GameObject.h"
+#include "Input.h"
+#include "Resources.h"
+#include "Time.h"
+
+#include "MathUtil.h"
+#include "Vector3.h"
 #include "Transform.h"
-#include "Vector.h"
 #include "Quaternion.h"
 
 class GameBehaviourComponent : public BehaviourComponent

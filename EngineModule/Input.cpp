@@ -1,61 +1,61 @@
 #include "pch.h"
-#include "InputManager.h"
+#include "Input.h"
 
-bool InputManager::mbInit = false;
-IDirectInput8* InputManager::mInput = nullptr;
-IDirectInputDevice8* InputManager::mKeyboard = nullptr;
-IDirectInputDevice8* InputManager::mMouse = nullptr;
-std::array<unsigned char, 256> InputManager::mKeyboardKeys;
-std::array<InputManager::State, 256> InputManager::mKeyboardState;
-DIMOUSESTATE InputManager::mMouseButtons;
-std::array<InputManager::State, 4> InputManager::mMouseState;
+bool Input::mbInit = false;
+IDirectInput8* Input::mInput = nullptr;
+IDirectInputDevice8* Input::mKeyboard = nullptr;
+IDirectInputDevice8* Input::mMouse = nullptr;
+std::array<unsigned char, 256> Input::mKeyboardKeys;
+std::array<Input::State, 256> Input::mKeyboardState;
+DIMOUSESTATE Input::mMouseButtons;
+std::array<Input::State, 4> Input::mMouseState;
 
-bool InputManager::GetKey(const unsigned int key)
+bool Input::GetKey(const unsigned int key)
 {
 	return mKeyboardState[key].bPressing;
 }
 
-bool InputManager::GetKeyDown(const unsigned int key)
+bool Input::GetKeyDown(const unsigned int key)
 {
 	return mKeyboardState[key].bPressed;
 }
 
-bool InputManager::GetKeyUp(const unsigned int key)
+bool Input::GetKeyUp(const unsigned int key)
 {
 	return mKeyboardState[key].bUp;
 }
 
-bool InputManager::GetMouseButton(const int button)
+bool Input::GetMouseButton(const int button)
 {
 	return mMouseState[button].bPressing;
 }
 
-bool InputManager::GetMouseButtonDown(const int button)
+bool Input::GetMouseButtonDown(const int button)
 {
 	return mMouseState[button].bPressed;
 }
 
-bool InputManager::GetMouseButtonUp(const int button)
+bool Input::GetMouseButtonUp(const int button)
 {
 	return mMouseState[button].bUp;
 }
 
-LONG InputManager::GetAxisMouseX()
+LONG Input::GetAxisMouseX()
 {
 	return mMouseButtons.lX;
 }
 
-LONG InputManager::GetAxisMouseY()
+LONG Input::GetAxisMouseY()
 {
 	return mMouseButtons.lY;
 }
 
-LONG InputManager::GetAxisMouseZ()
+LONG Input::GetAxisMouseZ()
 {
 	return mMouseButtons.lZ;
 }
 
-void InputManager::GetMousePosition(int* const outMouseX, int* const outMouseY)
+void Input::GetMousePosition(int* const outMouseX, int* const outMouseY)
 {
 	assert(outMouseX);
 	assert(outMouseY);
@@ -64,13 +64,13 @@ void InputManager::GetMousePosition(int* const outMouseX, int* const outMouseY)
 	*outMouseY = mMouseButtons.lY;
 }
 
-void InputManager::update()
+void Input::update()
 {
 	keyboardUpdate();
 	mouseUpdate();
 }
 
-void InputManager::keyboardUpdate()
+void Input::keyboardUpdate()
 {
 	if (!readKeyboard())
 	{
@@ -94,7 +94,7 @@ void InputManager::keyboardUpdate()
 	}
 }
 
-void InputManager::mouseUpdate()
+void Input::mouseUpdate()
 {
 	if (!readMouse())
 	{
@@ -118,7 +118,7 @@ void InputManager::mouseUpdate()
 	}
 }
 
-bool InputManager::readKeyboard()
+bool Input::readKeyboard()
 {
 	// 키보드 디바이스를 얻는다.
 	HRESULT result = mKeyboard->GetDeviceState(sizeof(mKeyboardKeys), (LPVOID)&mKeyboardKeys);
@@ -138,7 +138,7 @@ bool InputManager::readKeyboard()
 	return true;
 }
 
-bool InputManager::readMouse()
+bool Input::readMouse()
 {
 	// 마우스 디바이스를 얻는다.
 	HRESULT result = mMouse->GetDeviceState(sizeof(DIMOUSESTATE), (LPVOID)&mMouseButtons);
@@ -158,7 +158,7 @@ bool InputManager::readMouse()
 	return true;
 }
 
-bool InputManager::init(const HINSTANCE hInstance, const HWND hWnd)
+bool Input::init(const HINSTANCE hInstance, const HWND hWnd)
 {
 	if (mbInit)
 	{
@@ -224,7 +224,7 @@ bool InputManager::init(const HINSTANCE hInstance, const HWND hWnd)
 	return true;
 }
 
-void InputManager::clear()
+void Input::clear()
 {
 	for (int i = 0; i < 256; i++)
 	{
@@ -241,7 +241,7 @@ void InputManager::clear()
 	}
 }
 
-void InputManager::release()
+void Input::release()
 {
 	if (!mbInit)
 	{

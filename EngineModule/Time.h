@@ -1,15 +1,15 @@
 #pragma once
 
-class TimeManager
+class Time
 {
 public:
 	friend class GameEngine;
 
 public:
-	TimeManager() = delete;
-	TimeManager(const TimeManager&) = delete;
-	TimeManager& operator=(TimeManager&&) = delete;
-	~TimeManager() = delete;
+	Time() = delete;
+	Time(const Time&) = delete;
+	Time& operator=(Time&&) = delete;
+	~Time() = delete;
 
 public:
 	static float GetElapsedTime();

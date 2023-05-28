@@ -1,17 +1,17 @@
 #include "pch.h"
 #include "EngineUtil.h"
-#include "RenderingEngine.h"
-#include "ResourceManager.h"
+#include "Renderer.h"
+#include "Resources.h"
 #include "Material.h"
 #include "Mesh.h"
 #include "Texture.h"
 
-bool ResourceManager::mbInit = false;
-std::unordered_map<std::wstring, std::unique_ptr<Material>> ResourceManager::mMaterials;
-std::unordered_map<std::wstring, std::unique_ptr<Mesh>> ResourceManager::mMeshes;
-std::unordered_map<std::wstring, std::unique_ptr<Texture>> ResourceManager::mTextures;
+bool Resources::mbInit = false;
+std::unordered_map<std::wstring, std::unique_ptr<Material>> Resources::mMaterials;
+std::unordered_map<std::wstring, std::unique_ptr<Mesh>> Resources::mMeshes;
+std::unordered_map<std::wstring, std::unique_ptr<Texture>> Resources::mTextures;
 
-Material* ResourceManager::GetMaterial(const std::wstring& name)
+Material* Resources::GetMaterial(const std::wstring& name)
 {
 	auto it = mMaterials.find(name);
 	if (it == mMaterials.end())
@@ -22,7 +22,7 @@ Material* ResourceManager::GetMaterial(const std::wstring& name)
 	return it->second.get();
 }
 
-Mesh* ResourceManager::GetMesh(const std::wstring& name)
+Mesh* Resources::GetMesh(const std::wstring& name)
 {
 	auto it = mMeshes.find(name);
 	if (it == mMeshes.end())
@@ -33,7 +33,7 @@ Mesh* ResourceManager::GetMesh(const std::wstring& name)
 	return it->second.get();
 }
 
-Texture* ResourceManager::GetTexture(const std::wstring& name)
+Texture* Resources::GetTexture(const std::wstring& name)
 {
 	auto it = mTextures.find(name);
 	if (it == mTextures.end())
@@ -45,7 +45,7 @@ Texture* ResourceManager::GetTexture(const std::wstring& name)
 	return it->second.get();
 }
 
-bool ResourceManager::AddMaterial(const std::wstring& name, const eRenderingMode mode, const D3DMATERIAL9& nativeMtrl, Texture* const texture)
+bool Resources::AddMaterial(const std::wstring& name, const eRenderingMode mode, const D3DMATERIAL9& nativeMtrl, Texture* const texture)
 {
 	if (mMaterials.find(name) != mMaterials.end())
 	{
@@ -58,7 +58,7 @@ bool ResourceManager::AddMaterial(const std::wstring& name, const eRenderingMode
 	return true;
 }
 
-bool ResourceManager::AddNativeMesh(const std::wstring& name, ID3DXMesh* d3dMesh)
+bool Resources::AddNativeMesh(const std::wstring& name, ID3DXMesh* d3dMesh)
 {
 	assert(d3dMesh);
 
@@ -73,7 +73,7 @@ bool ResourceManager::AddNativeMesh(const std::wstring& name, ID3DXMesh* d3dMesh
 	return true;
 }
 
-bool ResourceManager::LoadNativeTexture(const std::wstring& name, const std::wstring& path)
+bool Resources::LoadNativeTexture(const std::wstring& name, const std::wstring& path)
 {
 	if (mTextures.find(name) != mTextures.end())
 	{
@@ -81,7 +81,7 @@ bool ResourceManager::LoadNativeTexture(const std::wstring& name, const std::wst
 	}
 
 	IDirect3DTexture9* ntexture = nullptr;
-	HRESULT hr = D3DXCreateTextureFromFile(RenderingEngine::GetDevice(), (_T("../Resources/") + path).c_str(), &ntexture);
+	HRESULT hr = D3DXCreateTextureFromFile(Renderer::GetDevice(), (_T("../Resources/") + path).c_str(), &ntexture);
 
 	if (FAILED(hr))
 	{
@@ -96,7 +96,7 @@ bool ResourceManager::LoadNativeTexture(const std::wstring& name, const std::wst
 	return true;
 }
 
-bool ResourceManager::init()
+bool Resources::init()
 {
 	if (mbInit)
 	{

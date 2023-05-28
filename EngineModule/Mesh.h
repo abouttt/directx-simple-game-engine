@@ -3,7 +3,7 @@
 class Mesh
 {
 public:
-	friend class ResourceManager;
+	friend class Resources;
 
 public:
 	Mesh();

@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "EngineUtil.h"
-#include "RenderingEngine.h"
+#include "Renderer.h"
 
 const DWORD Vertex::FVF = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1;
 
@@ -18,7 +18,7 @@ D3DMATERIAL9 InitMtrl(D3DXCOLOR ambient, D3DXCOLOR diffuse, D3DXCOLOR specular, 
 ID3DXMesh* GetCubeMesh()
 {
 	ID3DXMesh* mesh = nullptr;
-	D3DXCreateBox(RenderingEngine::GetDevice(), 1, 1, 1, &mesh, 0);
+	D3DXCreateBox(Renderer::GetDevice(), 1, 1, 1, &mesh, 0);
 	SetNormalFVF(&mesh);
 	SetTextureFVF(&mesh);
 
@@ -67,7 +67,7 @@ ID3DXMesh* GetCubeMesh()
 ID3DXMesh* GetSphereMesh()
 {
 	ID3DXMesh* mesh = nullptr;
-	D3DXCreateSphere(RenderingEngine::GetDevice(), 0.5f, 50, 50, &mesh, 0);
+	D3DXCreateSphere(Renderer::GetDevice(), 0.5f, 50, 50, &mesh, 0);
 	SetNormalFVF(&mesh);
 	SetTextureFVF(&mesh);
 
@@ -95,7 +95,7 @@ ID3DXMesh* GetQuadMesh()
 		4,
 		D3DXMESH_MANAGED,
 		Vertex::FVF,
-		RenderingEngine::GetDevice(),
+		Renderer::GetDevice(),
 		&mesh);
 
 	Vertex* vertices = nullptr;
@@ -124,7 +124,7 @@ void SetNormalFVF(ID3DXMesh** const outMesh)
 		(*outMesh)->CloneMeshFVF(
 			(*outMesh)->GetOptions(),
 			(*outMesh)->GetFVF() | D3DFVF_NORMAL,
-			RenderingEngine::GetDevice(),
+			Renderer::GetDevice(),
 			&tempMesh);
 
 		// 법선 계산.
@@ -143,7 +143,7 @@ void SetTextureFVF(ID3DXMesh** const outMesh)
 		(*outMesh)->CloneMeshFVF(
 			(*outMesh)->GetOptions(),
 			(*outMesh)->GetFVF() | D3DFVF_TEX1,
-			RenderingEngine::GetDevice(),
+			Renderer::GetDevice(),
 			&tempMesh);
 
 		(*outMesh)->Release();

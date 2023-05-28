@@ -5,7 +5,7 @@
 class LightComponent : public BehaviourComponent
 {
 public:
-	friend class RenderingEngine;
+	friend class Renderer;
 
 public:
 	LightComponent(const D3DLIGHTTYPE lightType);

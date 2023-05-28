@@ -8,7 +8,7 @@ class Material;
 class MeshComponent : public BehaviourComponent
 {
 public:
-	friend class RenderingEngine;
+	friend class Renderer;
 
 public:
 	MeshComponent();

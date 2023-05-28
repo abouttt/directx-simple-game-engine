@@ -1,37 +1,36 @@
 #include "pch.h"
 #include "Mesh.h"
 #include "Material.h"
-#include "Matrix.h"
 #include "MeshComponent.h"
-#include "RenderingEngine.h"
-#include "ResourceManager.h"
+#include "Renderer.h"
+#include "Resources.h"
 #include "Texture.h"
 #include "TransformComponent.h"
 
 MeshComponent::MeshComponent()
 	: mMesh(nullptr)
-	, mMaterial(ResourceManager::GetMaterial(_T("Default-Material")))
+	, mMaterial(Resources::GetMaterial(_T("Default-Material")))
 {
-	RenderingEngine::AddMeshComponent(this);
+	Renderer::AddMeshComponent(this);
 }
 
 MeshComponent::MeshComponent(Mesh* const mesh)
 	: mMesh(mesh)
-	, mMaterial(ResourceManager::GetMaterial(_T("Default-Material")))
+	, mMaterial(Resources::GetMaterial(_T("Default-Material")))
 {
-	RenderingEngine::AddMeshComponent(this);
+	Renderer::AddMeshComponent(this);
 }
 
 MeshComponent::MeshComponent(Mesh* const mesh, Material* const material)
 	: mMesh(mesh)
 	, mMaterial(material)
 {
-	RenderingEngine::AddMeshComponent(this);
+	Renderer::AddMeshComponent(this);
 }
 
 MeshComponent::~MeshComponent()
 {
-	RenderingEngine::RemoveMeshComponent(this);
+	Renderer::RemoveMeshComponent(this);
 }
 
 Mesh* MeshComponent::GetMesh()
@@ -62,10 +61,7 @@ void MeshComponent::render(IDirect3DDevice9* const device)
 	}
 
 	auto matWorld = GetTransform()->GetMatrix();
-	D3DXMATRIX dm;
-	std::memcpy(&dm.m, &matWorld.M, sizeof(D3DXMATRIX));
-	//std::copy(&matWorld.M[0][0], &matWorld.M[0][0] + 4 * 4, &dm.m[0][0]);
-	device->SetTransform(D3DTS_WORLD, &dm);
+	device->SetTransform(D3DTS_WORLD, &matWorld);
 
 	D3DMATERIAL9 nativeMtrl;
 	::ZeroMemory(&nativeMtrl, sizeof(D3DMATERIAL9));

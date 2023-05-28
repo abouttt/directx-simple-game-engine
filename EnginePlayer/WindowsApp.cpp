@@ -2,7 +2,7 @@
 #include "GameEngine.h"
 #include "WindowsPlayer.h"
 #include "WindowsUtil.h"
-#include "TimeManager.h"
+#include "Time.h"
 #include "SceneManager.h"
 #include "DevScene.h"
 
@@ -30,10 +30,10 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 	{
 		GameEngine::OnTick();
 		
-		float currentTime = TimeManager::GetElapsedTime();
+		float currentTime = Time::GetElapsedTime();
 		if (currentTime - previousTimer > updatePeriod)
 		{
-			float fps = TimeManager::GetFPS();
+			float fps = Time::GetFPS();
 			wndplayer::SetWindowsStatTitle(fps);
 			previousTimer = currentTime;
 		}

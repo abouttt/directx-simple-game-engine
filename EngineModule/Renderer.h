@@ -5,16 +5,16 @@ class MeshComponent;
 class LightComponent;
 enum class eRenderingMode;
 
-class RenderingEngine
+class Renderer
 {
 public:
 	friend class GameEngine;
 
 public:
-	RenderingEngine() = delete;
-	RenderingEngine(const RenderingEngine&) = delete;
-	RenderingEngine& operator=(RenderingEngine&&) = delete;
-	~RenderingEngine() = delete;
+	Renderer() = delete;
+	Renderer(const Renderer&) = delete;
+	Renderer& operator=(Renderer&&) = delete;
+	~Renderer() = delete;
 
 public:
 	static int GetWidth();
@@ -44,6 +44,7 @@ private:
 
 	static bool init(const HWND hWnd, const int width, const int height, const bool bWindowed);
 	static bool initDevice(const HWND hWnd, const bool bWindowed);
+	static void initPipeline();
 	static void clear();
 	static void release();
 

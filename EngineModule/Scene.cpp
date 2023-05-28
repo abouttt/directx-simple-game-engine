@@ -2,7 +2,7 @@
 #include "CameraComponent.h"
 #include "LightComponent.h"
 #include "MeshComponent.h"
-#include "ResourceManager.h"
+#include "Resources.h"
 #include "Scene.h"
 
 Scene::Scene()
@@ -123,7 +123,7 @@ GameObject* Scene::FindGameObjectWithTag(const std::wstring& tag)
 GameObject* Scene::createGameObjectWithMesh(const std::wstring& name, const std::wstring& meshName)
 {
 	auto newGameObject = CreateGameObject(name);
-	newGameObject->AddComponent<MeshComponent>(ResourceManager::GetMesh(meshName));
+	newGameObject->AddComponent<MeshComponent>(Resources::GetMesh(meshName));
 	return newGameObject;
 }
 

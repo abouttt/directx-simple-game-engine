@@ -1,53 +1,52 @@
 #pragma once
 
-#include "Vector.h"
-
-struct Matrix;
-struct Quaternion;
+#include "MathUtil.h"
 
 class Transform
 {
 public:
 	Transform();
-	Transform(const Vector& positon, const Vector& euler, const Vector& scale);
-	
+	Transform(const D3DXVECTOR3& position);
+	Transform(const D3DXVECTOR3& position, const D3DXQUATERNION& rotation);
+	Transform(const D3DXVECTOR3& position, const D3DXVECTOR3& euler);
+	Transform(const D3DXVECTOR3& position, const D3DXQUATERNION& rotation, const D3DXVECTOR3& scale);
+	Transform(const D3DXVECTOR3& position, const D3DXVECTOR3& euler, const D3DXVECTOR3& scale);
+
 public:
-	Vector GetPosition() const;
-	Quaternion GetRotation() const;
-	Vector GetEulerAngles() const;
-	Vector GetScale() const;
-	Vector GetAxisX() const;
-	Vector GetAxisY() const;
-	Vector GetAxisZ() const;
-	Matrix GetMatrix() const;
-	D3DXMATRIX GetD3DXMatrix() const;
+	D3DXVECTOR3 GetPosition() const;
+	D3DXQUATERNION GetRotation() const;
+	D3DXVECTOR3 GetEulerAngles() const;
+	D3DXVECTOR3 GetScale() const;
+	D3DXVECTOR3 GetAxisX() const;
+	D3DXVECTOR3 GetAxisY() const;
+	D3DXVECTOR3 GetAxisZ() const;
+	D3DXMATRIX GetMatrix() const;
 
-	void SetPosition(const Vector& position);
-	void SetRotation(const Quaternion& rotation);
-	void SetRotation(const Vector& euler);
-	void SetScale(const Vector& scale);
+	void SetPosition(const D3DXVECTOR3& position);
+	void SetRotation(const D3DXQUATERNION& rotation);
+	void SetRotation(const D3DXVECTOR3& euler);
+	void SetScale(const D3DXVECTOR3& scale);
 
-	void AddPosition(const Vector& position);
-	void AddRotation(const Quaternion& rotation);
-	void AddRotation(const Vector& euler);
-	void AddScale(const Vector& scale);
+	void AddPosition(const D3DXVECTOR3& position);
+	void AddRotation(const D3DXQUATERNION& rotation);
+	void AddRotation(const D3DXVECTOR3& euler);
+	void AddScale(const D3DXVECTOR3& scale);
 	void AddRotationX(const float degree);
 	void AddRotationY(const float degree);
 	void AddRotationZ(const float degree);
 
-	void Translate(const Vector& translation);
+	void Translate(const D3DXVECTOR3& translation);
 
 	Transform Inverse() const;
 	Transform LocalToWorld(const Transform& parentWorldTransform) const;
 	Transform WorldToLocal(const Transform& parentWorldTransform) const;
 
 private:
-	void clampEuler(Vector& euler);
+	void clampEuler(D3DXVECTOR3& euler);
 	float getAxisClampedValue(float rotationValue);
 
 private:
-	Vector mPosition;
-	Vector mEulerAngles;
-	Vector mScale;
+	D3DXVECTOR3 mPosition;
+	D3DXVECTOR3 mEulerAngles;
+	D3DXVECTOR3 mScale;
 };
-

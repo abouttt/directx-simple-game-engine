@@ -3,10 +3,6 @@
 #include "Component.h"
 #include "Transform.h"
 
-struct Vector;
-struct Quaternion;
-struct Matrix;
-
 class TransformComponent : public Component
 {
 public:
@@ -14,47 +10,47 @@ public:
 	TransformComponent(const Transform& localTransform);
 
 public: // 로컬 트랜스폼.
-	Vector GetLocalPosition() const;
-	Quaternion GetLocalRotation() const;
-	Vector GetLocalEulerAngles() const;
-	Vector GetLocalScale() const;
-	Vector GetLocalAxisX() const;
-	Vector GetLocalAxisY() const;
-	Vector GetLocalAxisZ() const;
-	Matrix GetLocalMatrix() const;
+	D3DXVECTOR3 GetLocalPosition() const;
+	D3DXQUATERNION GetLocalRotation() const;
+	D3DXVECTOR3 GetLocalEulerAngles() const;
+	D3DXVECTOR3 GetLocalScale() const;
+	D3DXVECTOR3 GetLocalAxisX() const;
+	D3DXVECTOR3 GetLocalAxisY() const;
+	D3DXVECTOR3 GetLocalAxisZ() const;
+	D3DXMATRIX GetLocalMatrix() const;
 
-	void SetLocalPosition(const Vector& position);
-	void SetLocalRotation(const Quaternion& rotation);
-	void SetLocalRotation(const Vector& eulerAngles);
-	void SetLocalScale(const Vector& scale);
+	void SetLocalPosition(const D3DXVECTOR3& position);
+	void SetLocalRotation(const D3DXQUATERNION& rotation);
+	void SetLocalRotation(const D3DXVECTOR3& eulerAngles);
+	void SetLocalScale(const D3DXVECTOR3& scale);
 
-	void AddLocalPosition(const Vector& position);
-	void AddLocalRotation(const Vector& eulerAngles);
-	void AddLocalScale(const Vector& scale);
+	void AddLocalPosition(const D3DXVECTOR3& position);
+	void AddLocalRotation(const D3DXVECTOR3& eulerAngles);
+	void AddLocalScale(const D3DXVECTOR3& scale);
 	void AddLocalRotationX(const float degree);
 	void AddLocalRotationY(const float degree);
 	void AddLocalRotationZ(const float degree);
 
-	void Translate(const Vector& translation);
+	void Translate(const D3DXVECTOR3& translation);
 
 public: // 월드 트랜스폼.
-	Vector GetPosition() const;
-	Quaternion GetRotation() const;
-	Vector GetEulerAngles() const;
-	Vector GetScale() const;
-	Vector GetAxisX() const;
-	Vector GetAxisY() const;
-	Vector GetAxisZ() const;
-	Matrix GetMatrix() const;
+	D3DXVECTOR3 GetPosition() const;
+	D3DXQUATERNION GetRotation() const;
+	D3DXVECTOR3 GetEulerAngles() const;
+	D3DXVECTOR3 GetScale() const;
+	D3DXVECTOR3 GetAxisX() const;
+	D3DXVECTOR3 GetAxisY() const;
+	D3DXVECTOR3 GetAxisZ() const;
+	D3DXMATRIX GetMatrix() const;
 
-	void SetPosition(const Vector& position);
-	void SetRotation(const Quaternion& rotation);
-	void SetRotation(const Vector& eulerAngles);
-	void SetScale(const Vector& scale);
+	void SetPosition(const D3DXVECTOR3& position);
+	void SetRotation(const D3DXQUATERNION& rotation);
+	void SetRotation(const D3DXVECTOR3& eulerAngles);
+	void SetScale(const D3DXVECTOR3& scale);
 
-	void AddPosition(const Vector& position);
-	void AddRotation(const Vector& eulerAngles);
-	void AddScale(const Vector& scale);
+	void AddPosition(const D3DXVECTOR3& position);
+	void AddRotation(const D3DXVECTOR3& eulerAngles);
+	void AddScale(const D3DXVECTOR3& scale);
 	void AddRotationX(const float degree);
 	void AddRotationY(const float degree);
 	void AddRotationZ(const float degree);

@@ -1,32 +1,32 @@
 #include "pch.h"
-#include "TimeManager.h"
+#include "Time.h"
 
-bool TimeManager::mbInit = false;
-long long TimeManager::mStartTimeStamp = 0;
-long long TimeManager::mFrameTimeStamp = 0;
-long TimeManager::mFrameCount = 0;
-float TimeManager::mCyclesPerMilliSeconds;
-float TimeManager::mFrameTime = -1.f;
-float TimeManager::mElapsedTime = 0.f;
-float TimeManager::mAverageFPS = 0.f;
-float TimeManager::mFPS = 0.f;
+bool Time::mbInit = false;
+long long Time::mStartTimeStamp = 0;
+long long Time::mFrameTimeStamp = 0;
+long Time::mFrameCount = 0;
+float Time::mCyclesPerMilliSeconds;
+float Time::mFrameTime = -1.f;
+float Time::mElapsedTime = 0.f;
+float Time::mAverageFPS = 0.f;
+float Time::mFPS = 0.f;
 
-float TimeManager::GetElapsedTime()
+float Time::GetElapsedTime()
 {
 	return mElapsedTime;
 }
 
-float TimeManager::GetDeltaTime()
+float Time::GetDeltaTime()
 {
 	return mFrameTime / 1000.f;
 }
 
-float TimeManager::GetFPS()
+float Time::GetFPS()
 {
 	return mFPS;
 }
 
-void TimeManager::beginTick()
+void Time::beginTick()
 {
 	mFrameTimeStamp = getCurrentTimeStamp();
 	if (mFrameCount == 0)
@@ -35,7 +35,7 @@ void TimeManager::beginTick()
 	}
 }
 
-void TimeManager::endTick()
+void Time::endTick()
 {
 	mFrameCount++;
 	INT64 currentTimeStamp = getCurrentTimeStamp();
@@ -47,7 +47,7 @@ void TimeManager::endTick()
 	mAverageFPS = mElapsedTime == 0.f ? 0.f : 1000.f / mElapsedTime * mFrameCount;
 }
 
-bool TimeManager::init()
+bool Time::init()
 {
 	if (mbInit)
 	{
@@ -60,7 +60,7 @@ bool TimeManager::init()
 	return true;
 }
 
-void TimeManager::clear()
+void Time::clear()
 {
 	mStartTimeStamp = 0;
 	mFrameTimeStamp = 0;
@@ -71,7 +71,7 @@ void TimeManager::clear()
 	mFPS = 0.f;
 }
 
-float TimeManager::getCyclesPerMilliSeconds()
+float Time::getCyclesPerMilliSeconds()
 {
 	LARGE_INTEGER frequency;
 	if (!QueryPerformanceFrequency(&frequency))
@@ -82,7 +82,7 @@ float TimeManager::getCyclesPerMilliSeconds()
 	return static_cast<float>(frequency.QuadPart / 1000.f);
 }
 
-long long TimeManager::getCurrentTimeStamp()
+long long Time::getCurrentTimeStamp()
 {
 	LARGE_INTEGER currentTime;
 	QueryPerformanceCounter(&currentTime);

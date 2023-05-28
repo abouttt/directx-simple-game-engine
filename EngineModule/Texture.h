@@ -3,7 +3,7 @@
 class Texture
 {
 public:
-	friend class ResourceManager;
+	friend class Resources;
 
 public:
 	Texture();

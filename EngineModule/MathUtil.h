@@ -4,9 +4,6 @@
 
 // √‚√≥ : https://github.com/onlybooks/gamemath/blob/main/Source/Runtime/Math/Public/MathUtil.h
 
-#include "Vector.h"
-#include "Quaternion.h"
-
 struct Math
 {
 	static constexpr float PI = { 3.14159265358979323846f };
@@ -225,22 +222,5 @@ struct Math
 
 		_mm_store_ss(&temp, X2);
 		return temp;
-	}
-
-	inline static Quaternion EulerToQuaternion(const Vector& v)
-	{
-		float sp = 0.f, sy = 0.f, sr = 0.f;
-		float cp = 0.f, cy = 0.f, cr = 0.f;
-
-		Math::GetSinCos(&sp, &cp, v.X * 0.5f);
-		Math::GetSinCos(&sy, &cy, v.Y * 0.5f);
-		Math::GetSinCos(&sr, &cr, v.Z * 0.5f);
-
-		Quaternion q;
-		q.W = sy * sp * sr + cy * cp * cr;
-		q.X = sy * sr * cp + sp * cy * cr;
-		q.Y = sy * cp * cr - sp * sr * cy;
-		q.Z = -sy * sp * cr + sr * cy * cp;
-		return q;
 	}
 };

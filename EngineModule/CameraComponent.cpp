@@ -1,10 +1,9 @@
 #include "pch.h"
 #include "CameraComponent.h"
-#include "RenderingEngine.h"
+#include "Renderer.h"
 #include "Scene.h"
 #include "SceneManager.h"
 #include "TransformComponent.h"
-#include "Vector.h"
 
 CameraComponent::CameraComponent()
 	: mFov(60)
@@ -13,20 +12,20 @@ CameraComponent::CameraComponent()
 	, mViewMatrix()
 	, mProjMatrix()
 {
-	RenderingEngine::SetCurrentCamera(this);
+	Renderer::SetCurrentCamera(this);
 }
 
 CameraComponent::~CameraComponent()
 {
 	if (this == GetCurrentCamera())
 	{
-		RenderingEngine::SetCurrentCamera(SceneManager::GetActiveScene()->FindComponent<CameraComponent>());
+		Renderer::SetCurrentCamera(SceneManager::GetActiveScene()->FindComponent<CameraComponent>());
 	}
 }
 
 CameraComponent* CameraComponent::GetCurrentCamera()
 {
-	return RenderingEngine::GetCurrentCamera();
+	return Renderer::GetCurrentCamera();
 }
 
 CameraComponent* CameraComponent::GetMainCamera()
@@ -82,36 +81,35 @@ void CameraComponent::SetEnable(const bool bEnable)
 
 	if (bEnable)
 	{
-		if (!RenderingEngine::GetCurrentCamera())
+		if (!Renderer::GetCurrentCamera())
 		{
-			RenderingEngine::SetCurrentCamera(this);
+			Renderer::SetCurrentCamera(this);
 		}
 	}
 	else
 	{
-		if (this == RenderingEngine::GetCurrentCamera())
+		if (this == Renderer::GetCurrentCamera())
 		{
 			auto nextCamera = SceneManager::GetActiveScene()->FindComponent<CameraComponent>();
-			RenderingEngine::SetCurrentCamera(nextCamera);
+			Renderer::SetCurrentCamera(nextCamera);
 		}
 	}
 }
 
 const D3DXMATRIX& CameraComponent::getViewMatrix()
 {
-	Vector right = GetTransform()->GetLocalAxisX();
-	Vector up = GetTransform()->GetLocalAxisY();
-	Vector look = GetTransform()->GetLocalAxisZ();
+	D3DXVECTOR3 right = GetTransform()->GetLocalAxisX();
+	D3DXVECTOR3 up = GetTransform()->GetLocalAxisY();
+	D3DXVECTOR3 look = GetTransform()->GetLocalAxisZ();
 
-	Vector pos = GetTransform()->GetPosition();
+	D3DXVECTOR3 pos = GetTransform()->GetPosition();
+	float x = -D3DXVec3Dot(&right, &pos);
+	float y = -D3DXVec3Dot(&up, &pos);
+	float z = -D3DXVec3Dot(&look, &pos);
 
-	float x = -Vector::Dot(right, pos);
-	float y = -Vector::Dot(up, pos);
-	float z = -Vector::Dot(look, pos);
-
-	mViewMatrix(0, 0) = right.X; mViewMatrix(0, 1) = up.X; mViewMatrix(0, 2) = look.X; mViewMatrix(0, 3) = 0.f;
-	mViewMatrix(1, 0) = right.Y; mViewMatrix(1, 1) = up.Y; mViewMatrix(1, 2) = look.Y; mViewMatrix(1, 3) = 0.f;
-	mViewMatrix(2, 0) = right.Z; mViewMatrix(2, 1) = up.Z; mViewMatrix(2, 2) = look.Z; mViewMatrix(2, 3) = 0.f;
+	mViewMatrix(0, 0) = right.x; mViewMatrix(0, 1) = up.x; mViewMatrix(0, 2) = look.x; mViewMatrix(0, 3) = 0.f;
+	mViewMatrix(1, 0) = right.y; mViewMatrix(1, 1) = up.y; mViewMatrix(1, 2) = look.y; mViewMatrix(1, 3) = 0.f;
+	mViewMatrix(2, 0) = right.z; mViewMatrix(2, 1) = up.z; mViewMatrix(2, 2) = look.z; mViewMatrix(2, 3) = 0.f;
 	mViewMatrix(3, 0) = x;       mViewMatrix(3, 1) = y;    mViewMatrix(3, 2) = z;      mViewMatrix(3, 3) = 1.f;
 
 	return mViewMatrix;
