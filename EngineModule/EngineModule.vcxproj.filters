@@ -129,6 +129,12 @@
     <ClInclude Include="MeshComponent.h">
       <Filter>Components\Public</Filter>
     </ClInclude>
+    <ClInclude Include="GameBehaviourComponent.h">
+      <Filter>Components\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="GameBehaviourEventManager.h">
+      <Filter>Managers\Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -199,6 +205,12 @@
     </ClCompile>
     <ClCompile Include="EngineUtil.cpp">
       <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="GameBehaviourComponent.cpp">
+      <Filter>Components\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="GameBehaviourEventManager.cpp">
+      <Filter>Managers\Private</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

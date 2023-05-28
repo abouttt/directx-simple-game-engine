@@ -42,21 +42,24 @@ Vector Transform::GetAxisX() const
 {
 	Quaternion rotation = Math::EulerToQuaternion(mEulerAngles);
 	rotation.Normalize();
-	return rotation.GetAxisX();
+	return Vector::Right * rotation;
+	//return rotation.GetAxisX();
 }
 
 Vector Transform::GetAxisY() const
 {
 	Quaternion rotation = Math::EulerToQuaternion(mEulerAngles);
 	rotation.Normalize();
-	return rotation.GetAxisY();
+	return Vector::Up * rotation;
+	//return rotation.GetAxisY();
 }
 
 Vector Transform::GetAxisZ() const
 {
 	Quaternion rotation = Math::EulerToQuaternion(mEulerAngles);
 	rotation.Normalize();
-	return rotation.GetAxisZ();
+	return Vector::Forward * rotation;
+	//return rotation.GetAxisZ();
 }
 
 Matrix Transform::GetMatrix() const

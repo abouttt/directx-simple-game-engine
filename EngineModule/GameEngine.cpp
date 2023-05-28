@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "BehaviourComponent.h"
+#include "GameBehaviourEventManager.h"
 #include "EngineUtil.h"
 #include "GameEngine.h"
 #include "InputManager.h"
@@ -64,22 +65,12 @@ void GameEngine::OnTick()
 
 	// Input Event.
 	InputManager::update();
-
-	if (InputManager::GetKeyDown(DIK_Q))
-	{
-		auto cube = SceneManager::GetActiveScene()->FindGameObject(_T("Main Camera"));
-		SceneManager::GetActiveScene()->RemoveGameObject(cube);
-	}
-	
-	if (InputManager::GetKeyDown(DIK_W))
-	{
-		auto cube = SceneManager::GetActiveScene()->FindGameObject(_T("Cube"));
-		cube->SetActive(!cube->IsActive());
-		//bool enabled = light->GetComponent<MeshComponent>()->IsEnabled();
-		//light->GetComponent<MeshComponent>()->SetEnable(!enabled);
-	}
+	GameBehaviourEventManager::onEnable();
+	GameBehaviourEventManager::onStart();
 
 	// Game Logic.
+	GameBehaviourEventManager::onUpate();
+	GameBehaviourEventManager::onLateUpdate();
 
 	// Load Scene.
 	if (SceneManager::isReserved())
@@ -97,6 +88,9 @@ void GameEngine::OnTick()
 	RenderingEngine::postRender();
 
 	// Decommissioning.
+	GameBehaviourEventManager::onDisable();
+	GameBehaviourEventManager::onDestory();
+
 	SceneManager::cleanup();
 
 	// 성능 측정 종료.

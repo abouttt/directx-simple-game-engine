@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "BehaviourComponent.h"
+#include "GameBehaviourComponent.h"
+#include "GameBehaviourEventManager.h"
 #include "GameObject.h"
 
 GameObject::GameObject()
@@ -61,6 +63,18 @@ void GameObject::SetActive(const bool bActive)
 	}
 
 	mbActive = bActive;
+
+	for (auto gb : GetComponents<GameBehaviourComponent>())
+	{
+		if (bActive)
+		{
+			GameBehaviourEventManager::AddOnEnable(gb);
+		}
+		else
+		{
+			GameBehaviourEventManager::AddOnDisable(gb);
+		}
+	}
 
 	for (std::size_t i = 0; i < mTransform->GetChildCount(); i++)
 	{

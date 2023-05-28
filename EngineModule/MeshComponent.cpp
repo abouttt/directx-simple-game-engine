@@ -63,7 +63,8 @@ void MeshComponent::render(IDirect3DDevice9* const device)
 
 	auto matWorld = GetTransform()->GetMatrix();
 	D3DXMATRIX dm;
-	std::copy(&matWorld.M[0][0], &matWorld.M[0][0] + 4 * 4, &dm.m[0][0]);
+	std::memcpy(&dm.m, &matWorld.M, sizeof(D3DXMATRIX));
+	//std::copy(&matWorld.M[0][0], &matWorld.M[0][0] + 4 * 4, &dm.m[0][0]);
 	device->SetTransform(D3DTS_WORLD, &dm);
 
 	D3DMATERIAL9 nativeMtrl;

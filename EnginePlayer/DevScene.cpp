@@ -12,6 +12,8 @@
 #include "MeshComponent.h"
 #include "TransformComponent.h"
 
+#include "CameraController.h"
+
 DevScene::DevScene()
 {
 }
@@ -24,6 +26,7 @@ void DevScene::init()
 {
 	auto camera = CreateCamera(_T("Main Camera"));
 	camera->GetTransform()->SetPosition(Vector(0.f, 0.f, -10.f));
+	camera->AddComponent<CameraController>();
 
 	auto light = CreateLight(_T("Directional Light"), D3DLIGHTTYPE::D3DLIGHT_DIRECTIONAL);
 	light->GetTransform()->SetRotation(Vector(10, -10, 10));
