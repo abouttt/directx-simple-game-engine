@@ -13,7 +13,10 @@ ImageComponent::ImageComponent()
 
 ImageComponent::~ImageComponent()
 {
-	mSprite->Release();
+	if (mSprite)
+	{
+		mSprite->Release();
+	}
 }
 
 Texture* ImageComponent::GetTexture() const
@@ -35,9 +38,8 @@ void ImageComponent::Draw(IDirect3DDevice9* const device)
 {
 	if (!mSprite)
 	{
-		if (FAILED(D3DXCreateSprite(device, &mSprite)))
+		if(!init(device))
 		{
-			::MessageBox(nullptr, _T("Image/init/D3DXCreateSprite : FAILED"), 0, 0);
 			return;
 		}
 	}
@@ -49,5 +51,16 @@ void ImageComponent::Draw(IDirect3DDevice9* const device)
 	mSprite->Begin(D3DXSPRITE_ALPHABLEND);
 	mSprite->Draw(mTexture->GetNativeTexture(), nullptr, nullptr, &position, mColor);
 	mSprite->End();
+}
+
+bool ImageComponent::init(IDirect3DDevice9* const device)
+{
+	if (FAILED(D3DXCreateSprite(device, &mSprite)))
+	{
+		::MessageBox(nullptr, _T("Image/init/D3DXCreateSprite : FAILED"), 0, 0);
+		return false;
+	}
+
+	return true;
 }
 

@@ -5,6 +5,7 @@
 #include "ImageComponent.h"
 #include "LightComponent.h"
 #include "MeshComponent.h"
+#include "TextComponent.h"
 #include "Resources.h"
 
 Scene::Scene()
@@ -76,6 +77,13 @@ GameObject* Scene::CreateImage(const std::wstring& name)
 {
 	auto newGameObject = CreateGameObject(name);
 	newGameObject->AddComponent<ImageComponent>();
+	return newGameObject;
+}
+
+GameObject* Scene::CreateText(const std::wstring& name)
+{
+	auto newGameObject = CreateGameObject(name);
+	newGameObject->AddComponent<TextComponent>();
 	return newGameObject;
 }
 

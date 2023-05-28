@@ -4,8 +4,6 @@
 #include "EngineUtil.h"
 #include "GameEngine.h"
 #include "Input.h"
-#include "LightComponent.h"
-#include "MeshComponent.h"
 #include "Renderer.h"
 #include "Resources.h"
 #include "Scene.h"
@@ -62,11 +60,11 @@ void GameEngine::OnTick()
 	Time::beginTick();
 
 	// Initialization.
+	GameBehaviourEventManager::onEnable();
+	GameBehaviourEventManager::onStart();
 
 	// Input Event.
 	Input::update();
-	GameBehaviourEventManager::onEnable();
-	GameBehaviourEventManager::onStart();
 
 	// Game Logic.
 	GameBehaviourEventManager::onUpate();

@@ -12,6 +12,7 @@
 #include "ImageComponent.h"
 #include "MeshComponent.h"
 #include "TransformComponent.h"
+#include "TextComponent.h"
 
 #include "CameraController.h"
 
@@ -40,4 +41,8 @@ void DevScene::init()
 	image->GetTransform()->SetPosition(D3DXVECTOR3(10, 50, 0));
 	image->GetTransform()->SetScale(D3DXVECTOR3(0.1f, 0.1f, 0.f));
 	image->GetComponent<ImageComponent>()->SetTexture(Resources::GetTexture(_T("DoomGuy")));
+
+	auto text = CreateText(_T("Text"));
+	text->GetComponent<TextComponent>()->SetText(_T("Text!!!"));
+	text->GetTransform()->SetPosition(D3DXVECTOR3(10, 10, 0));
 }
