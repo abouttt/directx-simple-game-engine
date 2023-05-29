@@ -5,6 +5,7 @@
 class Scene
 {
 public:
+	friend class GameEngine;
 	friend class SceneManager;
 
 public:

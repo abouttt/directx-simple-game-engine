@@ -40,7 +40,7 @@ void GameEngine::Release()
 		return;
 	}
 
-	SceneManager::release();
+	SceneManager::GetActiveScene()->release();
 	Input::release();
 	Renderer::release();
 
@@ -89,7 +89,7 @@ void GameEngine::OnTick()
 	GameBehaviourEventManager::onDisable();
 	GameBehaviourEventManager::onDestory();
 
-	SceneManager::cleanup();
+	SceneManager::GetActiveScene()->cleanup();
 
 	// 성능 측정 종료.
 	Time::endTick();

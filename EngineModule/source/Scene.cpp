@@ -9,7 +9,8 @@
 #include "Resources.h"
 
 Scene::Scene()
-	: mGameObjects()
+	: mName()
+	, mGameObjects()
 {
 }
 
@@ -36,7 +37,8 @@ std::vector<GameObject*> Scene::GetRootGameObjects()
 GameObject* Scene::CreateGameObject(const std::wstring& name, const std::wstring& tag = _T("UnTagged"))
 {
 	auto newGameObject = std::make_unique<GameObject>(name, tag);
-	return mGameObjects.emplace_back(std::move(newGameObject)).get();
+	mGameObjects.emplace_back(std::move(newGameObject));
+	return mGameObjects.back().get();
 }
 
 GameObject* Scene::CreateCube(const std::wstring& name)

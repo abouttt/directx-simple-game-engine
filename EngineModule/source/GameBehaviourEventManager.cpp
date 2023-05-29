@@ -52,9 +52,9 @@ void GameBehaviourEventManager::RemoveGameBehaviour(GameBehaviourComponent* cons
 
 void GameBehaviourEventManager::onEnable()
 {
-	while (!mOnDisableQueue.empty())
+	while (!mOnEnableQueue.empty())
 	{
-		mOnEnableQueue.front()->Start();
+		mOnEnableQueue.front()->OnEnable();
 		mOnEnableQueue.pop();
 	}
 }
@@ -94,7 +94,7 @@ void GameBehaviourEventManager::onDisable()
 {
 	while (!mOnDisableQueue.empty())
 	{
-		mOnDisableQueue.front()->Start();
+		mOnDisableQueue.front()->OnDisable();
 		mOnDisableQueue.pop();
 	}
 }
@@ -103,7 +103,7 @@ void GameBehaviourEventManager::onDestory()
 {
 	while (!mOnDestroyQueue.empty())
 	{
-		mOnDestroyQueue.front()->Start();
+		mOnDestroyQueue.front()->OnDestroy();
 		mOnDestroyQueue.pop();
 	}
 }

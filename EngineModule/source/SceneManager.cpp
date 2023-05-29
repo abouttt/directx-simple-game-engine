@@ -60,13 +60,3 @@ void SceneManager::loadScene()
 	mNextSceneIndex = -1;
 	mbReserve = false;
 }
-
-void SceneManager::cleanup()
-{
-	mScenes[mCurrentSceneIndex]->cleanup();
-}
-
-void SceneManager::release()
-{
-	mScenes[mCurrentSceneIndex]->release();
-}
