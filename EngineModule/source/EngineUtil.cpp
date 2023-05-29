@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "EngineUtil.h"
-#include "Renderer.h"
 
 const DWORD Vertex::FVF = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1;
 
@@ -15,12 +14,12 @@ D3DMATERIAL9 InitMtrl(D3DXCOLOR ambient, D3DXCOLOR diffuse, D3DXCOLOR specular, 
 	return mtrl;
 }
 
-ID3DXMesh* GetCubeMesh()
+ID3DXMesh* GetCubeMesh(IDirect3DDevice9* const device)
 {
 	ID3DXMesh* mesh = nullptr;
-	D3DXCreateBox(Renderer::GetDevice(), 1, 1, 1, &mesh, 0);
-	SetNormalFVF(&mesh);
-	SetTextureFVF(&mesh);
+	D3DXCreateBox(device, 1, 1, 1, &mesh, 0);
+	SetNormalFVF(device, &mesh);
+	SetTextureFVF(device, &mesh);
 
 	Vertex* vertices = nullptr;
 	mesh->LockVertexBuffer(0, (void**)&vertices);
@@ -64,12 +63,12 @@ ID3DXMesh* GetCubeMesh()
 	return mesh;
 }
 
-ID3DXMesh* GetSphereMesh()
+ID3DXMesh* GetSphereMesh(IDirect3DDevice9* const device)
 {
 	ID3DXMesh* mesh = nullptr;
-	D3DXCreateSphere(Renderer::GetDevice(), 0.5f, 50, 50, &mesh, 0);
-	SetNormalFVF(&mesh);
-	SetTextureFVF(&mesh);
+	D3DXCreateSphere(device, 0.5f, 50, 50, &mesh, 0);
+	SetNormalFVF(device, &mesh);
+	SetTextureFVF(device, &mesh);
 
 	Vertex* vertices = nullptr;
 	mesh->LockVertexBuffer(0, (void**)&vertices);
@@ -87,7 +86,7 @@ ID3DXMesh* GetSphereMesh()
 	return mesh;
 }
 
-ID3DXMesh* GetQuadMesh()
+ID3DXMesh* GetQuadMesh(IDirect3DDevice9* const device)
 {
 	ID3DXMesh* mesh = nullptr;
 	D3DXCreateMeshFVF(
@@ -95,7 +94,7 @@ ID3DXMesh* GetQuadMesh()
 		4,
 		D3DXMESH_MANAGED,
 		Vertex::FVF,
-		Renderer::GetDevice(),
+		device,
 		&mesh);
 
 	Vertex* vertices = nullptr;
@@ -116,7 +115,7 @@ ID3DXMesh* GetQuadMesh()
 	return mesh;
 }
 
-void SetNormalFVF(ID3DXMesh** const outMesh)
+void SetNormalFVF(IDirect3DDevice9* const device, ID3DXMesh** const outMesh)
 {
 	if (!((*outMesh)->GetFVF() & D3DFVF_NORMAL))
 	{
@@ -124,7 +123,7 @@ void SetNormalFVF(ID3DXMesh** const outMesh)
 		(*outMesh)->CloneMeshFVF(
 			(*outMesh)->GetOptions(),
 			(*outMesh)->GetFVF() | D3DFVF_NORMAL,
-			Renderer::GetDevice(),
+			device,
 			&tempMesh);
 
 		// 법선 계산.
@@ -135,7 +134,7 @@ void SetNormalFVF(ID3DXMesh** const outMesh)
 	}
 }
 
-void SetTextureFVF(ID3DXMesh** const outMesh)
+void SetTextureFVF(IDirect3DDevice9* const device, ID3DXMesh** const outMesh)
 {
 	if (!((*outMesh)->GetFVF() & D3DFVF_TEX1))
 	{
@@ -143,7 +142,7 @@ void SetTextureFVF(ID3DXMesh** const outMesh)
 		(*outMesh)->CloneMeshFVF(
 			(*outMesh)->GetOptions(),
 			(*outMesh)->GetFVF() | D3DFVF_TEX1,
-			Renderer::GetDevice(),
+			device,
 			&tempMesh);
 
 		(*outMesh)->Release();

@@ -5,8 +5,7 @@
 #include "GameObject.h"
 
 GameObject::GameObject()
-	: mbActive(true)
-	, mbDestroyed(false)
+	: mState(eState::Init)
 	, mName(_T("GameObject"))
 	, mTag(_T("Untagged"))
 	, mComponents()
@@ -15,8 +14,7 @@ GameObject::GameObject()
 }
 
 GameObject::GameObject(const std::wstring& name)
-	: mbActive(true)
-	, mbDestroyed(false)
+	: mState(eState::Init)
 	, mName(name)
 	, mTag(_T("Untagged"))
 	, mComponents()
@@ -25,8 +23,7 @@ GameObject::GameObject(const std::wstring& name)
 }
 
 GameObject::GameObject(const std::wstring& name, const std::wstring& tag)
-	: mbActive(true)
-	, mbDestroyed(false)
+	: mState(eState::Init)
 	, mName(name)
 	, mTag(tag)
 	, mComponents()
@@ -36,7 +33,7 @@ GameObject::GameObject(const std::wstring& name, const std::wstring& tag)
 
 bool GameObject::IsActive() const
 {
-	return mbActive;
+	return mState == eState::Active;
 }
 
 const std::wstring& GameObject::GetName() const
@@ -62,7 +59,7 @@ void GameObject::SetActive(const bool bActive)
 		return;
 	}
 
-	mbActive = bActive;
+	mState = bActive == true ? eState::Active : eState::Inactive;
 
 	for (auto gb : GetComponents<GameBehaviourComponent>())
 	{

@@ -10,6 +10,7 @@ class Renderer
 {
 public:
 	friend class GameEngine;
+	friend class Resources;
 
 public:
 	Renderer() = delete;
@@ -20,7 +21,6 @@ public:
 public:
 	static int GetWidth();
 	static int GetHeight();
-	static IDirect3DDevice9* GetDevice();
 	static D3DCOLOR GetBackgroundColor();
 	static CameraComponent* GetCurrentCamera();
 
@@ -36,6 +36,8 @@ public:
 	static void RemoveUIComponent(UIComponent* const ui);
 
 private:
+	static IDirect3DDevice9* getDevice();
+
 	static void preRender();
 	static void render();
 	static void drawUI();

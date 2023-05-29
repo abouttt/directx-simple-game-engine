@@ -98,9 +98,9 @@ void GameEngine::OnTick()
 void GameEngine::loadResources()
 {
 	// Mesh
-	Resources::AddNativeMesh(_T("Cube"), GetCubeMesh());
-	Resources::AddNativeMesh(_T("Sphere"), GetSphereMesh());
-	Resources::AddNativeMesh(_T("Quad"), GetQuadMesh());
+	Resources::AddNativeMesh(_T("Cube"), GetCubeMesh(Renderer::getDevice()));
+	Resources::AddNativeMesh(_T("Sphere"), GetSphereMesh(Renderer::getDevice()));
+	Resources::AddNativeMesh(_T("Quad"), GetQuadMesh(Renderer::getDevice()));
 
 	// Texture
 	Resources::LoadNativeTexture(_T("Crate"), _T("Textures/crate.jpg"));

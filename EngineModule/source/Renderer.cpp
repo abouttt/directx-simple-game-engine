@@ -29,7 +29,7 @@ int Renderer::GetHeight()
 	return mHeight;
 }
 
-IDirect3DDevice9* Renderer::GetDevice()
+IDirect3DDevice9* Renderer::getDevice()
 {
 	return mD3DDevice;
 }

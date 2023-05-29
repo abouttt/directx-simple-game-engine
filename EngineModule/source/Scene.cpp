@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Scene.h"
 
+#include "GameObject.h"
+
 #include "CameraComponent.h"
 #include "ImageComponent.h"
 #include "LightComponent.h"
@@ -101,7 +103,7 @@ void Scene::RemoveGameObject(GameObject* const gameObject)
 		if (it->get() == gameObject)
 		{
 			(*it)->SetActive(false);
-			(*it)->mbDestroyed = true;
+			(*it)->mState = GameObject::eState::Destroyed;
 			break;
 		}
 	}
@@ -151,15 +153,27 @@ void Scene::cleanup()
 	auto it = mGameObjects.rbegin();
 	while (it != mGameObjects.rend())
 	{
-		if ((*it)->mbDestroyed)
+		auto gameObject = it->get();
+
+		switch (gameObject->mState)
+		{
+		case GameObject::eState::Init:
+		{
+			gameObject->mState = GameObject::eState::Active;
+		}
+		break;
+		case GameObject::eState::Destroyed:
 		{
 			std::unique_ptr<GameObject> destroyedGameObject(it->release());
 			it = decltype(it)(mGameObjects.erase(std::next(it).base()));
 		}
-		else
+		break;
+		default:
 		{
-			(*it)->cleanup();
+			gameObject->cleanup();
 			++it;
+		}
+		break;
 		}
 	}
 }

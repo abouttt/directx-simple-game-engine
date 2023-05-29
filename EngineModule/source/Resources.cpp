@@ -81,7 +81,7 @@ bool Resources::LoadNativeTexture(const std::wstring& name, const std::wstring& 
 	}
 
 	IDirect3DTexture9* ntexture = nullptr;
-	HRESULT hr = D3DXCreateTextureFromFile(Renderer::GetDevice(), (_T("../Resources/") + path).c_str(), &ntexture);
+	HRESULT hr = D3DXCreateTextureFromFile(Renderer::getDevice(), (_T("../Resources/") + path).c_str(), &ntexture);
 
 	if (FAILED(hr))
 	{

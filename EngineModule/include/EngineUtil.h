@@ -41,11 +41,11 @@ const D3DMATERIAL9 YELLOW_MTRL = InitMtrl(COLOR_YELLOW, COLOR_YELLOW, COLOR_YELL
 // Mesh
 //
 
-ID3DXMesh* GetCubeMesh();
-ID3DXMesh* GetSphereMesh();
-ID3DXMesh* GetQuadMesh();
-void SetNormalFVF(ID3DXMesh** const outMesh);
-void SetTextureFVF(ID3DXMesh** const outMesh);
+ID3DXMesh* GetCubeMesh(IDirect3DDevice9* const device);
+ID3DXMesh* GetSphereMesh(IDirect3DDevice9* const device);
+ID3DXMesh* GetQuadMesh(IDirect3DDevice9* const device);
+void SetNormalFVF(IDirect3DDevice9* const device, ID3DXMesh** const outMesh);
+void SetTextureFVF(IDirect3DDevice9* const device, ID3DXMesh** const outMesh);
 
 //
 // Vertex

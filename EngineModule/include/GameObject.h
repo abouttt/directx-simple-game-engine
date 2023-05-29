@@ -5,6 +5,15 @@
 class GameObject
 {
 public:
+	enum class eState
+	{
+		Init,
+		Active,
+		Inactive,
+		Destroyed,
+	};
+
+public:
 	friend class Scene;
 
 public:
@@ -43,8 +52,7 @@ private:
 	void cleanup();
 
 private:
-	bool mbActive;
-	bool mbDestroyed;
+	eState mState;
 	std::wstring mName;
 	std::wstring mTag;
 	std::vector<std::unique_ptr<Component>> mComponents;
@@ -102,8 +110,7 @@ inline T* GameObject::GetComponentInChildren()
 	{
 		auto child = mTransform->GetChild(i);
 
-		if (child->GetGameObject()->mbDestroyed ||
-			!child->IsActive())
+		if (!child->IsActive())
 		{
 			continue;
 		}

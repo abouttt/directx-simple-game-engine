@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "GameBehaviourComponent.h"
 #include "GameBehaviourEventManager.h"
-#include "GameObject.h"
 
 std::vector<GameBehaviourComponent*> GameBehaviourEventManager::mGameBehaviours;
 std::queue<GameBehaviourComponent*> GameBehaviourEventManager::mOnEnableQueue;
