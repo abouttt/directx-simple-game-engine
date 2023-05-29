@@ -71,11 +71,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\GitProject\directx-simple-game-engine\EngineModule\include\objects;C:\GitProject\directx-simple-game-engine\EngineModule\include\math;C:\GitProject\directx-simple-game-engine\EngineModule\include\managers;C:\GitProject\directx-simple-game-engine\EngineModule\include\components;C:\GitProject\directx-simple-game-engine\EngineModule\include;C:\GitProject\directx-simple-game-engine\EnginePlayer\include\scenes;C:\GitProject\directx-simple-game-engine\EnginePlayer\include\game;C:\GitProject\directx-simple-game-engine\EnginePlayer\include\debug;C:\GitProject\directx-simple-game-engine\EnginePlayer\include;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\GitProject\directx-simple-game-engine\EngineModule\include\objects;C:\GitProject\directx-simple-game-engine\EngineModule\include\math;C:\GitProject\directx-simple-game-engine\EngineModule\include\managers;C:\GitProject\directx-simple-game-engine\EngineModule\include\components;C:\GitProject\directx-simple-game-engine\EngineModule\include;C:\GitProject\directx-simple-game-engine\EnginePlayer\include\scenes;C:\GitProject\directx-simple-game-engine\EnginePlayer\include\game;C:\GitProject\directx-simple-game-engine\EnginePlayer\include\debug;C:\GitProject\directx-simple-game-engine\EnginePlayer\include;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -145,28 +145,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CameraController.cpp" />
-    <ClCompile Include="Debug.cpp" />
-    <ClCompile Include="DevScene.cpp" />
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="WindowsApp.cpp" />
-    <ClCompile Include="WindowsPlayer.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="CameraController.h" />
-    <ClInclude Include="Debug.h" />
-    <ClInclude Include="DevScene.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="WindowsPlayer.h" />
-    <ClInclude Include="WindowsUtil.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\EngineModule\EngineModule.vcxproj">
       <Project>{8e87db0b-9eb6-415f-9436-3f260b48375b}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\debug\Debug.h" />
+    <ClInclude Include="include\game\CameraController.h" />
+    <ClInclude Include="include\pch.h" />
+    <ClInclude Include="include\scenes\DevScene.h" />
+    <ClInclude Include="include\WindowsPlayer.h" />
+    <ClInclude Include="include\WindowsUtil.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\debug\Debug.cpp" />
+    <ClCompile Include="source\game\CameraController.cpp" />
+    <ClCompile Include="source\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="source\scenes\DevScene.cpp" />
+    <ClCompile Include="source\WindowsApp.cpp" />
+    <ClCompile Include="source\WindowsPlayer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

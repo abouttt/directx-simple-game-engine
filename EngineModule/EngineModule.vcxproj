@@ -18,6 +18,66 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\components\BehaviourComponent.cpp" />
+    <ClCompile Include="source\components\CameraComponent.cpp" />
+    <ClCompile Include="source\components\Component.cpp" />
+    <ClCompile Include="source\components\GameBehaviourComponent.cpp" />
+    <ClCompile Include="source\components\ImageComponent.cpp" />
+    <ClCompile Include="source\components\LightComponent.cpp" />
+    <ClCompile Include="source\components\MeshComponent.cpp" />
+    <ClCompile Include="source\components\TextComponent.cpp" />
+    <ClCompile Include="source\components\TransformComponent.cpp" />
+    <ClCompile Include="source\components\UIComponent.cpp" />
+    <ClCompile Include="source\EngineUtil.cpp" />
+    <ClCompile Include="source\GameEngine.cpp" />
+    <ClCompile Include="source\managers\GameBehaviourEventManager.cpp" />
+    <ClCompile Include="source\managers\Input.cpp" />
+    <ClCompile Include="source\managers\Renderer.cpp" />
+    <ClCompile Include="source\managers\Resources.cpp" />
+    <ClCompile Include="source\managers\SceneManager.cpp" />
+    <ClCompile Include="source\managers\Time.cpp" />
+    <ClCompile Include="source\math\Transform.cpp" />
+    <ClCompile Include="source\objects\GameObject.cpp" />
+    <ClCompile Include="source\objects\Material.cpp" />
+    <ClCompile Include="source\objects\Mesh.cpp" />
+    <ClCompile Include="source\objects\Scene.cpp" />
+    <ClCompile Include="source\objects\Texture.cpp" />
+    <ClCompile Include="source\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\components\BehaviourComponent.h" />
+    <ClInclude Include="include\components\CameraComponent.h" />
+    <ClInclude Include="include\components\Component.h" />
+    <ClInclude Include="include\components\GameBehaviourComponent.h" />
+    <ClInclude Include="include\components\ImageComponent.h" />
+    <ClInclude Include="include\components\LightComponent.h" />
+    <ClInclude Include="include\components\MeshComponent.h" />
+    <ClInclude Include="include\components\TextComponent.h" />
+    <ClInclude Include="include\components\TransformComponent.h" />
+    <ClInclude Include="include\components\UIComponent.h" />
+    <ClInclude Include="include\EngineUtil.h" />
+    <ClInclude Include="include\GameEngine.h" />
+    <ClInclude Include="include\managers\GameBehaviourEventManager.h" />
+    <ClInclude Include="include\managers\Input.h" />
+    <ClInclude Include="include\managers\Renderer.h" />
+    <ClInclude Include="include\managers\Resources.h" />
+    <ClInclude Include="include\managers\SceneManager.h" />
+    <ClInclude Include="include\managers\Time.h" />
+    <ClInclude Include="include\math\MathUtil.h" />
+    <ClInclude Include="include\math\Quaternion.h" />
+    <ClInclude Include="include\math\Transform.h" />
+    <ClInclude Include="include\math\Vector3.h" />
+    <ClInclude Include="include\objects\GameObject.h" />
+    <ClInclude Include="include\objects\Material.h" />
+    <ClInclude Include="include\objects\Mesh.h" />
+    <ClInclude Include="include\objects\Scene.h" />
+    <ClInclude Include="include\objects\Texture.h" />
+    <ClInclude Include="include\pch.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -71,11 +131,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\GitProject\directx-simple-game-engine\EngineModule\include\objects;C:\GitProject\directx-simple-game-engine\EngineModule\include\math;C:\GitProject\directx-simple-game-engine\EngineModule\include\managers;C:\GitProject\directx-simple-game-engine\EngineModule\include\components;C:\GitProject\directx-simple-game-engine\EngineModule\include;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\GitProject\directx-simple-game-engine\EngineModule\include\objects;C:\GitProject\directx-simple-game-engine\EngineModule\include\math;C:\GitProject\directx-simple-game-engine\EngineModule\include\managers;C:\GitProject\directx-simple-game-engine\EngineModule\include\components;C:\GitProject\directx-simple-game-engine\EngineModule\include;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -148,68 +208,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="BehaviourComponent.h" />
-    <ClInclude Include="CameraComponent.h" />
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="EngineUtil.h" />
-    <ClInclude Include="GameBehaviourComponent.h" />
-    <ClInclude Include="GameBehaviourEventManager.h" />
-    <ClInclude Include="GameEngine.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="ImageComponent.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="LightComponent.h" />
-    <ClInclude Include="Material.h" />
-    <ClInclude Include="MathUtil.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="MeshComponent.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="Quaternion.h" />
-    <ClInclude Include="Renderer.h" />
-    <ClInclude Include="Resources.h" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="TextComponent.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="Time.h" />
-    <ClInclude Include="Transform.h" />
-    <ClInclude Include="TransformComponent.h" />
-    <ClInclude Include="UIComponent.h" />
-    <ClInclude Include="Vector3.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="BehaviourComponent.cpp" />
-    <ClCompile Include="CameraComponent.cpp" />
-    <ClCompile Include="Component.cpp" />
-    <ClCompile Include="EngineUtil.cpp" />
-    <ClCompile Include="GameBehaviourComponent.cpp" />
-    <ClCompile Include="GameBehaviourEventManager.cpp" />
-    <ClCompile Include="GameEngine.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="ImageComponent.cpp" />
-    <ClCompile Include="Input.cpp" />
-    <ClCompile Include="LightComponent.cpp" />
-    <ClCompile Include="Material.cpp" />
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="MeshComponent.cpp" />
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="Resources.cpp" />
-    <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="TextComponent.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="Time.cpp" />
-    <ClCompile Include="Transform.cpp" />
-    <ClCompile Include="TransformComponent.cpp" />
-    <ClCompile Include="UIComponent.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
