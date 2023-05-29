@@ -71,11 +71,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\GitProject\directx-simple-game-engine\EngineModule\include;C:\GitProject\directx-simple-game-engine\EnginePlayer\include;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\GitProject\directx-simple-game-engine\EngineModule\include;C:\GitProject\directx-simple-game-engine\EnginePlayer\include;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -145,23 +145,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CameraController.cpp" />
-    <ClCompile Include="Debug.cpp" />
-    <ClCompile Include="DevScene.cpp" />
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="source\CameraController.cpp" />
+    <ClCompile Include="source\Debug.cpp" />
+    <ClCompile Include="source\DevScene.cpp" />
+    <ClCompile Include="source\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="WindowsApp.cpp" />
-    <ClCompile Include="WindowsPlayer.cpp" />
+    <ClCompile Include="source\WindowsApp.cpp" />
+    <ClCompile Include="source\WindowsPlayer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CameraController.h" />
-    <ClInclude Include="Debug.h" />
-    <ClInclude Include="DevScene.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="WindowsPlayer.h" />
-    <ClInclude Include="WindowsUtil.h" />
+    <ClInclude Include="include\CameraController.h" />
+    <ClInclude Include="include\Debug.h" />
+    <ClInclude Include="include\DevScene.h" />
+    <ClInclude Include="include\pch.h" />
+    <ClInclude Include="include\WindowsPlayer.h" />
+    <ClInclude Include="include\WindowsUtil.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EngineModule\EngineModule.vcxproj">

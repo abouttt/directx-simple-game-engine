@@ -2,6 +2,7 @@
 
 #include "CameraComponent.h"
 #include "GameBehaviourComponent.h"
+#include "Debug.h"
 
 class CameraController : public GameBehaviourComponent
 {

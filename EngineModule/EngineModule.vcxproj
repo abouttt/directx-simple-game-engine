@@ -71,11 +71,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\GitProject\directx-simple-game-engine\EngineModule\include;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\GitProject\directx-simple-game-engine\EngineModule\include;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -149,66 +149,64 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BehaviourComponent.h" />
-    <ClInclude Include="CameraComponent.h" />
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="EngineUtil.h" />
-    <ClInclude Include="GameBehaviourComponent.h" />
-    <ClInclude Include="GameBehaviourEventManager.h" />
-    <ClInclude Include="GameEngine.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="ImageComponent.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="LightComponent.h" />
-    <ClInclude Include="Material.h" />
-    <ClInclude Include="MathUtil.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="MeshComponent.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="Quaternion.h" />
-    <ClInclude Include="Renderer.h" />
-    <ClInclude Include="Resources.h" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="TextComponent.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="Time.h" />
-    <ClInclude Include="Transform.h" />
-    <ClInclude Include="TransformComponent.h" />
-    <ClInclude Include="UIComponent.h" />
-    <ClInclude Include="Vector3.h" />
+    <ClInclude Include="include\BehaviourComponent.h" />
+    <ClInclude Include="include\CameraComponent.h" />
+    <ClInclude Include="include\Component.h" />
+    <ClInclude Include="include\EngineUtil.h" />
+    <ClInclude Include="include\GameBehaviourComponent.h" />
+    <ClInclude Include="include\GameBehaviourEventManager.h" />
+    <ClInclude Include="include\GameEngine.h" />
+    <ClInclude Include="include\GameObject.h" />
+    <ClInclude Include="include\ImageComponent.h" />
+    <ClInclude Include="include\Input.h" />
+    <ClInclude Include="include\LightComponent.h" />
+    <ClInclude Include="include\Material.h" />
+    <ClInclude Include="include\MathUtil.h" />
+    <ClInclude Include="include\Mesh.h" />
+    <ClInclude Include="include\MeshComponent.h" />
+    <ClInclude Include="include\pch.h" />
+    <ClInclude Include="include\Quaternion.h" />
+    <ClInclude Include="include\Renderer.h" />
+    <ClInclude Include="include\Resources.h" />
+    <ClInclude Include="include\Scene.h" />
+    <ClInclude Include="include\SceneManager.h" />
+    <ClInclude Include="include\TextComponent.h" />
+    <ClInclude Include="include\Texture.h" />
+    <ClInclude Include="include\Time.h" />
+    <ClInclude Include="include\Transform.h" />
+    <ClInclude Include="include\TransformComponent.h" />
+    <ClInclude Include="include\UIComponent.h" />
+    <ClInclude Include="include\Vector3.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BehaviourComponent.cpp" />
-    <ClCompile Include="CameraComponent.cpp" />
-    <ClCompile Include="Component.cpp" />
-    <ClCompile Include="EngineUtil.cpp" />
-    <ClCompile Include="GameBehaviourComponent.cpp" />
-    <ClCompile Include="GameBehaviourEventManager.cpp" />
-    <ClCompile Include="GameEngine.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="ImageComponent.cpp" />
-    <ClCompile Include="Input.cpp" />
-    <ClCompile Include="LightComponent.cpp" />
-    <ClCompile Include="Material.cpp" />
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="MeshComponent.cpp" />
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="source\BehaviourComponent.cpp" />
+    <ClCompile Include="source\CameraComponent.cpp" />
+    <ClCompile Include="source\Component.cpp" />
+    <ClCompile Include="source\EngineUtil.cpp" />
+    <ClCompile Include="source\GameBehaviourComponent.cpp" />
+    <ClCompile Include="source\GameBehaviourEventManager.cpp" />
+    <ClCompile Include="source\GameEngine.cpp" />
+    <ClCompile Include="source\GameObject.cpp" />
+    <ClCompile Include="source\ImageComponent.cpp" />
+    <ClCompile Include="source\Input.cpp" />
+    <ClCompile Include="source\LightComponent.cpp" />
+    <ClCompile Include="source\Material.cpp" />
+    <ClCompile Include="source\Mesh.cpp" />
+    <ClCompile Include="source\MeshComponent.cpp" />
+    <ClCompile Include="source\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="Resources.cpp" />
-    <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="TextComponent.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="Time.cpp" />
-    <ClCompile Include="Transform.cpp" />
-    <ClCompile Include="TransformComponent.cpp" />
-    <ClCompile Include="UIComponent.cpp" />
+    <ClCompile Include="source\Renderer.cpp" />
+    <ClCompile Include="source\Resources.cpp" />
+    <ClCompile Include="source\Scene.cpp" />
+    <ClCompile Include="source\SceneManager.cpp" />
+    <ClCompile Include="source\TextComponent.cpp" />
+    <ClCompile Include="source\Texture.cpp" />
+    <ClCompile Include="source\Time.cpp" />
+    <ClCompile Include="source\Transform.cpp" />
+    <ClCompile Include="source\TransformComponent.cpp" />
+    <ClCompile Include="source\UIComponent.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

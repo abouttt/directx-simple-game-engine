@@ -57,166 +57,166 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
+    <ClInclude Include="include\BehaviourComponent.h">
+      <Filter>Components\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CameraComponent.h">
+      <Filter>Components\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Component.h">
+      <Filter>Components\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameBehaviourComponent.h">
+      <Filter>Components\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ImageComponent.h">
+      <Filter>Components\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LightComponent.h">
+      <Filter>Components\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MeshComponent.h">
+      <Filter>Components\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TransformComponent.h">
+      <Filter>Components\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UIComponent.h">
+      <Filter>Components\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TextComponent.h">
+      <Filter>Components\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Vector3.h">
+      <Filter>Math\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Transform.h">
+      <Filter>Math\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Quaternion.h">
+      <Filter>Math\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MathUtil.h">
+      <Filter>Math\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Time.h">
+      <Filter>Managers\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Resources.h">
+      <Filter>Managers\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Renderer.h">
+      <Filter>Managers\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameBehaviourEventManager.h">
+      <Filter>Managers\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameEngine.h">
+      <Filter>Managers\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SceneManager.h">
+      <Filter>Managers\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Input.h">
+      <Filter>Managers\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Texture.h">
+      <Filter>Objects\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Scene.h">
+      <Filter>Objects\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Mesh.h">
+      <Filter>Objects\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Material.h">
+      <Filter>Objects\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameObject.h">
+      <Filter>Objects\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\pch.h">
       <Filter>PCH</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngine.h">
-      <Filter>Managers\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="Time.h">
-      <Filter>Managers\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>Managers\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="MathUtil.h">
-      <Filter>Math\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>Managers\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="Component.h">
-      <Filter>Components\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="TransformComponent.h">
-      <Filter>Components\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Objects\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraComponent.h">
-      <Filter>Components\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Objects\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Managers\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="BehaviourComponent.h">
-      <Filter>Components\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="EngineUtil.h">
+    <ClInclude Include="include\EngineUtil.h">
       <Filter>Util</Filter>
-    </ClInclude>
-    <ClInclude Include="LightComponent.h">
-      <Filter>Components\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Objects\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="Material.h">
-      <Filter>Objects\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Objects\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="Resources.h">
-      <Filter>Managers\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshComponent.h">
-      <Filter>Components\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="GameBehaviourComponent.h">
-      <Filter>Components\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="GameBehaviourEventManager.h">
-      <Filter>Managers\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Math\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector3.h">
-      <Filter>Math\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="Quaternion.h">
-      <Filter>Math\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="UIComponent.h">
-      <Filter>Components\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageComponent.h">
-      <Filter>Components\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="TextComponent.h">
-      <Filter>Components\Public</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <Filter>PCH</Filter>
-    </ClCompile>
-    <ClCompile Include="GameEngine.cpp">
-      <Filter>Managers\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="Time.cpp">
-      <Filter>Managers\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Managers\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Managers\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="Component.cpp">
+    <ClCompile Include="source\BehaviourComponent.cpp">
       <Filter>Components\Private</Filter>
     </ClCompile>
-    <ClCompile Include="TransformComponent.cpp">
+    <ClCompile Include="source\CameraComponent.cpp">
       <Filter>Components\Private</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
+    <ClCompile Include="source\Component.cpp">
+      <Filter>Components\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GameBehaviourComponent.cpp">
+      <Filter>Components\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ImageComponent.cpp">
+      <Filter>Components\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="source\LightComponent.cpp">
+      <Filter>Components\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="source\MeshComponent.cpp">
+      <Filter>Components\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="source\TextComponent.cpp">
+      <Filter>Components\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="source\TransformComponent.cpp">
+      <Filter>Components\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="source\UIComponent.cpp">
+      <Filter>Components\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GameBehaviourEventManager.cpp">
+      <Filter>Managers\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Input.cpp">
+      <Filter>Managers\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Renderer.cpp">
+      <Filter>Managers\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Resources.cpp">
+      <Filter>Managers\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SceneManager.cpp">
+      <Filter>Managers\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Time.cpp">
+      <Filter>Managers\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Scene.cpp">
       <Filter>Objects\Private</Filter>
     </ClCompile>
-    <ClCompile Include="CameraComponent.cpp">
-      <Filter>Components\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
+    <ClCompile Include="source\Material.cpp">
       <Filter>Objects\Private</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Managers\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="BehaviourComponent.cpp">
-      <Filter>Components\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="LightComponent.cpp">
-      <Filter>Components\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
+    <ClCompile Include="source\Mesh.cpp">
       <Filter>Objects\Private</Filter>
     </ClCompile>
-    <ClCompile Include="Material.cpp">
+    <ClCompile Include="source\GameObject.cpp">
       <Filter>Objects\Private</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
+    <ClCompile Include="source\Texture.cpp">
       <Filter>Objects\Private</Filter>
     </ClCompile>
-    <ClCompile Include="Resources.cpp">
-      <Filter>Managers\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="MeshComponent.cpp">
-      <Filter>Components\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="EngineUtil.cpp">
-      <Filter>Util</Filter>
-    </ClCompile>
-    <ClCompile Include="GameBehaviourComponent.cpp">
-      <Filter>Components\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="GameBehaviourEventManager.cpp">
-      <Filter>Managers\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="Transform.cpp">
+    <ClCompile Include="source\Transform.cpp">
       <Filter>Math\Private</Filter>
     </ClCompile>
-    <ClCompile Include="UIComponent.cpp">
-      <Filter>Components\Private</Filter>
+    <ClCompile Include="source\pch.cpp">
+      <Filter>PCH</Filter>
     </ClCompile>
-    <ClCompile Include="ImageComponent.cpp">
-      <Filter>Components\Private</Filter>
+    <ClCompile Include="source\EngineUtil.cpp">
+      <Filter>Util</Filter>
     </ClCompile>
-    <ClCompile Include="TextComponent.cpp">
-      <Filter>Components\Private</Filter>
+    <ClCompile Include="source\GameEngine.cpp">
+      <Filter>Managers\Private</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

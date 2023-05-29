@@ -33,43 +33,43 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <Filter>PCH</Filter>
+    <ClCompile Include="source\CameraController.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="WindowsApp.cpp">
-      <Filter>Private\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="WindowsPlayer.cpp">
-      <Filter>Private\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="DevScene.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Debug.cpp">
+    <ClCompile Include="source\Debug.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
-    <ClCompile Include="CameraController.cpp">
-      <Filter>Game</Filter>
+    <ClCompile Include="source\DevScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="source\pch.cpp">
+      <Filter>PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="source\WindowsApp.cpp">
+      <Filter>Private\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="source\WindowsPlayer.cpp">
+      <Filter>Private\Windows</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
-      <Filter>PCH</Filter>
+    <ClInclude Include="include\CameraController.h">
+      <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="WindowsPlayer.h">
-      <Filter>Private\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="WindowsUtil.h">
-      <Filter>Private\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="DevScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Debug.h">
+    <ClInclude Include="include\Debug.h">
       <Filter>Debug</Filter>
     </ClInclude>
-    <ClInclude Include="CameraController.h">
-      <Filter>Game</Filter>
+    <ClInclude Include="include\DevScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="include\pch.h">
+      <Filter>PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="include\WindowsPlayer.h">
+      <Filter>Private\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="include\WindowsUtil.h">
+      <Filter>Private\Windows</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
