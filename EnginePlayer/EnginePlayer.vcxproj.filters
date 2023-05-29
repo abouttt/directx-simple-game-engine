@@ -51,6 +51,9 @@
     <ClCompile Include="source\WindowsPlayer.cpp">
       <Filter>Private\Windows</Filter>
     </ClCompile>
+    <ClCompile Include="source\CubeRotate.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\CameraController.h">
@@ -70,6 +73,9 @@
     </ClInclude>
     <ClInclude Include="include\WindowsUtil.h">
       <Filter>Private\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CubeRotate.h">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

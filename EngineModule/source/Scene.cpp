@@ -10,8 +10,8 @@
 #include "TextComponent.h"
 #include "Resources.h"
 
-Scene::Scene()
-	: mName()
+Scene::Scene(const std::wstring& name)
+	: mName(name)
 	, mGameObjects()
 {
 }

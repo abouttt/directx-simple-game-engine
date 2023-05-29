@@ -207,20 +207,17 @@ Transform Transform::LocalToWorld(const Transform& parentWorldTransform) const
 	Transform result;
 	result.SetScale(parentWorldTransform.GetScale() * GetScale());
 	result.SetRotation(parentWorldTransform.GetRotation() * GetRotation());
-	result.SetPosition(parentWorldTransform.GetPosition() + ((parentWorldTransform.GetScale() * GetPosition()) * parentWorldTransform.GetRotation()));
-
+	result.SetPosition(parentWorldTransform.GetPosition() + parentWorldTransform.GetRotation() * (parentWorldTransform.GetScale() * GetPosition()));
 	return result;
 }
 
 Transform Transform::WorldToLocal(const Transform& parentWorldTransform) const
 {
 	Transform invParent = parentWorldTransform.Inverse();
-
 	Transform result;
 	result.SetScale(invParent.GetScale() * GetScale());
 	result.SetRotation(invParent.GetRotation() * GetRotation());
-	result.SetPosition(invParent.GetPosition() + (invParent.GetScale() * (GetPosition() * invParent.GetRotation())));
-
+	result.SetPosition(invParent.GetPosition() + (invParent.GetScale() * (invParent.GetRotation() * GetPosition())));
 	return result;
 }
 

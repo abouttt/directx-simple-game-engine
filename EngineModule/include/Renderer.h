@@ -45,8 +45,9 @@ private:
 
 	static void updateCamera();
 	static void updateLights();
+	static void partitionMeshes();
 	static void sortTransparencyMeshes();
-	static void renderMeshes(std::vector<MeshComponent*>& meshComponents);
+	static void renderMeshes(std::vector<MeshComponent*>::iterator begin, std::vector<MeshComponent*>::iterator end);
 
 	static bool init(const HWND hWnd, const int width, const int height, const bool bWindowed);
 	static bool initDevice(const HWND hWnd, const bool bWindowed);
@@ -62,9 +63,11 @@ private:
 	static D3DCOLOR mBackgroundColor;
 
 	static CameraComponent* mCurrentCamera;
-	static std::unordered_map<eRenderingMode, std::vector<MeshComponent*>> mMeshComponents;
+	static std::vector<MeshComponent*> mMeshComponents;
 	static std::vector<LightComponent*> mLightComponents;
 	static std::vector<UIComponent*> mUIComponents;
+
+	static std::vector<MeshComponent*>::iterator mAlphaRenderBegin;
 	static DWORD mCurrentLightCount;
 };
 

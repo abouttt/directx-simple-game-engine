@@ -9,7 +9,7 @@ public:
 	friend class SceneManager;
 
 public:
-	Scene();
+	Scene(const std::wstring& name);
 	virtual ~Scene() = default;
 
 public:

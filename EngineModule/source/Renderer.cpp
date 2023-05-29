@@ -14,9 +14,10 @@ int Renderer::mHeight = 0;
 IDirect3DDevice9* Renderer::mD3DDevice = nullptr;
 D3DCOLOR Renderer::mBackgroundColor = D3DCOLOR_XRGB(128, 128, 128);
 CameraComponent* Renderer::mCurrentCamera = nullptr;
-std::unordered_map<eRenderingMode, std::vector<MeshComponent*>> Renderer::mMeshComponents;
+std::vector<MeshComponent*> Renderer::mMeshComponents;
 std::vector<LightComponent*> Renderer::mLightComponents;
 std::vector<UIComponent*> Renderer::mUIComponents;
+std::vector<MeshComponent*>::iterator Renderer::mAlphaRenderBegin;
 DWORD Renderer::mCurrentLightCount = 0;
 
 int Renderer::GetWidth()
@@ -53,13 +54,9 @@ void Renderer::AddMeshComponent(MeshComponent* const mesh)
 {
 	assert(mesh);
 
-	auto mode = mesh->GetMaterial()->GetRenderingMode() == eRenderingMode::Opaque ?
-		eRenderingMode::Opaque : eRenderingMode::Transparency;
-	auto& meshComponents = mMeshComponents[mode];
-
-	if (std::find(meshComponents.begin(), meshComponents.end(), mesh) == meshComponents.end())
+	if (std::find(mMeshComponents.begin(), mMeshComponents.end(), mesh) == mMeshComponents.end())
 	{
-		meshComponents.emplace_back(mesh);
+		mMeshComponents.emplace_back(mesh);
 	}
 }
 
@@ -70,8 +67,6 @@ void Renderer::AddLightComponent(LightComponent* const light)
 	if (std::find(mLightComponents.begin(), mLightComponents.end(), light) == mLightComponents.end())
 	{
 		light->mIndex = mCurrentLightCount++;
-		mD3DDevice->SetLight(light->mIndex, &light->mD3DLight);
-		mD3DDevice->LightEnable(light->mIndex, true);
 		mLightComponents.emplace_back(light);
 	}
 }
@@ -90,14 +85,10 @@ void Renderer::RemoveMeshComponent(MeshComponent* const mesh)
 {
 	assert(mesh);
 
-	auto mode = mesh->GetMaterial()->GetRenderingMode() == eRenderingMode::Opaque ?
-		eRenderingMode::Opaque : eRenderingMode::Transparency;
-	auto& meshComponents = mMeshComponents[mode];
-
-	auto it = std::find(meshComponents.begin(), meshComponents.end(), mesh);
-	if (it != meshComponents.end())
+	auto it = std::find(mMeshComponents.begin(), mMeshComponents.end(), mesh);
+	if (it != mMeshComponents.end())
 	{
-		meshComponents.erase(it);
+		mMeshComponents.erase(it);
 	}
 }
 
@@ -135,6 +126,7 @@ void Renderer::preRender()
 	{
 		updateCamera();
 		updateLights();
+		partitionMeshes();
 		sortTransparencyMeshes();
 	}
 
@@ -150,13 +142,15 @@ void Renderer::render()
 {
 	if (mD3DDevice)
 	{
+		std::vector<MeshComponent*> it;
+
 		// 불투명 렌더링.
 		mD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
-		renderMeshes(mMeshComponents[eRenderingMode::Opaque]);
+		renderMeshes(mMeshComponents.begin(), mAlphaRenderBegin);
 
 		// 투명 렌더링.
 		mD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
-		renderMeshes(mMeshComponents[eRenderingMode::Transparency]);
+		renderMeshes(mAlphaRenderBegin, mMeshComponents.end());
 	}
 }
 
@@ -191,17 +185,32 @@ void Renderer::updateLights()
 {
 	for (auto light : mLightComponents)
 	{
-		light->updatePositionAndDirection();
-		mD3DDevice->LightEnable(light->mIndex, light->IsActiveAndEnabled());
+		bool activeAndEnabled = light->IsActiveAndEnabled();
+		if (activeAndEnabled)
+		{
+			light->updatePositionAndDirection();
+			mD3DDevice->SetLight(light->mIndex, &light->mD3DLight);
+		}
+
+		mD3DDevice->LightEnable(light->mIndex, activeAndEnabled);
 	}
+}
+
+void Renderer::partitionMeshes()
+{
+	// 투명, 불투명 나누기.
+	mAlphaRenderBegin = std::partition(mMeshComponents.begin(), mMeshComponents.end(),
+		[&](MeshComponent* meshComponent)
+		{
+			return meshComponent->GetMaterial()->GetRenderingMode() == eRenderingMode::Opaque;
+		});
 }
 
 // 카메라와의 거리에 따라 정렬.
 void Renderer::sortTransparencyMeshes()
 {
 	auto camPos = mCurrentCamera->GetTransform()->GetPosition();
-	auto& meshComponents = mMeshComponents[eRenderingMode::Transparency];
-	std::sort(meshComponents.begin(), meshComponents.end(),
+	std::sort(mAlphaRenderBegin, mMeshComponents.end(),
 		[&](MeshComponent* a, MeshComponent* b)
 		{
 			auto gapA = camPos - a->GetTransform()->GetPosition();
@@ -210,13 +219,13 @@ void Renderer::sortTransparencyMeshes()
 		});
 }
 
-void Renderer::renderMeshes(std::vector<MeshComponent*>& meshComponents)
+void Renderer::renderMeshes(std::vector<MeshComponent*>::iterator begin, std::vector<MeshComponent*>::iterator end)
 {
-	for (auto meshComponent : meshComponents)
+	for (auto& it = begin; it != end; ++it)
 	{
-		if (meshComponent->IsActiveAndEnabled())
+		if ((*it)->IsActiveAndEnabled())
 		{
-			meshComponent->render(mD3DDevice);
+			(*it)->render(mD3DDevice);
 		}
 	}
 }
@@ -239,9 +248,6 @@ bool Renderer::init(const HWND hWnd, const int width, const int height, const bo
 	{
 		initPipeline();
 	}
-
-	mMeshComponents.insert({ eRenderingMode::Opaque, std::vector<MeshComponent*>() });
-	mMeshComponents.insert({ eRenderingMode::Transparency, std::vector<MeshComponent*>() });
 
 	mbInit = true;
 	return true;
@@ -336,7 +342,6 @@ void Renderer::clear()
 	for (DWORD i = 0; i < mCurrentLightCount; i++)
 	{
 		mD3DDevice->LightEnable(mCurrentLightCount, false);
-		mD3DDevice->SetLight(mCurrentLightCount, nullptr);
 	}
 	mCurrentLightCount = 0;
 }

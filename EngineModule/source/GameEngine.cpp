@@ -105,8 +105,15 @@ void GameEngine::loadResources()
 	// Texture
 	Resources::LoadNativeTexture(_T("Crate"), _T("Textures/crate.jpg"));
 	Resources::LoadNativeTexture(_T("DoomGuy"), _T("Textures/doomguy.png"));
+	Resources::LoadNativeTexture(_T("Cacodoom"), _T("Textures/cacodoom.png"));
+	Resources::LoadNativeTexture(_T("Fire"), _T("Textures/fire.jpg"));
+	Resources::LoadNativeTexture(_T("Ice"), _T("Textures/ice.jpg"));
 
 	// Material
 	Resources::AddMaterial(_T("Default-Material"), eRenderingMode::Opaque, WHITE_MTRL, nullptr);
 	Resources::AddMaterial(_T("Crate"), eRenderingMode::Opaque, WHITE_MTRL, Resources::GetTexture(_T("Crate")));
+	Resources::AddMaterial(_T("DoomGuy"), eRenderingMode::Cutout, WHITE_MTRL, Resources::GetTexture(_T("DoomGuy")));
+	Resources::AddMaterial(_T("Cacodoom"), eRenderingMode::Cutout, WHITE_MTRL, Resources::GetTexture(_T("Cacodoom")));
+	Resources::AddMaterial(_T("Fire"), eRenderingMode::Opaque, WHITE_MTRL, Resources::GetTexture(_T("Fire")));
+	Resources::AddMaterial(_T("Ice"), eRenderingMode::Opaque, WHITE_MTRL, Resources::GetTexture(_T("Ice")));
 }

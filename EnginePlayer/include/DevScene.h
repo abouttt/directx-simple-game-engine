@@ -5,7 +5,7 @@
 class DevScene : public Scene
 {
 public:
-	DevScene();
+	DevScene(const std::wstring& name);
 	~DevScene();
 
 protected:

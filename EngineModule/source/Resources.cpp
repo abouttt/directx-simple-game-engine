@@ -39,7 +39,6 @@ Texture* Resources::GetTexture(const std::wstring& name)
 	if (it == mTextures.end())
 	{
 		return nullptr;
-		
 	}
 
 	return it->second.get();

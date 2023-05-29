@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\CubeRotate.cpp" />
     <ClCompile Include="source\CameraController.cpp" />
     <ClCompile Include="source\Debug.cpp" />
     <ClCompile Include="source\DevScene.cpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="source\WindowsPlayer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\CubeRotate.h" />
     <ClInclude Include="include\CameraController.h" />
     <ClInclude Include="include\Debug.h" />
     <ClInclude Include="include\DevScene.h" />
