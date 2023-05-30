@@ -11,8 +11,8 @@ SoundComponent::SoundComponent()
 	, mVolume(1.f)
 	, mPitch(1.f)
 	, mStereoPan(0.f)
-	, mbLoop(false)
 	, mbMute(false)
+	, mbLoop(false)
 {
 }
 
@@ -33,6 +33,11 @@ bool SoundComponent::LoadSoundFile(const std::wstring& fileName)
 
 void SoundComponent::Play()
 {
+	if (!IsActiveAndEnabled())
+	{
+		return;
+	}
+
 	if (mSound)
 	{
 		if (mChannel)
@@ -48,6 +53,11 @@ void SoundComponent::Play()
 
 void SoundComponent::PlayOneShot()
 {
+	if (!IsActiveAndEnabled())
+	{
+		return;
+	}
+
 	if (mSound)
 	{
 		mSystem->playSound(mSound, nullptr, true, &mChannel);
@@ -166,6 +176,25 @@ void SoundComponent::SetMute(const bool bMute)
 	}
 }
 
+void SoundComponent::SetEnable(const bool mbEnable)
+{
+	if (IsEnabled() == mbEnable)
+	{
+		return;
+	}
+
+	BehaviourComponent::SetEnable(mbEnable);
+
+	if (mbEnable)
+	{
+		Play();
+	}
+	else
+	{
+		Stop();
+	}
+}
+
 void SoundComponent::setupChannel(bool bOneShot)
 {
 	if (!mChannel)
@@ -177,6 +206,7 @@ void SoundComponent::setupChannel(bool bOneShot)
 	mChannel->setVolume(mVolume);
 	mChannel->setPitch(mPitch);
 	mChannel->setPan(mStereoPan);
+	mChannel->setMute(mbMute);
 	if (bOneShot)
 	{
 		mChannel->setMode(FMOD_LOOP_OFF);
@@ -185,7 +215,6 @@ void SoundComponent::setupChannel(bool bOneShot)
 	{
 		mChannel->setMode(mbLoop ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF);
 	}
-	mChannel->setMute(mbMute);
 }
 
 bool SoundComponent::init()

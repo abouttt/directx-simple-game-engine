@@ -33,6 +33,8 @@ public:
 	void SetLoop(const bool bLoop);
 	void SetMute(const bool bMute);
 
+	void SetEnable(const bool mbEnable) override;
+
 private:
 	static bool init();
 	static void update();
@@ -50,7 +52,7 @@ private:
 	float mVolume;
 	float mPitch;
 	float mStereoPan;
-	bool mbLoop;
 	bool mbMute;
+	bool mbLoop;
 };
 

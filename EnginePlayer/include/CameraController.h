@@ -20,7 +20,7 @@ public:
 	{
 		if (Input::GetKeyDown(DIK_SPACE))
 		{
-			sound->Play();
+			sound->SetEnable(!sound->IsEnabled());
 			/*if (cube->IsActive())
 				cube->SetActive(false);
 			else
