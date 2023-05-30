@@ -71,12 +71,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\GitProject\directx-simple-game-engine\EngineModule\include;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\FMOD\inc;C:\GitProject\directx-simple-game-engine\EngineModule\include;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\FMOD\lib\x64;$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\GitProject\directx-simple-game-engine\EngineModule\include;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\FMOD\inc;C:\GitProject\directx-simple-game-engine\EngineModule\include;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\FMOD\lib\x64;$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\SoundComponent.h" />
     <ClInclude Include="include\BehaviourComponent.h" />
     <ClInclude Include="include\CameraComponent.h" />
     <ClInclude Include="include\Component.h" />
@@ -179,6 +180,7 @@
     <ClInclude Include="include\Vector3.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\SoundComponent.cpp" />
     <ClCompile Include="source\BehaviourComponent.cpp" />
     <ClCompile Include="source\CameraComponent.cpp" />
     <ClCompile Include="source\Component.cpp" />

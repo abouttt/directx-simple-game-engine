@@ -17,7 +17,7 @@ public:
 	std::size_t GetRootCount() const;
 	std::vector<GameObject*> GetRootGameObjects();
 
-	GameObject* CreateGameObject(const std::wstring& name, const std::wstring& tag);
+	GameObject* CreateGameObject(const std::wstring& name, const std::wstring& tag = _T("UnTagged"));
 	GameObject* CreateCube(const std::wstring& name);
 	GameObject* CreateSphere(const std::wstring& name);
 	GameObject* CreateQuad(const std::wstring& name);

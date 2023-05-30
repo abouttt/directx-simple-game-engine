@@ -141,6 +141,9 @@
     <ClInclude Include="include\EngineUtil.h">
       <Filter>Util</Filter>
     </ClInclude>
+    <ClInclude Include="include\SoundComponent.h">
+      <Filter>Components\Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\BehaviourComponent.cpp">
@@ -217,6 +220,9 @@
     </ClCompile>
     <ClCompile Include="source\GameEngine.cpp">
       <Filter>Managers\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SoundComponent.cpp">
+      <Filter>Components\Private</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -36,7 +36,7 @@ std::vector<GameObject*> Scene::GetRootGameObjects()
 	return result;
 }
 
-GameObject* Scene::CreateGameObject(const std::wstring& name, const std::wstring& tag = _T("UnTagged"))
+GameObject* Scene::CreateGameObject(const std::wstring& name, const std::wstring& tag)
 {
 	auto newGameObject = std::make_unique<GameObject>(name, tag);
 	mGameObjects.emplace_back(std::move(newGameObject));

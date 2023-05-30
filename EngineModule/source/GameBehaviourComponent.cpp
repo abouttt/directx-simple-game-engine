@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "GameBehaviourComponent.h"
 #include "GameBehaviourEventManager.h"
+#include "SceneManager.h"
 
 GameBehaviourComponent::GameBehaviourComponent()
 {
@@ -10,6 +11,11 @@ GameBehaviourComponent::GameBehaviourComponent()
 GameBehaviourComponent::~GameBehaviourComponent()
 {
 	GameBehaviourEventManager::RemoveGameBehaviour(this);
+}
+
+Scene* GameBehaviourComponent::GetScene()
+{
+	return SceneManager::GetActiveScene();
 }
 
 void GameBehaviourComponent::SetEnable(bool bEnable)

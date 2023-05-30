@@ -71,12 +71,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\GitProject\directx-simple-game-engine\EngineModule\include;C:\GitProject\directx-simple-game-engine\EnginePlayer\include;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\GitProject\directx-simple-game-engine\EngineModule\include;C:\GitProject\directx-simple-game-engine\EnginePlayer\include;..\FMOD\inc;$(DXSDK_DIR)Include</IncludePath>
+    <LibraryPath>..\FMOD\lib\x64;$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\GitProject\directx-simple-game-engine\EngineModule\include;C:\GitProject\directx-simple-game-engine\EnginePlayer\include;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\GitProject\directx-simple-game-engine\EngineModule\include;C:\GitProject\directx-simple-game-engine\EnginePlayer\include;..\FMOD\inc;$(DXSDK_DIR)Include</IncludePath>
+    <LibraryPath>..\FMOD\lib\x64;$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -115,12 +115,13 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\EngineModule;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d9.lib;d3dx10d.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx10d.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;dinput8.lib;%(AdditionalDependencies);fmod_vc.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -134,14 +135,15 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\EngineModule;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d9.lib;d3dx10d.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx10d.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;dinput8.lib;%(AdditionalDependencies);fmod_vc.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

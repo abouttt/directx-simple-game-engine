@@ -6,11 +6,13 @@
 
 #include <array>
 #include <algorithm>
-#include <d3dx9.h>
-#include <d3dx9math.h>
 #include <cassert>
 #include <cmath>
+
+#include <d3dx9.h>
+#include <d3dx9math.h>
 #include <dinput.h>
+#include <fmod.hpp>
 #include <memory>
 #include <queue>
 #include <string>

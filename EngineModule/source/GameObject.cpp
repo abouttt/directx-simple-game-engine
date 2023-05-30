@@ -33,7 +33,7 @@ GameObject::GameObject(const std::wstring& name, const std::wstring& tag)
 
 bool GameObject::IsActive() const
 {
-	return mState == eState::Active;
+	return (mState == eState::Init) || (mState == eState::Active);
 }
 
 const std::wstring& GameObject::GetName() const

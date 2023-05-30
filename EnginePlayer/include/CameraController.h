@@ -2,6 +2,8 @@
 
 #include "CameraComponent.h"
 #include "GameBehaviourComponent.h"
+#include "SoundComponent.h"
+#include "CubeRotate.h"
 #include "Debug.h"
 
 class CameraController : public GameBehaviourComponent
@@ -10,10 +12,33 @@ public:
 	void Start() override
 	{
 		mCameraPtr = CameraComponent::GetCurrentCamera();
+		cube = GetScene()->FindComponent<CubeRotate>();
+		sound = GetScene()->FindComponent<SoundComponent>();
 	}
 
 	void Update() override
 	{
+		if (Input::GetKeyDown(DIK_SPACE))
+		{
+			sound->Play();
+			/*if (cube->IsActive())
+				cube->SetActive(false);
+			else
+				cube->SetActive(true);*/
+
+				//Destroy(cube);
+		}
+
+		if (Input::GetKeyDown(DIK_UPARROW))
+		{
+			sound->SetLoop(true);
+		}
+
+		if (Input::GetKeyDown(DIK_DOWNARROW))
+		{
+			sound->SetLoop(false);
+		}
+
 		if (Input::GetKey(DIK_W))
 		{
 			mCameraPtr->GetTransform()->Translate(D3DXVECTOR3(0, 0, mSpeed * Time::GetDeltaTime()));
@@ -53,5 +78,7 @@ public:
 private:
 	CameraComponent* mCameraPtr = nullptr;
 	float mSpeed = 50;
+	CubeRotate* cube;
+	SoundComponent* sound;
 };
 

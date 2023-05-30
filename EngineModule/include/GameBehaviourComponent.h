@@ -6,6 +6,7 @@
 #include "GameObject.h"
 #include "Input.h"
 #include "Resources.h"
+#include "Scene.h"
 #include "Time.h"
 
 #include "MathUtil.h"
@@ -23,6 +24,7 @@ public:
 	~GameBehaviourComponent();
 
 public:
+	Scene* GetScene();
 	void SetEnable(bool bEnable) override;
 
 public:	// Game Logic Event.

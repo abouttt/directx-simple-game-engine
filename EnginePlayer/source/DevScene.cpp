@@ -11,6 +11,7 @@
 #include "GameObject.h"
 #include "ImageComponent.h"
 #include "MeshComponent.h"
+#include "SoundComponent.h"
 #include "TransformComponent.h"
 #include "TextComponent.h"
 
@@ -39,6 +40,10 @@ void DevScene::init()
 	cacodoom->GetTransform()->SetPosition(D3DXVECTOR3(2, 0, 0));
 	cacodoom->GetComponent<MeshComponent>()->SetMaterial(Resources::GetMaterial(_T("Cacodoom")));
 
+	auto sound = CreateGameObject(_T("Sound"));
+	sound->AddComponent<SoundComponent>();
+	sound->GetComponent<SoundComponent>()->LoadSoundFile(_T("pop.wav"));
+
 	auto cube = CreateCube(_T("Cube"));
 	cube->GetTransform()->SetPosition(D3DXVECTOR3(0, 0, 0));
 	cube->GetComponent<MeshComponent>()->SetMaterial(Resources::GetMaterial(_T("Crate")));
@@ -55,8 +60,6 @@ void DevScene::init()
 	auto ice = CreateSphere(_T("Ice"));
 	ice->GetTransform()->SetPosition(D3DXVECTOR3(-4, 0, 0));
 	ice->GetComponent<MeshComponent>()->SetMaterial(Resources::GetMaterial(_T("Ice")));
-
-	
 
 	auto doomguy = CreateQuad(_T("Doom Guy"));
 	doomguy->GetTransform()->SetPosition(D3DXVECTOR3(2, 0, 5));
