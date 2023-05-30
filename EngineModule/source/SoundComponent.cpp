@@ -2,7 +2,7 @@
 #include "EngineUtil.h"
 #include "SoundComponent.h"
 
-FMOD::System* SoundComponent::mSystem;
+FMOD::System* SoundComponent::mSystem = nullptr;
 
 SoundComponent::SoundComponent()
 	: mSound(nullptr)

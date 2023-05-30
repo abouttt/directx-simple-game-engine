@@ -72,7 +72,7 @@ public:
 
 	void LateUpdate() override
 	{
-		Debug::Log(GetTransform()->GetPosition());
+		//Debug::Log(GetTransform()->GetPosition());
 	}
 
 private:

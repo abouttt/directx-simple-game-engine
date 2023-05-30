@@ -21,5 +21,3 @@
 #include <vector>
 #include <Windows.h>
 #include <xmmintrin.h>
-
-#include "Debug.h"

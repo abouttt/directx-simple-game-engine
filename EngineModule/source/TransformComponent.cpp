@@ -334,6 +334,8 @@ void TransformComponent::updateLocal()
 	{
 		mLocalTransform = mWorldTransform;
 	}
+
+	updateChildrenWorld();
 }
 
 void TransformComponent::updateWorld()

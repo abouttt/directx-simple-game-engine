@@ -189,16 +189,11 @@ Transform Transform::Inverse() const
 	}
 
 	Transform result;
-
 	result.SetScale(reciprocalScale);
-
 	D3DXQUATERNION rot = EulerToQuaternion(mEulerAngles);
 	D3DXQuaternionConjugate(&rot, &rot);
 	result.SetRotation(rot);
-
-	D3DXVECTOR3 pos = -mPosition * result.GetRotation() * result.GetScale();
-	result.SetPosition(pos);
-
+	result.SetPosition(result.GetScale() * (result.GetRotation() * -mPosition));
 	return result;
 }
 
