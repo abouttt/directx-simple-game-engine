@@ -2,9 +2,10 @@
 #include "EngineUtil.h"
 #include "SoundComponent.h"
 
+FMOD::System* SoundComponent::mSystem;
+
 SoundComponent::SoundComponent()
-	: mSystem(nullptr)
-	, mSound(nullptr)
+	: mSound(nullptr)
 	, mChannel(nullptr)
 	, mPriority(128)
 	, mVolume(1.f)
@@ -13,8 +14,6 @@ SoundComponent::SoundComponent()
 	, mbLoop(false)
 	, mbMute(false)
 {
-	FMOD::System_Create(&mSystem);
-	mSystem->init(32, FMOD_INIT_NORMAL, nullptr);
 }
 
 SoundComponent::~SoundComponent()
@@ -23,9 +22,6 @@ SoundComponent::~SoundComponent()
 	{
 		mSound->release();
 	}
-
-	mSystem->close();
-	mSystem->release();
 }
 
 bool SoundComponent::LoadSoundFile(const std::wstring& fileName)
@@ -192,10 +188,38 @@ void SoundComponent::setupChannel(bool bOneShot)
 	mChannel->setMute(mbMute);
 }
 
+bool SoundComponent::init()
+{
+	if (mSystem)
+	{
+		return false;
+	}
+
+	if (FMOD::System_Create(&mSystem) != FMOD_OK)
+	{
+		::MessageBox(nullptr, _T("SoundComponent/init/FMOD::System_Create : FAILED"), _T("Error"), MB_ICONEXCLAMATION | MB_OK);
+		return false;
+	}
+
+	if (mSystem->init(32, FMOD_INIT_NORMAL, nullptr) != FMOD_OK)
+	{
+		::MessageBox(nullptr, _T("SoundComponent/init/FMOD::System::init : FAILED"), _T("Error"), MB_ICONEXCLAMATION | MB_OK);
+		return false;
+	}
+
+	return true;
+}
+
 void SoundComponent::update()
 {
-	if (mSystem->update() != FMOD_OK)
+	mSystem->update();
+}
+
+void SoundComponent::release()
+{
+	if (mSystem)
 	{
-		return;
+		mSystem->close();
+		mSystem->release();
 	}
 }

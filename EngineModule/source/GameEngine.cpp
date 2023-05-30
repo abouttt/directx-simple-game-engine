@@ -7,6 +7,7 @@
 #include "Resources.h"
 #include "Scene.h"
 #include "SceneManager.h"
+#include "SoundComponent.h"
 #include "Time.h"
 
 bool GameEngine::mbInit = false;
@@ -19,7 +20,8 @@ bool GameEngine::Init(const HINSTANCE hInstance, const HWND hWnd, const int widt
 	}
 
 	if (!Renderer::init(hWnd, width, height, bWindowed) ||
-		!Input::init(hInstance, hWnd))
+		!Input::init(hInstance, hWnd) || 
+		!SoundComponent::init())
 	{
 		return false;
 	}
@@ -43,6 +45,7 @@ void GameEngine::Release()
 	SceneManager::GetActiveScene()->release();
 	Input::release();
 	Renderer::release();
+	SoundComponent::release();
 
 	mbInit = false;
 }
@@ -68,6 +71,7 @@ void GameEngine::OnTick()
 	// Game Logic.
 	GameBehaviourEventManager::onUpate();
 	GameBehaviourEventManager::onLateUpdate();
+	SoundComponent::update();
 
 	// Load Scene.
 	if (SceneManager::isReserved())

@@ -5,6 +5,9 @@
 class SoundComponent : public BehaviourComponent
 {
 public:
+	friend class GameEngine;
+
+public:
 	SoundComponent();
 	~SoundComponent();
 
@@ -31,11 +34,15 @@ public:
 	void SetMute(const bool bMute);
 
 private:
-	void update();
+	static bool init();
+	static void update();
+	static void release();
+
 	void setupChannel(bool bOneShot);
 
 private:
-	FMOD::System* mSystem;
+	static FMOD::System* mSystem;
+
 	FMOD::Sound* mSound;
 	FMOD::Channel* mChannel;
 
