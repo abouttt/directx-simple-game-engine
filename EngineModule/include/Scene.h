@@ -37,7 +37,6 @@ protected:
 
 private:
 	GameObject* createGameObjectWithMesh(const std::wstring& name, const std::wstring& meshName);
-	void cleanup();
 	void release();
 
 private:

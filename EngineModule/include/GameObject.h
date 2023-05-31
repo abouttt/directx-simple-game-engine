@@ -5,15 +5,6 @@
 class GameObject
 {
 public:
-	enum class eState
-	{
-		Init,
-		Active,
-		Inactive,
-		Destroyed,
-	};
-
-public:
 	friend class Scene;
 
 public:
@@ -49,10 +40,7 @@ public: // Component
 	void RemoveComponent(Component* const component);
 
 private:
-	void cleanup();
-
-private:
-	eState mState;
+	bool mbActive;
 	std::wstring mName;
 	std::wstring mTag;
 	std::vector<std::unique_ptr<Component>> mComponents;
@@ -87,11 +75,6 @@ inline T* GameObject::GetComponent()
 
 	for (auto& component : mComponents)
 	{
-		if (component->mbDestroyed)
-		{
-			continue;
-		}
-
 		if (auto t = dynamic_cast<T*>(component.get()))
 		{
 			return t;
@@ -146,11 +129,6 @@ inline std::vector<T*> GameObject::GetComponents()
 
 	for (auto& component : mComponents)
 	{
-		if (component->mbDestroyed)
-		{
-			continue;
-		}
-
 		if (auto t = dynamic_cast<T*>(component.get()))
 		{
 			result.emplace_back(t);

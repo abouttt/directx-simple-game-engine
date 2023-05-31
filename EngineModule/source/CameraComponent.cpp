@@ -12,15 +12,12 @@ CameraComponent::CameraComponent()
 	, mViewMatrix()
 	, mProjMatrix()
 {
-	Renderer::SetCurrentCamera(this);
+	Renderer::AddCameraComponent(this);
 }
 
 CameraComponent::~CameraComponent()
 {
-	if (this == GetCurrentCamera())
-	{
-		Renderer::SetCurrentCamera(SceneManager::GetActiveScene()->FindComponent<CameraComponent>());
-	}
+	Renderer::RemoveCameraComponent(this);
 }
 
 CameraComponent* CameraComponent::GetCurrentCamera()
@@ -78,22 +75,6 @@ void CameraComponent::SetEnable(const bool bEnable)
 	}
 
 	BehaviourComponent::SetEnable(bEnable);
-
-	if (bEnable)
-	{
-		if (!Renderer::GetCurrentCamera())
-		{
-			Renderer::SetCurrentCamera(this);
-		}
-	}
-	else
-	{
-		if (this == Renderer::GetCurrentCamera())
-		{
-			auto nextCamera = SceneManager::GetActiveScene()->FindComponent<CameraComponent>();
-			Renderer::SetCurrentCamera(nextCamera);
-		}
-	}
 }
 
 const D3DXMATRIX& CameraComponent::getViewMatrix()

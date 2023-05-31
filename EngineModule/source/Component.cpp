@@ -3,8 +3,7 @@
 #include "GameObject.h"
 
 Component::Component()
-    : mbDestroyed(false)
-    , mGameObject(nullptr)
+    : mGameObject(nullptr)
 {
 }
 

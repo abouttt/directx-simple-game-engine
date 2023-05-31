@@ -24,7 +24,6 @@ public:
 	void SetName(const std::wstring& name);
 
 private:
-	bool mbDestroyed;
 	GameObject* mGameObject;
 };
 

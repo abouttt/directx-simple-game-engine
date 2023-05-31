@@ -23,14 +23,17 @@ public:
 	static int GetHeight();
 	static D3DCOLOR GetBackgroundColor();
 	static CameraComponent* GetCurrentCamera();
+	static std::vector<CameraComponent*>& GetAllCameras();
+	static std::size_t AllCameraCount();
 
 	static void SetBackgroundColor(const D3DCOLOR color);
-	static void SetCurrentCamera(CameraComponent* camera);
 
+	static void AddCameraComponent(CameraComponent* const camera);
 	static void AddMeshComponent(MeshComponent* const mesh);
 	static void AddLightComponent(LightComponent* const light);
 	static void AddUIComponent(UIComponent* const ui);
 
+	static void RemoveCameraComponent(CameraComponent* const camera);
 	static void RemoveMeshComponent(MeshComponent* const mesh);
 	static void RemoveLightComponent(LightComponent* const light);
 	static void RemoveUIComponent(UIComponent* const ui);
@@ -62,12 +65,12 @@ private:
 	static IDirect3DDevice9* mD3DDevice;
 	static D3DCOLOR mBackgroundColor;
 
-	static CameraComponent* mCurrentCamera;
+	static std::vector<CameraComponent*> mCameraComponents;
 	static std::vector<MeshComponent*> mMeshComponents;
 	static std::vector<LightComponent*> mLightComponents;
 	static std::vector<UIComponent*> mUIComponents;
-
 	static std::vector<MeshComponent*>::iterator mAlphaRenderBegin;
+	static CameraComponent* mCurrentCamera;
 	static DWORD mCurrentLightCount;
 };
 
