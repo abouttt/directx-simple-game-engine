@@ -13,12 +13,11 @@ int Renderer::mWidth = 0;
 int Renderer::mHeight = 0;
 IDirect3DDevice9* Renderer::mD3DDevice = nullptr;
 D3DCOLOR Renderer::mBackgroundColor = D3DCOLOR_XRGB(128, 128, 128);
-std::vector<CameraComponent*> Renderer::mCameraComponents;
+CameraComponent* Renderer::mCurrentCamera = nullptr;
 std::vector<MeshComponent*> Renderer::mMeshComponents;
 std::vector<LightComponent*> Renderer::mLightComponents;
 std::vector<UIComponent*> Renderer::mUIComponents;
-std::vector<MeshComponent*>::iterator Renderer::mAlphaRenderBegin = mMeshComponents.end();
-CameraComponent* Renderer::mCurrentCamera = nullptr;
+std::vector<MeshComponent*>::iterator Renderer::mAlphaRenderBegin;
 DWORD Renderer::mCurrentLightCount = 0;
 
 int Renderer::GetWidth()
@@ -46,15 +45,9 @@ void Renderer::SetBackgroundColor(const D3DCOLOR color)
 	mBackgroundColor = color;
 }
 
-void Renderer::AddCameraComponent(CameraComponent* const camera)
+void Renderer::SetCurrentCamera(CameraComponent* camera)
 {
-	assert(camera);
-
-	if (std::find(mCameraComponents.begin(), mCameraComponents.end(), camera) == mCameraComponents.end())
-	{
-		mCurrentCamera = camera;
-		mCameraComponents.emplace_back(camera);
-	}
+	mCurrentCamera = camera;
 }
 
 void Renderer::AddMeshComponent(MeshComponent* const mesh)
@@ -85,17 +78,6 @@ void Renderer::AddUIComponent(UIComponent* const ui)
 	if (std::find(mUIComponents.begin(), mUIComponents.end(), ui) == mUIComponents.end())
 	{
 		mUIComponents.emplace_back(ui);
-	}
-}
-
-void Renderer::RemoveCameraComponent(CameraComponent* const camera)
-{
-	assert(camera);
-
-	auto it = std::find(mCameraComponents.begin(), mCameraComponents.end(), camera);
-	if (it != mCameraComponents.end())
-	{
-		mCameraComponents.erase(it);
 	}
 }
 
@@ -138,21 +120,11 @@ CameraComponent* Renderer::GetCurrentCamera()
 	return mCurrentCamera;
 }
 
-std::vector<CameraComponent*>& Renderer::GetAllCameras()
-{
-	return mCameraComponents;
-}
-
-std::size_t Renderer::AllCameraCount()
-{
-	return mCameraComponents.size();
-}
-
 void Renderer::preRender()
 {
-	updateCamera();
 	if (mCurrentCamera)
 	{
+		updateCamera();
 		updateLights();
 		partitionMeshes();
 		sortTransparencyMeshes();
@@ -161,27 +133,13 @@ void Renderer::preRender()
 	// 배경 지우기 / 렌더 시작.
 	if (mD3DDevice)
 	{
-		if (mCurrentCamera)
-		{
-			mD3DDevice->Clear(0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, mBackgroundColor, 1.f, 0);
-			
-		}
-		else
-		{
-			mD3DDevice->Clear(0, 0, D3DCLEAR_TARGET, COLOR_BLACK, 1.f, 0);
-		}
-
+		mD3DDevice->Clear(0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, mBackgroundColor, 1.f, 0);
 		mD3DDevice->BeginScene();
 	}
 }
 
 void Renderer::render()
 {
-	if (!mCurrentCamera)
-	{
-		return;
-	}
-
 	if (mD3DDevice)
 	{
 		std::vector<MeshComponent*> it;
@@ -198,11 +156,6 @@ void Renderer::render()
 
 void Renderer::drawUI()
 {
-	if (!mCurrentCamera)
-	{
-		return;
-	}
-
 	for (auto ui : mUIComponents)
 	{
 		if (ui->IsActiveAndEnabled())
@@ -224,21 +177,8 @@ void Renderer::postRender()
 
 void Renderer::updateCamera()
 {
-	if (!mCurrentCamera || !mCurrentCamera->IsActiveAndEnabled())
-	{
-		auto it = std::find_if(mCameraComponents.begin(), mCameraComponents.end(),
-			[](auto camera)
-			{
-				return camera->IsActiveAndEnabled();
-			});
-		mCurrentCamera = it != mCameraComponents.end() ? (*it) : nullptr;
-	}
-
-	if (mCurrentCamera)
-	{
-		mD3DDevice->SetTransform(D3DTS_VIEW, &mCurrentCamera->getViewMatrix());
-		mD3DDevice->SetTransform(D3DTS_PROJECTION, &mCurrentCamera->getProjectionMatrix(mWidth, mHeight));
-	}
+	mD3DDevice->SetTransform(D3DTS_VIEW, &mCurrentCamera->getViewMatrix());
+	mD3DDevice->SetTransform(D3DTS_PROJECTION, &mCurrentCamera->getProjectionMatrix(mWidth, mHeight));
 }
 
 void Renderer::updateLights()
@@ -269,7 +209,7 @@ void Renderer::partitionMeshes()
 // 카메라와의 거리에 따라 정렬.
 void Renderer::sortTransparencyMeshes()
 {
-	auto camPos = GetCurrentCamera()->GetTransform()->GetPosition();
+	auto camPos = mCurrentCamera->GetTransform()->GetPosition();
 	std::sort(mAlphaRenderBegin, mMeshComponents.end(),
 		[&](MeshComponent* a, MeshComponent* b)
 		{
@@ -396,14 +336,13 @@ void Renderer::initPipeline()
 
 void Renderer::clear()
 {
-	mCameraComponents.clear();
+	mCurrentCamera = nullptr;
 	mMeshComponents.clear();
 	mLightComponents.clear();
 	for (DWORD i = 0; i < mCurrentLightCount; i++)
 	{
 		mD3DDevice->LightEnable(mCurrentLightCount, false);
 	}
-	mCurrentCamera = nullptr;
 	mCurrentLightCount = 0;
 }
 

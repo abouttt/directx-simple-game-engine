@@ -5,7 +5,7 @@
 #include "GameObject.h"
 
 GameObject::GameObject()
-	: mbActive(true)
+	: mState(eState::Init)
 	, mName(_T("GameObject"))
 	, mTag(_T("Untagged"))
 	, mComponents()
@@ -14,7 +14,7 @@ GameObject::GameObject()
 }
 
 GameObject::GameObject(const std::wstring& name)
-	: mbActive(true)
+	: mState(eState::Init)
 	, mName(name)
 	, mTag(_T("Untagged"))
 	, mComponents()
@@ -23,7 +23,7 @@ GameObject::GameObject(const std::wstring& name)
 }
 
 GameObject::GameObject(const std::wstring& name, const std::wstring& tag)
-	: mbActive(true)
+	: mState(eState::Init)
 	, mName(name)
 	, mTag(tag)
 	, mComponents()
@@ -33,7 +33,7 @@ GameObject::GameObject(const std::wstring& name, const std::wstring& tag)
 
 bool GameObject::IsActive() const
 {
-	return mbActive;
+	return (mState == eState::Init) || (mState == eState::Active);
 }
 
 const std::wstring& GameObject::GetName() const
@@ -53,12 +53,13 @@ TransformComponent* GameObject::GetTransform()
 
 void GameObject::SetActive(const bool bActive)
 {
+	// 현재 상태와 매개변수 상태가 같다면 진행하지 않는다.
 	if (IsActive() == bActive)
 	{
 		return;
 	}
 
-	mbActive = bActive;
+	mState = bActive == true ? eState::Active : eState::Inactive;
 
 	for (auto gb : GetComponents<GameBehaviourComponent>())
 	{
@@ -90,19 +91,35 @@ void GameObject::SetTag(const std::wstring& tag)
 
 void GameObject::RemoveComponent(Component* const component)
 {
-	if (!component)
+	for (auto it = mComponents.begin(); it != mComponents.end(); ++it)
 	{
-		return;
-	}
-
-	auto it = std::find_if(mComponents.begin(), mComponents.end(),
-		[component](auto& original)
+		if (it->get() == component)
 		{
-			return original.get() == component;
-		});
+			if (auto behaviour = dynamic_cast<BehaviourComponent*>(component))
+			{
+				behaviour->SetEnable(false);
+			}
 
-	if (it != mComponents.end())
+			(*it)->mbDestroyed = true;
+
+			break;
+		}
+	}
+}
+
+void GameObject::cleanup()
+{
+	auto it = mComponents.rbegin();
+	while (it != mComponents.rend())
 	{
-		mComponents.erase(it);
+		if ((*it)->mbDestroyed)
+		{
+			std::unique_ptr<Component> destroyedComponent(it->release());
+			it = decltype(it)(mComponents.erase(std::next(it).base()));
+		}
+		else
+		{
+			++it;
+		}
 	}
 }

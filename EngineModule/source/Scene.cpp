@@ -102,8 +102,8 @@ void Scene::RemoveGameObject(GameObject* const gameObject)
 	{
 		if (it->get() == gameObject)
 		{
-			std::unique_ptr<GameObject> go(it->release());
-			mGameObjects.erase(it);
+			(*it)->SetActive(false);
+			(*it)->mState = GameObject::eState::Destroyed;
 			break;
 		}
 	}
@@ -146,6 +146,36 @@ GameObject* Scene::createGameObjectWithMesh(const std::wstring& name, const std:
 	auto newGameObject = CreateGameObject(name);
 	newGameObject->AddComponent<MeshComponent>(Resources::GetMesh(meshName));
 	return newGameObject;
+}
+
+void Scene::cleanup()
+{
+	auto it = mGameObjects.rbegin();
+	while (it != mGameObjects.rend())
+	{
+		auto gameObject = it->get();
+
+		switch (gameObject->mState)
+		{
+		case GameObject::eState::Init:
+		{
+			gameObject->mState = GameObject::eState::Active;
+		}
+		break;
+		case GameObject::eState::Destroyed:
+		{
+			std::unique_ptr<GameObject> destroyedGameObject(it->release());
+			it = decltype(it)(mGameObjects.erase(std::next(it).base()));
+		}
+		break;
+		default:
+		{
+			gameObject->cleanup();
+			++it;
+		}
+		break;
+		}
+	}
 }
 
 void Scene::release()

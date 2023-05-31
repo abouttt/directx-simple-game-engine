@@ -93,6 +93,8 @@ void GameEngine::OnTick()
 	GameBehaviourEventManager::onDisable();
 	GameBehaviourEventManager::onDestory();
 
+	SceneManager::GetActiveScene()->cleanup();
+
 	// 성능 측정 종료.
 	Time::endTick();
 }
