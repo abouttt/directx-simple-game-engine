@@ -23,6 +23,10 @@ public:
 	void SetMesh(Mesh* const mesh);
 	void SetMaterial(Material* const material);
 
+protected:
+	void OnEnable() override;
+	void OnDisable() override;
+
 private:
 	void render(IDirect3DDevice9* const device);
 

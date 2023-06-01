@@ -27,7 +27,7 @@ DevScene::~DevScene()
 {
 }
 
-void DevScene::init()
+void DevScene::Init()
 {
 	auto camera = CreateCamera(_T("Main Camera"));
 	camera->GetTransform()->SetPosition(D3DXVECTOR3(0.f, 0.f, -10.f));
@@ -52,6 +52,7 @@ void DevScene::init()
 	auto cube2 = CreateCube(_T("Cube2"));
 	cube2->GetTransform()->SetPosition(D3DXVECTOR3(3, 0, 0));
 	cube2->GetTransform()->SetParent(cube->GetTransform());
+	cube2->AddComponent<CubeRotate>();
 
 	auto fire = CreateSphere(_T("Fire"));
 	fire->GetTransform()->SetPosition(D3DXVECTOR3(-2, 0, 0));

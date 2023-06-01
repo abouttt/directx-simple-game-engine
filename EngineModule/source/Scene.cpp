@@ -4,6 +4,7 @@
 #include "GameObject.h"
 
 #include "CameraComponent.h"
+#include "GameBehaviourComponent.h"
 #include "ImageComponent.h"
 #include "LightComponent.h"
 #include "MeshComponent.h"
@@ -13,6 +14,7 @@
 Scene::Scene(const std::wstring& name)
 	: mName(name)
 	, mGameObjects()
+	, mGameBehaviourComponents()
 {
 }
 
@@ -98,6 +100,11 @@ void Scene::RemoveGameObject(GameObject* const gameObject)
 		return;
 	}
 
+	if (gameObject->mState == GameObject::eState::Destroyed)
+	{
+		return;
+	}
+
 	for (auto it = mGameObjects.begin(); it != mGameObjects.end(); ++it)
 	{
 		if (it->get() == gameObject)
@@ -112,7 +119,7 @@ void Scene::RemoveGameObject(GameObject* const gameObject)
 GameObject* Scene::FindGameObject(const std::wstring& name)
 {
 	auto it = std::find_if(mGameObjects.begin(), mGameObjects.end(),
-		[&](auto& gameObject)
+		[&name](auto& gameObject)
 		{
 			if (!gameObject->IsActive())
 			{
@@ -128,7 +135,7 @@ GameObject* Scene::FindGameObject(const std::wstring& name)
 GameObject* Scene::FindGameObjectWithTag(const std::wstring& tag)
 {
 	auto it = std::find_if(mGameObjects.begin(), mGameObjects.end(),
-		[&](auto& gameObject)
+		[&tag](auto& gameObject)
 		{
 			if (!gameObject->IsActive())
 			{
@@ -141,6 +148,57 @@ GameObject* Scene::FindGameObjectWithTag(const std::wstring& tag)
 	return it != mGameObjects.end() ? it->get() : nullptr;
 }
 
+void Scene::Update()
+{
+	for (auto gb : mGameBehaviourComponents)
+	{
+		if (!gb->mbStarted)
+		{
+			gb->OnEnable();
+		}
+
+		if (gb->IsActiveAndEnabled())
+		{
+			if (!gb->mbStarted)
+			{
+				gb->Start();
+				gb->mbStarted = true;
+			}
+
+			gb->Update();
+		}
+	}
+}
+
+void Scene::LateUpdate()
+{
+	for (auto gb : mGameBehaviourComponents)
+	{
+		if (gb->IsActiveAndEnabled())
+		{
+			gb->LateUpdate();
+		}
+	}
+}
+
+void Scene::addGameBehaviourComponent(GameBehaviourComponent* gb)
+{
+	auto it = std::find(mGameBehaviourComponents.begin(), mGameBehaviourComponents.end(), gb);
+	if (it == mGameBehaviourComponents.end())
+	{
+		mGameBehaviourComponents.emplace_back(gb);
+	}
+}
+
+void Scene::removeGameBehaviourComponent(GameBehaviourComponent* gb)
+{
+	auto it = std::find(mGameBehaviourComponents.begin(), mGameBehaviourComponents.end(), gb);
+	if (it != mGameBehaviourComponents.end())
+	{
+		mGameBehaviourComponents.erase(it);
+	}
+}
+
 GameObject* Scene::createGameObjectWithMesh(const std::wstring& name, const std::wstring& meshName)
 {
 	auto newGameObject = CreateGameObject(name);
@@ -150,30 +208,15 @@ GameObject* Scene::createGameObjectWithMesh(const std::wstring& name, const std:
 
 void Scene::cleanup()
 {
-	auto it = mGameObjects.rbegin();
-	while (it != mGameObjects.rend())
+	for (auto it = mGameObjects.begin(); it != mGameObjects.end(); ++it)
 	{
-		auto gameObject = it->get();
-
-		switch (gameObject->mState)
+		if ((*it)->mState == GameObject::eState::Destroyed)
 		{
-		case GameObject::eState::Init:
-		{
-			gameObject->mState = GameObject::eState::Active;
+			mGameObjects.erase(it--);
 		}
-		break;
-		case GameObject::eState::Destroyed:
+		else
 		{
-			std::unique_ptr<GameObject> destroyedGameObject(it->release());
-			it = decltype(it)(mGameObjects.erase(std::next(it).base()));
-		}
-		break;
-		default:
-		{
-			gameObject->cleanup();
-			++it;
-		}
-		break;
+			(*it)->cleanup();
 		}
 	}
 }

@@ -17,7 +17,8 @@
 class GameBehaviourComponent : public BehaviourComponent
 {
 public:
-	friend class GameBehaviourEventManager;
+	friend class GameObject;
+	friend class Scene;
 
 public:
 	GameBehaviourComponent();
@@ -25,14 +26,16 @@ public:
 
 public:
 	Scene* GetScene();
-	void SetEnable(bool bEnable) override;
 
-public:	// Game Logic Event.
-	virtual void OnEnable();
+protected:	// Game Logic Event.
+	virtual void OnEnable() override;
 	virtual void Start();
 	virtual void Update();
 	virtual void LateUpdate();
-	virtual void OnDisable();
+	virtual void OnDisable() override;
 	virtual void OnDestroy();
+
+private:
+	bool mbStarted;
 };
 

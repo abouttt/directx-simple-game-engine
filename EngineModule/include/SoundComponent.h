@@ -33,7 +33,9 @@ public:
 	void SetLoop(const bool bLoop);
 	void SetMute(const bool bMute);
 
-	void SetEnable(const bool mbEnable) override;
+protected:
+	void OnEnable() override;
+	void OnDisable() override;
 
 private:
 	static bool init();

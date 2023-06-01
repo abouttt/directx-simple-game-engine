@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "EngineUtil.h"
-#include "GameBehaviourEventManager.h"
 #include "GameEngine.h"
 #include "Input.h"
 #include "Renderer.h"
@@ -58,21 +57,6 @@ void GameEngine::OnTick()
 		return;
 	}
 
-	// 성능 측정 시작.
-	Time::beginTick();
-
-	// Initialization.
-	GameBehaviourEventManager::onEnable();
-	GameBehaviourEventManager::onStart();
-
-	// Input Event.
-	Input::update();
-
-	// Game Logic.
-	GameBehaviourEventManager::onUpate();
-	GameBehaviourEventManager::onLateUpdate();
-	SoundComponent::update();
-
 	// Load Scene.
 	if (SceneManager::isReserved())
 	{
@@ -80,8 +64,21 @@ void GameEngine::OnTick()
 		Renderer::clear();
 		Time::clear();
 		SceneManager::loadScene();
-		return;
 	}
+
+	// 성능 측정 시작.
+	Time::beginTick();
+
+	// Initialization.
+
+
+	// Input Event.
+	Input::update();
+
+	// Game Logic.
+	SceneManager::GetActiveScene()->Update();
+	SceneManager::GetActiveScene()->LateUpdate();
+	SoundComponent::update();
 
 	// Scene Rendering.
 	Renderer::preRender();
@@ -90,9 +87,6 @@ void GameEngine::OnTick()
 	Renderer::postRender();
 
 	// Decommissioning.
-	GameBehaviourEventManager::onDisable();
-	GameBehaviourEventManager::onDestory();
-
 	SceneManager::GetActiveScene()->cleanup();
 
 	// 성능 측정 종료.

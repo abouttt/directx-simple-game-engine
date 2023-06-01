@@ -176,23 +176,14 @@ void SoundComponent::SetMute(const bool bMute)
 	}
 }
 
-void SoundComponent::SetEnable(const bool mbEnable)
+void SoundComponent::OnEnable()
 {
-	if (IsEnabled() == mbEnable)
-	{
-		return;
-	}
+	Play();
+}
 
-	BehaviourComponent::SetEnable(mbEnable);
-
-	if (mbEnable)
-	{
-		Play();
-	}
-	else
-	{
-		Stop();
-	}
+void SoundComponent::OnDisable()
+{
+	Stop();
 }
 
 void SoundComponent::setupChannel(bool bOneShot)

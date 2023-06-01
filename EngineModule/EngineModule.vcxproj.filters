@@ -108,9 +108,6 @@
     <ClInclude Include="include\Renderer.h">
       <Filter>Managers\Public</Filter>
     </ClInclude>
-    <ClInclude Include="include\GameBehaviourEventManager.h">
-      <Filter>Managers\Public</Filter>
-    </ClInclude>
     <ClInclude Include="include\GameEngine.h">
       <Filter>Managers\Public</Filter>
     </ClInclude>
@@ -175,9 +172,6 @@
     </ClCompile>
     <ClCompile Include="source\UIComponent.cpp">
       <Filter>Components\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="source\GameBehaviourEventManager.cpp">
-      <Filter>Managers\Private</Filter>
     </ClCompile>
     <ClCompile Include="source\Input.cpp">
       <Filter>Managers\Private</Filter>

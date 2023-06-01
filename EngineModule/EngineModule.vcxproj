@@ -72,11 +72,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>..\FMOD\inc;C:\GitProject\directx-simple-game-engine\EngineModule\include;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\FMOD\lib\x64;$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
+    <LibraryPath>..\FMOD\lib;$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>..\FMOD\inc;C:\GitProject\directx-simple-game-engine\EngineModule\include;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\FMOD\lib\x64;$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
+    <LibraryPath>..\FMOD\lib;$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -155,7 +155,6 @@
     <ClInclude Include="include\Component.h" />
     <ClInclude Include="include\EngineUtil.h" />
     <ClInclude Include="include\GameBehaviourComponent.h" />
-    <ClInclude Include="include\GameBehaviourEventManager.h" />
     <ClInclude Include="include\GameEngine.h" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\ImageComponent.h" />
@@ -186,7 +185,6 @@
     <ClCompile Include="source\Component.cpp" />
     <ClCompile Include="source\EngineUtil.cpp" />
     <ClCompile Include="source\GameBehaviourComponent.cpp" />
-    <ClCompile Include="source\GameBehaviourEventManager.cpp" />
     <ClCompile Include="source\GameEngine.cpp" />
     <ClCompile Include="source\GameObject.cpp" />
     <ClCompile Include="source\ImageComponent.cpp" />

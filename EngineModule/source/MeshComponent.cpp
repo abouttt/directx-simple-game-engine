@@ -53,6 +53,14 @@ void MeshComponent::SetMaterial(Material* const material)
 	mMaterial = material;
 }
 
+void MeshComponent::OnEnable()
+{
+}
+
+void MeshComponent::OnDisable()
+{
+}
+
 void MeshComponent::render(IDirect3DDevice9* const device)
 {
 	if (!mMesh)

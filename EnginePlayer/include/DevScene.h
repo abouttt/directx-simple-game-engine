@@ -9,6 +9,6 @@ public:
 	~DevScene();
 
 protected:
-	void init() override;
+	void Init() override;
 };
 

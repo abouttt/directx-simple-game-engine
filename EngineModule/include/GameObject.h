@@ -7,7 +7,6 @@ class GameObject
 public:
 	enum class eState
 	{
-		Init,
 		Active,
 		Inactive,
 		Destroyed,
@@ -20,6 +19,7 @@ public:
 	GameObject();
 	GameObject(const std::wstring& name);
 	GameObject(const std::wstring& name, const std::wstring& tag);
+	~GameObject();
 
 public:
 	bool IsActive() const;
@@ -30,6 +30,9 @@ public:
 	void SetActive(const bool bActive);
 	void SetName(const std::wstring& name);
 	void SetTag(const std::wstring& tag);
+
+private:
+	void cleanup();
 
 public: // Component
 	template<typename T, typename ...Args>
@@ -47,9 +50,6 @@ public: // Component
 	template<typename T>
 	std::vector<T*> GetComponentsInParent();
 	void RemoveComponent(Component* const component);
-
-private:
-	void cleanup();
 
 private:
 	eState mState;
@@ -87,11 +87,6 @@ inline T* GameObject::GetComponent()
 
 	for (auto& component : mComponents)
 	{
-		if (component->mbDestroyed)
-		{
-			continue;
-		}
-
 		if (auto t = dynamic_cast<T*>(component.get()))
 		{
 			return t;
@@ -146,11 +141,6 @@ inline std::vector<T*> GameObject::GetComponents()
 
 	for (auto& component : mComponents)
 	{
-		if (component->mbDestroyed)
-		{
-			continue;
-		}
-
 		if (auto t = dynamic_cast<T*>(component.get()))
 		{
 			result.emplace_back(t);

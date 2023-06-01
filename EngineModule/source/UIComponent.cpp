@@ -11,3 +11,11 @@ UIComponent::~UIComponent()
 {
 	Renderer::RemoveUIComponent(this);
 }
+
+void UIComponent::OnEnable()
+{
+}
+
+void UIComponent::OnDisable()
+{
+}

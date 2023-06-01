@@ -2,11 +2,14 @@
 
 #include "GameObject.h"
 
+class GameBehaviourComponent;
+
 class Scene
 {
 public:
 	friend class GameEngine;
 	friend class SceneManager;
+	friend class GameBehaviourComponent;
 
 public:
 	Scene(const std::wstring& name);
@@ -33,9 +36,14 @@ public:
 	T* FindComponent();
 
 protected:
-	virtual void init() abstract;
+	void Update();
+	void LateUpdate();
+
+	virtual void Init() abstract;
 
 private:
+	void addGameBehaviourComponent(GameBehaviourComponent* gb);
+	void removeGameBehaviourComponent(GameBehaviourComponent* gb);
 	GameObject* createGameObjectWithMesh(const std::wstring& name, const std::wstring& meshName);
 	void cleanup();
 	void release();
@@ -43,6 +51,7 @@ private:
 private:
 	std::wstring mName;
 	std::vector<std::unique_ptr<GameObject>> mGameObjects;
+	std::vector<GameBehaviourComponent*> mGameBehaviourComponents;
 };
 
 template<typename T>

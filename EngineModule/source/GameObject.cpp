@@ -1,11 +1,12 @@
 #include "pch.h"
 #include "BehaviourComponent.h"
 #include "GameBehaviourComponent.h"
-#include "GameBehaviourEventManager.h"
 #include "GameObject.h"
+#include "Scene.h"
+#include "SceneManager.h"
 
 GameObject::GameObject()
-	: mState(eState::Init)
+	: mState(eState::Active)
 	, mName(_T("GameObject"))
 	, mTag(_T("Untagged"))
 	, mComponents()
@@ -14,7 +15,7 @@ GameObject::GameObject()
 }
 
 GameObject::GameObject(const std::wstring& name)
-	: mState(eState::Init)
+	: mState(eState::Active)
 	, mName(name)
 	, mTag(_T("Untagged"))
 	, mComponents()
@@ -23,7 +24,7 @@ GameObject::GameObject(const std::wstring& name)
 }
 
 GameObject::GameObject(const std::wstring& name, const std::wstring& tag)
-	: mState(eState::Init)
+	: mState(eState::Active)
 	, mName(name)
 	, mTag(tag)
 	, mComponents()
@@ -31,9 +32,24 @@ GameObject::GameObject(const std::wstring& name, const std::wstring& tag)
 {
 }
 
+GameObject::~GameObject()
+{
+	for (auto& gb : GetComponents<GameBehaviourComponent>())
+	{
+		gb->OnDestroy();
+	}
+
+	auto scene = SceneManager::GetActiveScene();
+	for (size_t i = 0; i < mTransform->GetChildCount(); i++)
+	{
+		auto gameObject = mTransform->GetChild(i)->GetGameObject();
+		scene->RemoveGameObject(gameObject);
+	}
+}
+
 bool GameObject::IsActive() const
 {
-	return (mState == eState::Init) || (mState == eState::Active);
+	return (mState == eState::Active);
 }
 
 const std::wstring& GameObject::GetName() const
@@ -59,17 +75,22 @@ void GameObject::SetActive(const bool bActive)
 		return;
 	}
 
-	mState = bActive == true ? eState::Active : eState::Inactive;
+	mState = bActive ? eState::Active : eState::Inactive;
 
-	for (auto gb : GetComponents<GameBehaviourComponent>())
+	for (auto behaviour : GetComponents<BehaviourComponent>())
 	{
+		if (!behaviour->IsEnabled())
+		{
+			continue;
+		}
+
 		if (bActive)
 		{
-			GameBehaviourEventManager::AddOnEnable(gb);
+			behaviour->OnEnable();
 		}
 		else
 		{
-			GameBehaviourEventManager::AddOnDisable(gb);
+			behaviour->OnDisable();
 		}
 	}
 
@@ -91,17 +112,21 @@ void GameObject::SetTag(const std::wstring& tag)
 
 void GameObject::RemoveComponent(Component* const component)
 {
+	if (component->mbDestroyed)
+	{
+		return;
+	}
+
 	for (auto it = mComponents.begin(); it != mComponents.end(); ++it)
 	{
 		if (it->get() == component)
 		{
 			if (auto behaviour = dynamic_cast<BehaviourComponent*>(component))
 			{
-				behaviour->SetEnable(false);
+				behaviour->SetEnabled(false);
 			}
 
 			(*it)->mbDestroyed = true;
-
 			break;
 		}
 	}
@@ -109,17 +134,16 @@ void GameObject::RemoveComponent(Component* const component)
 
 void GameObject::cleanup()
 {
-	auto it = mComponents.rbegin();
-	while (it != mComponents.rend())
+	for (auto it = mComponents.begin(); it != mComponents.end(); ++it)
 	{
 		if ((*it)->mbDestroyed)
 		{
-			std::unique_ptr<Component> destroyedComponent(it->release());
-			it = decltype(it)(mComponents.erase(std::next(it).base()));
-		}
-		else
-		{
-			++it;
+			if (auto gb = dynamic_cast<GameBehaviourComponent*>(it->get()))
+			{
+				gb->OnDestroy();
+			}
+
+			mComponents.erase(it--);
 		}
 	}
 }

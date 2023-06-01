@@ -20,23 +20,9 @@ public:
 	{
 		if (Input::GetKeyDown(DIK_SPACE))
 		{
-			sound->SetEnable(!sound->IsEnabled());
-			/*if (cube->IsActive())
-				cube->SetActive(false);
-			else
-				cube->SetActive(true);*/
-
-				//Destroy(cube);
-		}
-
-		if (Input::GetKeyDown(DIK_UPARROW))
-		{
-			sound->SetLoop(true);
-		}
-
-		if (Input::GetKeyDown(DIK_DOWNARROW))
-		{
-			sound->SetLoop(false);
+			cube->SetEnabled(!cube->IsEnabled());
+			//GetScene()->RemoveGameObject(cube->GetGameObject());
+			cube->GetGameObject()->RemoveComponent(cube);
 		}
 
 		if (Input::GetKey(DIK_W))

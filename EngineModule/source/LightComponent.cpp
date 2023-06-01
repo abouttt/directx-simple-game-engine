@@ -48,6 +48,14 @@ void LightComponent::SetRange(const float range)
 	mD3DLight.Range = range;
 }
 
+void LightComponent::OnEnable()
+{
+}
+
+void LightComponent::OnDisable()
+{
+}
+
 void LightComponent::initDirectionLight()
 {
 	mD3DLight.Type = D3DLIGHT_DIRECTIONAL;

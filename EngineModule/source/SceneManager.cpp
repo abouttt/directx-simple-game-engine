@@ -55,7 +55,7 @@ bool SceneManager::isReserved()
 void SceneManager::loadScene()
 {
 	mScenes[mCurrentSceneIndex]->mGameObjects.clear();
-	mScenes[mNextSceneIndex]->init();
+	mScenes[mNextSceneIndex]->Init();
 	mCurrentSceneIndex = mNextSceneIndex;
 	mNextSceneIndex = -1;
 	mbReserve = false;

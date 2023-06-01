@@ -16,6 +16,10 @@ public:
 	void SetColor(const D3DXCOLOR& color);
 	void SetRange(const float range);
 
+protected:
+	void OnEnable() override;
+	void OnDisable() override;
+
 private:
 	void initDirectionLight();
 	void initPointLight();

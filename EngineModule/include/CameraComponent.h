@@ -9,11 +9,10 @@ public:
 
 public:
 	CameraComponent();
-	~CameraComponent();
 
 public:
-	static CameraComponent* GetCurrentCamera();
 	static CameraComponent* GetMainCamera();
+	static CameraComponent* GetCurrentCamera();
 
 public:
 	int GetFieldOfView() const;
@@ -23,7 +22,10 @@ public:
 	void SetNear(const float value);
 	void SetFar(const float value);
 	void SetFieldOfView(const int value);
-	void SetEnable(const bool bEnable) override;
+
+protected:
+	void OnEnable() override;
+	void OnDisable() override;
 
 private:
 	const D3DXMATRIX& getViewMatrix();

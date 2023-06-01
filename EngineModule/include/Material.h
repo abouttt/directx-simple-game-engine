@@ -8,6 +8,7 @@ class Material
 {
 public:
 	friend class Resources;
+
 public:
 	Material();
 

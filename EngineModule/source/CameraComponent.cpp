@@ -15,19 +15,6 @@ CameraComponent::CameraComponent()
 	Renderer::SetCurrentCamera(this);
 }
 
-CameraComponent::~CameraComponent()
-{
-	if (this == GetCurrentCamera())
-	{
-		Renderer::SetCurrentCamera(SceneManager::GetActiveScene()->FindComponent<CameraComponent>());
-	}
-}
-
-CameraComponent* CameraComponent::GetCurrentCamera()
-{
-	return Renderer::GetCurrentCamera();
-}
-
 CameraComponent* CameraComponent::GetMainCamera()
 {
 	auto scene = SceneManager::GetActiveScene();
@@ -38,6 +25,11 @@ CameraComponent* CameraComponent::GetMainCamera()
 	}
 
 	return mainCamera->GetComponent<CameraComponent>();
+}
+
+CameraComponent* CameraComponent::GetCurrentCamera()
+{
+	return Renderer::GetCurrentCamera();
 }
 
 int CameraComponent::GetFieldOfView() const
@@ -70,29 +62,20 @@ void CameraComponent::SetFieldOfView(const int value)
 	mFov = value;
 }
 
-void CameraComponent::SetEnable(const bool bEnable)
+void CameraComponent::OnEnable()
 {
-	if (IsEnabled() == bEnable)
+	if (!GetCurrentCamera())
 	{
-		return;
+		Renderer::SetCurrentCamera(this);
 	}
+}
 
-	BehaviourComponent::SetEnable(bEnable);
-
-	if (bEnable)
+void CameraComponent::OnDisable()
+{
+	if (this == GetCurrentCamera())
 	{
-		if (!Renderer::GetCurrentCamera())
-		{
-			Renderer::SetCurrentCamera(this);
-		}
-	}
-	else
-	{
-		if (this == Renderer::GetCurrentCamera())
-		{
-			auto nextCamera = SceneManager::GetActiveScene()->FindComponent<CameraComponent>();
-			Renderer::SetCurrentCamera(nextCamera);
-		}
+		auto nextCamera = SceneManager::GetActiveScene()->FindComponent<CameraComponent>();
+		Renderer::SetCurrentCamera(nextCamera);
 	}
 }
 

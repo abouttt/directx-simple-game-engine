@@ -72,11 +72,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>C:\GitProject\directx-simple-game-engine\EngineModule\include;C:\GitProject\directx-simple-game-engine\EnginePlayer\include;..\FMOD\inc;$(DXSDK_DIR)Include</IncludePath>
-    <LibraryPath>..\FMOD\lib\x64;$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
+    <LibraryPath>..\FMOD\lib;$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>C:\GitProject\directx-simple-game-engine\EngineModule\include;C:\GitProject\directx-simple-game-engine\EnginePlayer\include;..\FMOD\inc;$(DXSDK_DIR)Include</IncludePath>
-    <LibraryPath>..\FMOD\lib\x64;$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
+    <LibraryPath>..\FMOD\lib;$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

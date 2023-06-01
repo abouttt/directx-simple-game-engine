@@ -1,10 +1,12 @@
 #include "pch.h"
-#include "CameraComponent.h"
 #include "EngineUtil.h"
-#include "LightComponent.h"
+
 #include "Material.h"
-#include "MeshComponent.h"
 #include "Renderer.h"
+
+#include "CameraComponent.h"
+#include "LightComponent.h"
+#include "MeshComponent.h"
 #include "TransformComponent.h"
 #include "UIComponent.h"
 
