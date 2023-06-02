@@ -152,11 +152,6 @@ void Scene::Update()
 {
 	for (auto gb : mGameBehaviourComponents)
 	{
-		if (!gb->mbStarted)
-		{
-			gb->OnEnable();
-		}
-
 		if (gb->IsActiveAndEnabled())
 		{
 			if (!gb->mbStarted)

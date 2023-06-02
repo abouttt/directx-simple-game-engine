@@ -1,7 +1,6 @@
 #pragma once
 
 #include "BehaviourComponent.h"
-#include "TransformComponent.h"
 
 #include "GameObject.h"
 #include "Input.h"

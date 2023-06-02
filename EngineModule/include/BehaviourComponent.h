@@ -6,6 +6,7 @@ class BehaviourComponent : public Component
 {
 public:
 	friend class GameObject;
+	friend class Util;
 
 public:
 	BehaviourComponent();

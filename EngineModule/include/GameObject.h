@@ -1,6 +1,9 @@
 #pragma once
 
+#include "EngineUtil.h"
 #include "TransformComponent.h"
+
+class BehaviourComponent;
 
 class GameObject
 {
@@ -75,6 +78,13 @@ inline T* GameObject::AddComponent(Args && ...args)
 
 	auto newComponent = std::make_unique<T>(std::forward<Args>(args)...);
 	newComponent->mGameObject = this;
+
+	// Behaviour Component 생성시 최초 OnEnable 호출.
+	if (std::is_base_of<BehaviourComponent, T>::value)
+	{
+		Util::CallBehaviourComponentOnEnable((BehaviourComponent*)newComponent.get());
+	}
+
 	mComponents.emplace_back(std::move(newComponent));
 
 	return static_cast<T*>(mComponents.back().get());
@@ -183,3 +193,4 @@ inline std::vector<T*> GameObject::GetComponentsInParent()
 
 	return result;
 }
+

@@ -20,7 +20,7 @@ public:
 	{
 		if (Input::GetKeyDown(DIK_SPACE))
 		{
-			cube->SetEnabled(!cube->IsEnabled());
+			//cube->SetEnabled(!cube->IsEnabled());
 			//GetScene()->RemoveGameObject(cube->GetGameObject());
 			cube->GetGameObject()->RemoveComponent(cube);
 		}

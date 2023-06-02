@@ -12,7 +12,6 @@ CameraComponent::CameraComponent()
 	, mViewMatrix()
 	, mProjMatrix()
 {
-	Renderer::SetCurrentCamera(this);
 }
 
 CameraComponent* CameraComponent::GetMainCamera()
