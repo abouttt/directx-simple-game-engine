@@ -1,7 +1,5 @@
 #pragma once
 
-class BehaviourComponent;
-
 //
 // Enum
 //
@@ -14,13 +12,6 @@ enum class eRenderingMode
 };
 
 // Util
-
-class Util
-{
-public:
-	static void CallBehaviourComponentOnEnable(BehaviourComponent* const behaviour);
-};
-
 std::wstring StringToWString(const std::string& str);
 std::string WStringToString(const std::wstring& wstr);
 

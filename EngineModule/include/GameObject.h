@@ -1,6 +1,6 @@
 #pragma once
 
-#include "EngineUtil.h"
+#include "BehaviourComponent.h"
 #include "TransformComponent.h"
 
 class BehaviourComponent;
@@ -80,9 +80,9 @@ inline T* GameObject::AddComponent(Args && ...args)
 	newComponent->mGameObject = this;
 
 	// Behaviour Component 생성시 최초 OnEnable 호출.
-	if (std::is_base_of<BehaviourComponent, T>::value)
+	if (auto behaviour = dynamic_cast<BehaviourComponent*>(newComponent.get()))
 	{
-		Util::CallBehaviourComponentOnEnable((BehaviourComponent*)newComponent.get());
+		behaviour->OnEnable();
 	}
 
 	mComponents.emplace_back(std::move(newComponent));

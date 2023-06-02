@@ -1,7 +1,5 @@
 #include "pch.h"
 #include "EngineUtil.h"
-#include "BehaviourComponent.h"
-#include "GameObject.h"
 
 const DWORD Vertex::FVF = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1;
 
@@ -21,11 +19,6 @@ std::string WStringToString(const std::wstring& wstr)
 	str.resize(wstr.length());
 	wcstombs_s(&size, &str[0], str.size() + 1, wstr.c_str(), wstr.size());
 	return str;
-}
-
-void Util::CallBehaviourComponentOnEnable(BehaviourComponent* const behaviour)
-{
-	behaviour->OnEnable();
 }
 
 D3DMATERIAL9 InitMtrl(D3DXCOLOR ambient, D3DXCOLOR diffuse, D3DXCOLOR specular, D3DXCOLOR emissive, const float power)
